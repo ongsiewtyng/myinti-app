@@ -2,9 +2,6 @@
 
 @section('content')
 <body style="overflow: hidden;">
-    <div class="image-container">
-        <img src="{{ asset('image/abstract.jpg') }}" alt="Abstract Image" >
-    </div>
     <section>
         <div class="form-box">
             <div class="form-value">
@@ -13,13 +10,15 @@
                     <h2>Login</h2>
                     <div class="inputbox">
                         <ion-icon name="mail-outline"></ion-icon>
-                        <input type="text" name="email" required autofocus>
+                        <input type="text" name="email" required pattern="^[pP]\d{8}@student\.newinti\.edu\.my$">
                         <label for="">Email</label>
+
                         @error('email')
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong>The email must be in the format "p********@student.newinti.edu.my".</strong>
                             </span>
                         @enderror
+                        
                     </div>
                     <div class="inputbox">
                         <ion-icon name="lock-closed-outline"></ion-icon>
@@ -49,14 +48,6 @@
 
 @section('styles')
 <style>
-    .image-container {
-    background-size: cover;
-    z-index: -1;
-    position: absolute;
-    background-image: url("{{ asset('image/abstract.jpg') }}");
-    background-size: cover;
-    filter: blur(10px);
-    }
   
     img {
     max-width: 100%;

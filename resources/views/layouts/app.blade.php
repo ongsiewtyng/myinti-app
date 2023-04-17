@@ -12,23 +12,20 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/kopi-senja-sans">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     @yield('styles')
     @yield('scripts')
 
     <style>
         @import url('https://fonts.cdnfonts.com/css/kopi-senja-sans');
-        .navbar{
-            background-color:#f0192b;
-        }
         .navbar-brand{
             margin:0;
             padding:0;
             font-family: 'Kopi Senja Sans', sans-serif;
-            font-size:50px;
         }
         .links{
-            color: #000000;
+            color: #fff;
             text-decoration: none;
         }
         .height{
@@ -41,11 +38,12 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-danger shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}" style="font-size:30px;">
+                <a class="navbar-brand" href="{{ url('/') }}" style="font-size:40px; color: #fff;">
                     {{ config('app.name', 'MyINTI') }}
                 </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>

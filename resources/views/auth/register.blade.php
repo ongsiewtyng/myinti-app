@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="inputbox">
-                        <ion-icon name="eye-outline" onclick="toggleConfirmPasswordVisibility()"></ion-icon>
+                        <ion-icon class="confirm" name="eye-outline" onclick="toggleConfirmPasswordVisibility()"></ion-icon>
                         <input type="password" name="password_confirmation" id="password_confirm" required>
                         <label for="">Confirm Password</label>
                     </div>
@@ -61,20 +61,20 @@
             eyeIcon.setAttribute("name", "eye-off-outline");
         } else {
             passwordField.type = "password";
-            eyeIcon.setAttribute("name", "eye-outline");
+            eyeOffIcon.setAttribute("name", "eye-outline");
         }
     }
 
     function toggleConfirmPasswordVisibility() {
         var confirmPasswordField = document.getElementById("password_confirm");
-        var confirmEyeIcon = document.querySelector("ion-icon[name='eye-outline']:last-of-type");
-        var confirmEyeOffIcon = document.querySelector("ion-icon[name='eye-off-outline']:last-of-type");
+        var confirmEyeIcon = document.querySelector("ion-icon[name='eye-outline']:first-of-type");
+        var confirmEyeOffIcon = document.querySelector("ion-icon[name='eye-off-outline']:first-of-type");
         if (confirmPasswordField.type === "password") {
             confirmPasswordField.type = "text";
             confirmEyeIcon.setAttribute("name", "eye-off-outline");
         } else {
             confirmPasswordField.type = "password";
-            confirmEyeIcon.setAttribute("name", "eye-outline");
+            confirmEyeOffIcon.setAttribute("name", "eye-outline");
         }
     }
 </script>

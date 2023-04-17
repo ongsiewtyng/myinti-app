@@ -5,20 +5,20 @@
         <div class="container text-center">
             <div class="card">
                 <div class="card-body">
-                    <div class="col-md-12">
-                        <!-- <div class="banner">
-                            <div id="banner" class="carousel slide" data-ride="carousel">
-                                <div class="banner 1 box"> -->
-                                    <div class="carousel-item active">
-                                        <div class="col-md-6">   
-                                            <h2 style="color: #000000;">Tapau! Food</h2>
-                                            <p style="color: #000000;">Reserve meals for events or order food directly from campus dining options, all in one place.</p>
-                                        </div>
-                                        <div class="col-md-6">   
-                                            <img src="{{ asset('image/icons/coffee.png') }}" class="" alt="Banner Image 1">
-                                            <img src="{{ asset('image/icons/pancake.png') }}" class="" alt="Banner Image 2">
-                                        </div>
-                                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 style="color: #000000;" class="banner1">Tapau! Food</h2>
+                            <p style="color: #000000;" class="banner1">Reserve meals for events or order food directly from campus dining options, all in one place.</p>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <img src="{{ asset('image/icons/coffee.png') }}" class="coffee" alt="Banner Image 1">
+                            <img src="{{ asset('image/icons/pancake.png') }}" class="pancake" alt="Banner Image 2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
                                     <!-- <div class="carousel-item">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -78,79 +78,22 @@
 
 @section('styles')
 <style>
-    /* .banner {
-        background: #fff;
-        padding: 50px 0;
-        height: 300px; 
-    }
-    
-    .banner .box1{
-        background: #fff;
-        padding: 50px 0;
-        height: 300px; 
-        width: 100%; 
-        border: 1px solid #000000;
-    }
-    
-    
-    .banner .carousel-indicators {
-        bottom: -50px;
-        
-    }
-    .banner .carousel-indicators li {
-        border: 1px solid #000000;
-        border-radius: 10px;
-        width: 50px;
-        height: 8px;
-        margin: 1.5px;
-    }
-    .banner .carousel-indicators li.active {
-        background: #BCD3F2;
-        border: 1px solid #000000;
-    }
-    .banner .carousel-indicators li:hover {
-        background: #BCD3F2;
-        border: 1px solid #000000;
+    @import url('https://fonts.cdnfonts.com/css/kubos');
+    .banner1 {
+        font-size: 40px;
+        font-weight: 700;
+        margin-top: 100px;
     }
 
-    
-    .carousel-inner {
-        height: 350px; 
-        width: 100%; 
-        border: 5px solid rgba(0,0,0,0.1);
-        border-radius: 10px;
-        overflow: hidden;
+    .coffee {
+        width: 200px;
+        margin-top: 100px;
     }
 
-    .carousel-item {
-        height: 500px;
+    .pancake {
+        width: 200px;
+        margin-top: 100px;
     }
-    .carousel-item img {
-        position: absolute;
-        top: 30%;
-        right: 0;
-        transform: translate(0, -50%);
-        width: 200px !important; 
-        height: auto; 
-    }
-    .carousel-caption h2,
-    .carousel-caption p {
-        color: #000000;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    .carousel-caption h2 {
-        left: 10%;
-    }
-
-    .carousel-caption p {
-        left: 15%;
-    }  */
-
-
-
 
 
 

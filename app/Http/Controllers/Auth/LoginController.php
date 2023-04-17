@@ -40,23 +40,38 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function authenticate(Request $request) {
+    /**
+     * Validate the email format.
+     *
+     * @param  string  $email
+     * @return bool
+     */
+    protected function validateEmail($email)
+    {
+        $regex = '/^[pP]\d{8}@student\.newinti\.edu\.my$/i';
+        return preg_match($regex, $email);
+    }
+
+    public function authenticate(Request $request)
+    {
         $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string'],
         ]);
+
+        // Check if email is valid
+        if (!$this->validateEmail($request->email)) {
+            return back()->withErrors(['email' => 'Invalid email format'])->withInput();
+        }
 
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            return redirect('/home');
+            return redirect()->intended('/home');
         } else {
             return back()->withErrors([
                 'email' => 'The provided credentials do not match our records.',
-            ]);
+            ])->withInput();
         }
-
     }
-
 }
