@@ -4,9 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -52,26 +57,61 @@ class LoginController extends Controller
         return preg_match($regex, $email);
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'login' => ['required', 'string'],
+            'password' => ['required', 'string','min:6'],
+        ];
+    }
+
+
     public function authenticate(Request $request)
     {
-        $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required', 'string'],
-        ]);
 
-        // Check if email is valid
-        if (!$this->validateEmail($request->email)) {
-            return back()->withErrors(['email' => 'Invalid email format'])->withInput();
+        $user = User::where('email', $request->input('login'))->first();
+
+        if (!$user) {
+            $user = User::where('name', $request->input('login'))->first();
         }
 
-        $credentials = $request->only('email', 'password');
+        if (!$user || !Hash::check($request->input('password'), $user->password)) {
+            RateLimiter::hit($this->throttleKey($request));
 
-        if (Auth::attempt($credentials)) {
+            throw ValidationException::withMessages([
+                'login' => __('auth.failed'),
+            ]);
+        }
+
+        Auth::login($user, $request->boolean('remember-me'));
+        RateLimiter::hit($this->throttleKey($request));
+
+        $credentials = $request->only('login', 'password');
+        $remember = $request->filled('remember-me');
+
+        if (Auth::attempt($credentials, $remember)) {
+            $user = Auth::user();
             return redirect()->intended('/home');
         } else {
             return back()->withErrors([
-                'email' => 'The provided credentials do not match our records.',
+                'login' => 'The provided credentials do not match our records.',
             ])->withInput();
         }
+
+    }
+
+    /**
+     * Get the rate limiting throttle key for the request.
+     *
+     * @return string
+     */
+    public function throttleKey(Request $request)
+    {
+        return Str::lower($request->input('email')).'|'.$request->ip();
     }
 }

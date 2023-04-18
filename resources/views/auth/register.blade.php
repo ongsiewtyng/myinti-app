@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="inputbox">
-                        <ion-icon class="confirm" name="eye-outline" onclick="toggleConfirmPasswordVisibility()"></ion-icon>
+                        <ion-icon class="confirm" name="eye-outline" onclick="toggleConfirmPasswordVisibility()" id="password-toggle"></ion-icon>
                         <input type="password" name="password_confirmation" id="password_confirm" required>
                         <label for="">Confirm Password</label>
                     </div>
@@ -67,8 +67,8 @@
 
     function toggleConfirmPasswordVisibility() {
         var confirmPasswordField = document.getElementById("password_confirm");
-        var confirmEyeIcon = document.querySelector("ion-icon[name='eye-outline']:first-of-type");
-        var confirmEyeOffIcon = document.querySelector("ion-icon[name='eye-off-outline']:first-of-type");
+        var confirmEyeIcon = document.querySelector("#password-toggle[name='eye-outline']:last-of-type");
+        var confirmEyeOffIcon = document.querySelector("#password-toggle[name='eye-off-outline']:last-of-type");
         if (confirmPasswordField.type === "password") {
             confirmPasswordField.type = "text";
             confirmEyeIcon.setAttribute("name", "eye-off-outline");
@@ -77,6 +77,7 @@
             confirmEyeOffIcon.setAttribute("name", "eye-outline");
         }
     }
+
 </script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -92,9 +93,6 @@
     align-items: center;
     min-height: 50vh;
     width: 100%;
-    background: url('background6.jpg')no-repeat;
-    background-position: center;
-    background-size: cover;
     }
     .form-box{
     position: relative;

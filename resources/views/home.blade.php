@@ -7,12 +7,11 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <h2 style="color: #000000;" class="banner1">Tapau! Food</h2>
-                            <p style="color: #000000;" class="banner1">Reserve meals for events or order food directly from campus dining options, all in one place.</p>
+                            <h2 style="color: #000000;" class="text1">Tapau! Food</h2>
+                            <p style="color: #000000;" class="text2">Reserve meals for events or order food directly from campus dining options, all in one place.</p>
                         </div>
                         <div class="col-md-6 text-right">
-                            <img src="{{ asset('image/icons/coffee.png') }}" class="coffee" alt="Banner Image 1">
-                            <img src="{{ asset('image/icons/pancake.png') }}" class="pancake" alt="Banner Image 2">
+                            <img src="{{ asset('image/icons/tapau.gif') }}" class="coffee" alt="Banner Image 1">
                         </div>
                     </div>
                 </div>
@@ -78,24 +77,27 @@
 
 @section('styles')
 <style>
-    @import url('https://fonts.cdnfonts.com/css/kubos');
-    .banner1 {
-        font-size: 40px;
+    @import url('https://fonts.cdnfonts.com/css/maybe-coffee');
+    .text1 {
+        font-size: 60px;
         font-weight: 700;
         margin-top: 100px;
+        font-family: 'Maybe Coffee', sans-serif;
+        transform:rotate(-5deg);
+    }
+    .text2{
+        font-size: 15px;
+        font-weight: 600;
+        margin-top: 50px;
+        font-family: 'Ballega', sans-serif;
+        white-space: nowrap;
+    
     }
 
     .coffee {
-        width: 200px;
-        margin-top: 100px;
+        width: 300px;
+        margin-top: -40px;
     }
-
-    .pancake {
-        width: 200px;
-        margin-top: 100px;
-    }
-
-
 
 </style>
 @endsection

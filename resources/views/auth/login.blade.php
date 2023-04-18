@@ -10,8 +10,8 @@
                     <h2>Login</h2>
                     <div class="inputbox">
                         <ion-icon name="mail-outline"></ion-icon>
-                        <input type="text" name="email" required pattern="^[pP]\d{8}@student\.newinti\.edu\.my$">
-                        <label for="">Email</label>
+                        <input type="text" name="login" :value="old('login')" required autofocus>
+                        <label for="login">Email or Name</label>
 
                         @error('email')
                             <span class="invalid-feedback" role="alert">
@@ -22,12 +22,13 @@
                     </div>
                     <div class="inputbox">
                         <ion-icon name="lock-closed-outline"></ion-icon>
-                        <input type="password" name="password" required autocomplete="current-password">
+                        <ion-icon name="eye-outline" onclick="togglePasswordVisibility()" id= "password-toggle"></ion-icon>
+                        <input type="password" name="password" id="password" required autocomplete="current-password">
                         <label for="">Password</label>
                     </div>
                     <div class="forget">
-                        <input type="checkbox" name="remember" id="remember">
-                        <label for="remember">{{ __('Remember Me') }}</label>
+                        <input type="checkbox" name="remember-me" id="remember-me">
+                        <label for="remember-me">{{ __('Remember Me') }}</label>
                     </div>
                     <button type="submit">Log in</button>
                     <div class="fpass">
@@ -42,13 +43,26 @@
     </section>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById("password");
+            var eyeIcon = document.querySelector("#password-toggle[name='eye-outline']");
+            var eyeOffIcon = document.querySelector("#password-toggle[name='eye-off-outline']");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.setAttribute("name", "eye-off-outline");
+            } else {
+                passwordField.type = "password";
+                eyeOffIcon.setAttribute("name", "eye-outline");
+            }
+        }
+    </script>
 </body>
 @endsection
 
 
 @section('styles')
 <style>
-  
     img {
     max-width: 100%;
     height: auto;
@@ -129,6 +143,12 @@
         color: #000000;
         font-size: 1.2em;
         top: 20px;
+    }
+    .inputbox ion-icon#password-toggle {
+        position: absolute;
+        left: 262px;
+        top: 60%;
+        transform: translateY(-50%);
     }
     .forget{
         margin: -10px 0 15px ;
