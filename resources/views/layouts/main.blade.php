@@ -55,20 +55,20 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a href="{{ url('/about') }}" class="nav-link links">About</a>
+                            <a href="{{ route('about') }}" class="nav-link links">About</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle links" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Services
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('/services/service1') }}">Event Approval</a>
-                                <a class="dropdown-item" href="{{ url('/services/service2') }}">Tapau! Food</a>
-                                <a class="dropdown-item" href="{{ url('/services/service3') }}">Facility Reservation</a>
+                                <a class="dropdown-item" href="{{ route('service1') }}">Event Approval</a>
+                                <a class="dropdown-item" href="{{ route('service2') }}">Tapau! Food</a>
+                                <a class="dropdown-item" href="{{ route('service3') }}">Facility Reservation</a>
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/contact') }}" class="nav-link links">Contact</a>
+                            <a href="{{ route('contact') }}" class="nav-link links">Contact</a>
                         </li>
                     </ul>
 
@@ -102,6 +102,10 @@
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
+                                <a class="dropdown-item" href="{{ route('menus.edit-profile') }}" method="POST">
+                                    {{ __('Edit Profile') }}
+                                </a>
+                                </div>
                             </div>
                         </li>
                     @endguest

@@ -87,16 +87,15 @@
     }
     .text2{
         font-size: 15px;
-        font-weight: 600;
         margin-top: 50px;
-        font-family: 'Ballega', sans-serif;
+        font-family: 'Anuphan', sans-serif;
         white-space: nowrap;
     
     }
 
     .coffee {
         width: 300px;
-        margin-top: -40px;
+        margin-top: -15px;
     }
 
 </style>

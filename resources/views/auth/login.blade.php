@@ -144,7 +144,7 @@
         font-size: 1.2em;
         top: 20px;
     }
-    .inputbox ion-icon#password-toggle {
+    .inputbox ion-icon #password-toggle {
         position: absolute;
         left: 262px;
         top: 60%;

@@ -1,4 +1,4 @@
 @font-face {
-  font-family: 'Ballega';
-  src: url('/font/ballega.otf') format('opentypefont');
+  font-family: 'Anuphan';
+  src: url('/font/Anuphan-VariableFont_wght.ttf') format('truetypefont');
 }
