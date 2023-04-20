@@ -20,5 +20,16 @@ class Session extends Model
     {
         return $this->belongsTo(User::class, 'booked_by');
     }
+
+    public function facility()
+    {
+        return $this->belongsTo(Facility::class,'f_id');
+    }
+
+    public function rooms()
+    {
+        return $this->hasMany(Room::class,'rooms');
+    }
+
     
 }

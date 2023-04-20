@@ -16,11 +16,10 @@
             @if(isset($grouped_sessions[$facility->f_id]))
                 <div class="table">
                     <div class="gname">
+                        <div class="g_id">
+                            <img src="{{ $facility->icon_url }}" alt="Facility Icon" class="facility-icon">
+                        </div>
                         {{ $facility->name }}
-                    </div>
-                    <div class="g_id">
-                        <img src="{{ $facility->icon_url }}" alt="Facility Icon" class="facility-icon">
-                        {{ $facility->f_id }}
                     </div>
                     <div class="gtime">
                         <div class="time-select-container">
@@ -84,13 +83,13 @@
 
     .table-container {
         width: auto;
-        margin: 40px 0;
+        margin: auto;
         
     }
 
     .table-header {
         text-align: center;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
 
     .table {
@@ -118,7 +117,7 @@
 
     .student {
         flex: 1;
-        text-align: right;
+        text-align: center;
         padding: 5px;
         font-weight: bold;
     }
@@ -157,8 +156,10 @@
     }
 
     .book-now-btn {
+        width: auto;
+        margin: auto;
         margin-left: 100px;
-        padding: 5px 20px;
+        padding: 8px 20px;
         border-radius: 5px;
         background-color: #fff;
         color: #000000;
@@ -170,8 +171,19 @@
         background-color: #FF3131;
         color: #fff;
         font-weight: bold;
+        transform: scale(1.1);
     }
 
+    .facility-icon {
+        width: auto;
+        height: 87px;
+        margin-right: 0px;
+        transition: all 0.3s ease;
+    }
+
+    .facility-icon:hover {
+        transform: scale(1.5);
+    }
 
     
 
