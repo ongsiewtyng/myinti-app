@@ -37,40 +37,5 @@ class ServicesController extends Controller
     return view('menus.service3', compact('available_sessions', 'booked_sessions','facilities','grouped_sessions','sessions'));
     }
 
-    public function bookSession(Request $request, $roomId, $id) {
-        // Validate the request parameters
-        $validatedData = $request->validate([
-            'room' => 'required|numeric',
-            'time' => 'required',
-        ]);
-
-        $room = Room::findOrFail($room_id);
-
-        $session = new Session();
-        $session->facility_id = $request->input('f_id');
-        $session->time = $request->input('time');
-        $session->student_id = auth()->user()->id;
-        $session->save();
-    
-        // Get the user ID from the session
-        $user_id = Auth::id();
-    
-        // Check if the requested session is available
-        $session = Session::where('room_id', $validatedData['room'])
-                          ->where('time', $validatedData['time'])
-                          ->whereNull('studentid')
-                          ->first();
-    
-        // If the requested session is available, book it
-        if ($session) {
-            $session->studentid = $user_id;
-            $session->save();
-            return redirect('/menus/service3')->with('success', 'Session booked successfully!');
-        }
-    
-        // If the requested session is not available, return an error message
-        return redirect('/menus/service3')->with('error', 'Sorry, the requested session is not available.');
-    }    
-
 }
 

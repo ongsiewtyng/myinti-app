@@ -26,14 +26,12 @@
                             <select name="time" class="time-select">
                                 @foreach($grouped_sessions[$facility->f_id] as $session)
                                     <option value="{{ $session->time }}">{{ $session->time }}</option>
+                                    <option value="{{ $session->rooms}}">{{ $session->rooms }}</option>
                                 @endforeach
                             </select>
-                            <form method="POST" action="/book-session">
-                                @csrf
-                                <input type="hidden" name="f_id" value="{{ $facility->f_id }}">
-                                <input type="hidden" name="time" value="{{ $session->time }}">
-                                <button type="submit" class="book-now-btn">Book Now</button>
-                            </form>
+                            <div class = "book-now">
+                                <a href="{{ route('confirmBooking', ['id' => $session->f_id, 'time' => $session->time]) }}" class="book-now-btn">Book Now</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -155,10 +153,22 @@
         background-color: transparent;
     }
 
+    .book-now {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100px;
+        height: 100%;
+        background-color: #FF3131;
+        color: #fff;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
     .book-now-btn {
         width: auto;
         margin: auto;
-        margin-left: 100px;
+        margin-left: -194px;
         padding: 8px 20px;
         border-radius: 5px;
         background-color: #fff;

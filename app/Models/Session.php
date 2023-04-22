@@ -9,26 +9,22 @@ class Session extends Model
 {
     use HasFactory;
 
+    protected $table = 'sessions'; // set the correct table name
+    protected $primaryKey = 'id'; // set the correct primary key column name
+    public $timestamps = false; // if the table doesn't have timestamp columns, set this to false
+
     protected $fillable = [
-        'facility_name',
+        'studentid',
+        'f_id',
+        'rooms',
         'time',
-        'booked_by',
+        'booked',
     ];
 
     // Define a relationship with the User model
     public function user()
     {
         return $this->belongsTo(User::class, 'booked_by');
-    }
-
-    public function facility()
-    {
-        return $this->belongsTo(Facility::class,'f_id');
-    }
-
-    public function rooms()
-    {
-        return $this->hasMany(Room::class,'rooms');
     }
 
     

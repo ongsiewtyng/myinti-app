@@ -38,6 +38,21 @@ class SessionSeeder extends Seeder
                 ];
                 $current_time += $duration + $interval;
             }
+            // Add room dropdown for facilities 6 and 7
+            if ($i === 6 || $i === 7) {
+                // Fetch available rooms for selected facility
+                $available_rooms = DB::table('sessions')
+                    ->select('rooms')
+                    ->where('f_id', $i)
+                    ->groupBy('rooms')
+                    ->get();
+                
+                $rooms = '<select name="room_id">';
+                foreach ($available_rooms as $room) {
+                    $rooms .= '<option value="' . $room->rooms . '">' . $room->rooms . '</option>';
+                }
+                $rooms .= '</select>';
+            }
         }
 
         DB::table('sessions')->insert($insert_data);
