@@ -21,7 +21,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('register');
-Route::post('/authenticate', [App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('authenticate');
+Route::post('/authenticate', [App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('authenticate'); 
+Route::get('/admin', [App\Http\Controllers\Auth\AdminController::class, 'index'])->name('admin');
+Route::post('/dashboard', [App\Http\Controllers\Auth\AdminController::class, 'home'])->name('dashboard');
 Route::match(['get', 'post'], '/profile/edit', [App\Http\Controllers\EditProfileController::class, 'edit'])->name('menus.edit-profile');
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::get('/about', [App\Http\Controllers\AboutController::class, 'index'])->name('about');

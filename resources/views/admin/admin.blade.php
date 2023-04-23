@@ -5,23 +5,13 @@
     <section>
         <div class="form-box">
             <div class="form-value">
-                <div class="admin">
-                    <a href="{{ route('admin')}}">Admin</a>
-                </div>
-                <form method="POST" action="{{ route('authenticate') }}">
+                <form method="POST" action="{{ route('dashboard') }}"> 
                     @csrf
-                    <h2>Login</h2>
+                    <h2>Admin Login</h2>
                     <div class="inputbox">
                         <ion-icon name="mail-outline"></ion-icon>
                         <input type="text" name="login" :value="old('login')" required autofocus>
-                        <label for="login">Email or Name</label>
-
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>The email must be in the format "p********@student.newinti.edu.my".</strong>
-                            </span>
-                        @enderror
-                        
+                        <label for="login">Email</label>
                     </div>
                     <div class="inputbox">
                         <ion-icon name="lock-closed-outline"></ion-icon>
@@ -29,16 +19,9 @@
                         <input type="password" name="password" id="password" required autocomplete="current-password">
                         <label for="">Password</label>
                     </div>
-                    <div class="forget">
-                        <input type="checkbox" name="remember-me" id="remember-me">
-                        <label for="remember-me">{{ __('Remember Me') }}</label>
-                    </div>
                     <button type="submit">Log in</button>
-                    <div class="fpass">
-                        <a href="{{ route('password.request') }}">Forget Password</a>
-                    </div>
-                    <div class="register">
-                        <p>New Student? <a href="{{ route('register') }}">Register</a></p>
+                    <div class="student">
+                        <p>Student? <a href="{{ route('login') }}">Login Here</a></p>
                     </div>
                 </form>
             </div>
@@ -179,7 +162,7 @@
     }
     .forget label a:hover{
         text-decoration: underline;
-    }   
+    }
     button{
         width: 100%;
         height: 40px;
@@ -191,29 +174,19 @@
         font-size: 1em;
         font-weight: 600;
     }
-    .register{
+    .student{
         font-size: 14px;
         color: #000000;
         text-align: center;
-        
+        margin: 25px 0 10px;
     }
-    .register p a{
+    .student p a{
         text-decoration: none;
         color: #000000;
         font-weight: 600;
     }
-    .register p a:hover{
+    .student p a:hover{
         text-decoration: underline;
-    }
-
-    .admin{
-        color: #000000;
-        text-align: center;
-        position: absolute;
-        bottom: 15px;
-        left: 50%;
-        transform: translateX(-50%);
-
     }
     
 </style>
