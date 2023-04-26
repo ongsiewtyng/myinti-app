@@ -1,6 +1,9 @@
 @extends('layouts.main')
 
 @section('content')
+
+<title>@yield('title', 'Facility Reservation')</title>
+
 <div class="container">
     <div class="table-container">
         <h2 class="table-header">Sessions Available</h2>

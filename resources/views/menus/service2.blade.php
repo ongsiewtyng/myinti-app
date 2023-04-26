@@ -2,6 +2,8 @@
 
 @section('content')
 
+<title>@yield('title', 'Tapau! Food')</title>
+
 <head>
 	<title>Food Canteen</title>
 	<meta charset="UTF-8">

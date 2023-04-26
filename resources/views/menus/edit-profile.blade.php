@@ -1,6 +1,9 @@
 @extends('layouts.main')
 
 @section('content')
+
+<title>@yield('title', 'Edit Profile')</title>
+
 <body?>
     <section>
     <div class="form-box">
