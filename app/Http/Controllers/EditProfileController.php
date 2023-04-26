@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+//use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\File;
 
 class EditProfileController extends Controller
 {
@@ -12,10 +14,9 @@ class EditProfileController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit()
-    {
-        $user = Auth::user();
-        return view('menus.edit-profile', compact('user'));
+    public function edit($id){
+        $user = User::find($id);
+        return view('menus.edit-profile',compact('user'));
     }
 
     /**
@@ -24,23 +25,27 @@ class EditProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request)
-    {
-        $user = Auth::user();
+    public function update(Request $request,$id){
+        $user = User::find($id);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = $request->input('password');
+        $user->password = $request->input('password_confirmation');
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:6|confirmed',
-        ]);
-
-        $user->name = $request->name;
-        $user->email = $request->email;
-        if ($request->password) {
-            $user->password = bcrypt($request->password);
+        if($request->hasFile('pic')){
+            $destination = 'uploads/users/'.$user->pic;
+            if(File::exists($destination)){
+                File::delete($destination);
+            }
+            $file = $request->file('pic');
+            $extension = $file->getClientOriginalExtension();
+            $filename = user->id. '.' . $extension;
+            $file->move(public_path('uploads/users'),$filename);
+            $user->pic = $filename;
         }
-        $user->save();
 
-        return redirect()->route('home')->with('success', 'Your profile has been updated.');
+        $user->update();
+        return redirect()->back()->with('success', 'Your profile has been updated.');
+
     }
 }

@@ -40,6 +40,9 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
 </head>
 <body>
     <div id="app">
@@ -92,7 +95,7 @@
                             @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
+                                <img src="{{ asset('uploads/users/'.(Auth::user()->pic ?? 'pic.png')) }}" style="width: 30px; height: 30px; border-radius: 50%;">
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}"
@@ -103,7 +106,7 @@
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
-                                <a class="dropdown-item" href="{{ route('menus.edit-profile') }}" method="POST">
+                                <a class="dropdown-item" href="{{ route('menus.edit-profile',['id' => Auth::id()]) }}" method="POST">
                                     {{ __('Edit Profile') }}
                                 </a>
                                 </div>
@@ -115,7 +118,7 @@
         </div>
     </nav>
 
-    <main class="py-4">
+    <main class="py-4" style="overflow:hidden">
         @yield('content')
     </main>
 </div>

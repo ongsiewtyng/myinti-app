@@ -4,17 +4,19 @@
 <body?>
     <section>
     <div class="form-box">
-        <form method="POST" action="{{ route('menus.edit-profile') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ url('update/'.$user->id) }}" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
+            
             <h2>Edit Profile</h2>
             <div class="inputbox">
-                <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required autocomplete="name">
+                <input type="text" name="name" id="name" value="{{ $user->name }}" required autocomplete="name">
                 <label for="name">{{ __('Name') }}</label>
                 <ion-icon name="person-outline"></ion-icon>
             </div>
 
             <div class="inputbox">
-                <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required autocomplete="email">
+                <input type="email" name="email" id="email" value="{{ $user->email }}" required autocomplete="email">
                 <label for="email">{{ __('Email Address') }}</label>
                 <ion-icon name="mail-outline"></ion-icon>
             </div>
@@ -30,15 +32,15 @@
                 <label for="password_confirmation">{{ __('Confirm New Password') }}</label>
                 <ion-icon class="confirm" name="eye-outline" onclick="toggleConfirmPasswordVisibility()" id="password-toggle"></ion-icon>
             </div>
-        </form>
+        
             <div class="avatar">
-                <input type="file" name="avatar" id="avatar" accept="image/*">
-                <label for="avatar">{{ __('Profile Picture') }}</label>
-                <ion-icon name="image-outline"></ion-icon>
+                <input id="pic" type="file" class="form-control" name = "pic">
+                <img src="{{ asset('myinti/users/' . ($user->pic ? $user->pic : 'pic.png')) }}" style="width: 100px; height: 100px; border-radius: 50%;">
             </div>
 
             <button type="submit" style="margin-top: 20px;">{{ __('Save Changes') }}</button>
-        </div>
+        </form>
+    </div>
     </section>
     <script>
         function togglePasswordVisibility() {
@@ -117,6 +119,7 @@
         font-size: 1em;
         pointer-events: none;
         transition: .5s;
+        font-weight: bold;
     }
 
     .inputbox input:focus ~ label,

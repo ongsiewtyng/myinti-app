@@ -1,101 +1,351 @@
 @extends('layouts.main')
 
 @section('content')
-    <body>
-        <div class="container text-center">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h2 style="color: #000000;" class="text1">Tapau! Food</h2>
-                            <p style="color: #000000;" class="text2">Reserve meals for events or order food directly from campus dining options, all in one place.</p>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <img src="{{ asset('image/icons/tapau.gif') }}" class="coffee" alt="Banner Image 1">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-                                    <!-- <div class="carousel-item">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="carousel-caption d-none d-md-block">
-                                                    <h2>Event Proposal Approval</h2>
-                                                    <p>Easily submit and track the progress of event proposals on campus, ensuring a streamlined process for student organizations.</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 text-right">
-                                                <img src="banner-image-2.jpg" class="d-block w-50" alt="Banner Image 2">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="carousel-caption d-none d-md-block">
-                                                    <h2>Facility Reservation</h2>
-                                                    <p>Reserve spaces for events, meetings, or study sessions with just a few clicks.</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 text-right">
-                                                <img src="banner-image-3.jpg" class="d-block w-50" alt="Banner Image 3">
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                <!-- </div>                        
-                                <ol class="carousel-indicators">
-                                    <li data-target="#banner" data-slide-to="0" class="active"></li>
-                                    <li data-target="#banner" data-slide-to="1"></li>
-                                    <li data-target="#banner" data-slide-to="2"></li>
-                                    <li data-target="#banner" data-slide-to="3"></li>
-                                    <li data-target="#banner" data-slide-to="4"></li>
-                                </ol>
-                                
-
+<body>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <!-- slide images start -->
+            <div class="swiper-slide">
+                <div class="container text-center">
+                    <div class="card">
+                        <div class="circle"></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2 style="color: #000000;" class="order">ORDER</h2>
+                                    <h2 style="color: #000000;" class="now">NOW</h2>
+                                    <p style="color: #000000;" class="text2">Hate queuing?! Order food directly from campus dining options, all in one place.</p>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <img src="{{ asset('image/icons/noodles.png') }}" class="noodle" alt="Banner Image 1">
+                                    <img src="{{ asset('image/icons/queue.png') }}" class="queue" alt="Banner Image 2">
+                                </div>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="swiper-slide">
+                <div class="container text-center">
+                    <div class="card">
+                        <div class="circle2"></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2 style="color: #000000;" class="need">NEED</h2>
+                                    <h2 style="color: #000000;" class="approval">APPROVAL?</h2>
+                                    <p style="color: #000000;" class="text3">Got a new event? Need stamp approval from INTIMA quick and smooth process. Submit your documents through our service.</p>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <img src="{{ asset('image/icons/folder.png') }}" class="folder" alt="Banner Image 1">
+                                    <img src="{{ asset('image/icons/check.png') }}" class="check" alt="Banner Image 2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="container text-center">
+                    <div class="card">
+                        <div class="circle3"></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2 style="color: #000000;" class="free">FREE</h2>
+                                    <h2 style="color: #000000;" class="time">TIME?</h2>
+                                    <p style="color: #000000;" class="text4">Taking a break from class? Want to use the pool table but it being occupied? Use our service to book and pay for the facility before anyone.</p>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <img src="{{ asset('image/icons/basketball.png') }}" class="games" alt="Banner Image 1">
+                                    <img src="{{ asset('image/icons/dice.png') }}" class="dice" alt="Banner Image 2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
         </div>
+        <!-- Add pagination bullets -->
+        <div class="swiper-pagination" style="position:inherit"></div>
 
+        
 
-        <script>
-            var indicators = document.querySelectorAll('#banner .carousel-indicators li');
-            indicators.forEach(function(indicator, index) {
-                indicator.addEventListener('click', function() {
-                    var banner = document.getElementById('banner');
-                    var carousel = bootstrap.Carousel.getInstance(banner);
-                    carousel.to(index);
-                });
-            });
-        </script>
-    </body>
+    <!-- Initialize Swiper -->
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+    
+        },
+        autoplay: {
+            delay: 5000,
+        },
+        loop: true,
+    });
+    </script>
+</body>
 @endsection
 
 @section('styles')
 <style>
-    @import url('https://fonts.cdnfonts.com/css/maybe-coffee');
-    .text1 {
-        font-size: 60px;
-        font-weight: 700;
-        margin-top: 100px;
-        font-family: 'Maybe Coffee', sans-serif;
-        transform:rotate(-5deg);
+    @import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
+
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .swiper-wrapper{
+       
+    }
+
+
+    .card-body{
+        width: 1403px;
+        height: 383px;
+    }
+    .card{
+        position: relative;
+        clip-path: inset(0);
+    }
+    .circle {
+        width: 491px;
+        height: 491px;
+        background-color: #BEFFA0;
+        border-radius: 50%;
+        position: absolute;
+        left: 910px;
+        top: -190px;
+        z-index: 1;
+        }
+
+    .circle2{
+        width: 491px;
+        height: 491px;
+        background-color: #FFE870;
+        border-radius: 50%;
+        position: absolute;
+        left: 910px;
+        top: -190px;
+        z-index: 1;
+    }
+
+    .circle3{
+        width: 491px;
+        height: 491px;
+        background-color: #C2E2FF;
+        border-radius: 50%;
+        position: absolute;
+        left: 910px;
+        top: -190px;
+        z-index: 1;
+    }
+
+    .order {
+        position: absolute;
+        width: 203px;
+        height: 60px;
+        left: 243px;
+        top: 123px;
+
+        font-family: 'Unbounded','sans-serif';
+        font-weight: 400;
+        font-size: 48px;
+        line-height: 60px;
+        /* identical to box height */
+        display: flex;
+        align-items: center;
+    }
+
+    .now {
+        position: absolute;
+        width: 180px;
+        height: 60px;
+        left: 345px;
+        top: 193px;
+
+        font-family: 'Unbounded','sans-serif';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 48px;
+        line-height: 60px;
+        /* identical to box height */
+
+        display: flex;
+        align-items: center;
+        
     }
     .text2{
-        font-size: 15px;
+        font-size: 20px;
         margin-top: 50px;
         font-family: 'Anuphan', sans-serif;
         white-space: nowrap;
-    
+        position: absolute;
+        width: 705px;
+        height: 93px;
+        left: 60px;
+        top: 200px;
+        line-height: 31px;
+        display: flex;
+        align-items: center;
     }
 
-    .coffee {
+    .text3{
+        position: absolute;
+        width: 705px;
+        height: 62px;
+        left: 82px;
+        top: 260px;
+
+        font-family: 'Anuphan', sans-serif;
+        font-size: 20px;
+        line-height: 31px;
+        display: flex;
+        align-items: center;
+    }
+
+    .text4{
+        position: absolute;
+        width: 705px;
+        height: 62px;
+        left: 82px;
+        top: 280px;
+
+        font-family: 'Anuphan', sans-serif;
+        font-size: 20px;
+        line-height: 31px;
+        display: flex;
+        align-items: center;
+    }
+
+    .noodle {
+        position:relative;
+        width: 350px;
+        height:350px;
+        margin-top: -10px;
+        right:90px;
+        z-index: 2;
+    }
+
+    .queue{
+        position: absolute;
         width: 300px;
-        margin-top: -15px;
+        height: 300px;
+        left: 5px;
+        top: 35px;
+    }
+
+    .need{
+        position: absolute;
+        width: 162px;
+        height: 50px;
+        left: 243px;
+        top: 110px;
+
+        font-family: 'Unbounded','sans-serif';
+        font-weight: 400;
+        font-size: 48px;
+        line-height: 60px;
+        /* identical to box height */
+
+        display: flex;
+        align-items: center;
+    }
+
+    .approval{
+        position: absolute;
+        width: 343px;
+        height: 50px;
+        left: 318px;
+        top: 183px;
+
+        font-family: 'Unbounded','sans-serif';
+        font-weight: 400;
+        font-size: 48px;
+        line-height: 60px;
+        /* identical to box height */
+
+        display: flex;
+        align-items: center;
+    }
+
+    .folder{
+        position: absolute;
+        width: 350px;
+        height: 350px;
+        margin-top: -10px;
+        right:100px;
+        z-index: 2;
+
+    }
+
+    .check{
+        position: absolute;
+        width: 225px;
+        height: 204px;
+        left: 34px;
+        top: 61px;
+    }
+
+    .free{
+        position: absolute;
+        width: 148px;
+        height: 60px;
+        left: 300px;
+        top: 106px;
+
+        font-family: 'Unbounded','sans-serif';
+        font-weight: 400;
+        font-size: 48px;
+        line-height: 60px;
+        /* identical to box height */
+        display: flex;
+        align-items: center;
+    }
+
+    .time{
+        position: absolute;
+        width: 177px;
+        height: 60px;
+        left: 400px;
+        top: 178px;
+
+        font-family: 'Unbounded','sans-serif';
+        font-weight: 400;
+        font-size: 48px;
+        line-height: 60px;
+        /* identical to box height */
+        display: flex;
+        align-items: center;
+    }
+
+    .games{
+        position: absolute;
+        width: 582px;
+        height: 328px;
+        left: 750px;
+        top: 34px;
+        z-index: 2;
+
+    }
+
+    .dice{
+        position: absolute;
+        width: 256px;
+        height: 256px;
+        left: 25px;
+        top: 40.37px;
+        transform: rotate(-19.48deg);
     }
 
 </style>

@@ -22,10 +22,17 @@ class Session extends Model
     ];
 
     // Define a relationship with the User model
-    public function user()
+    
+    public function bookedByUser()
     {
         return $this->belongsTo(User::class, 'booked_by');
     }
+    
+    public function studentUser()
+    {
+        return $this->belongsTo(User::class, 'studentid', 'studentid');
+    }
+    
 
     
 }

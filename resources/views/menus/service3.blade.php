@@ -26,7 +26,7 @@
                             <select name="time" class="time-select">
                                 @foreach($grouped_sessions[$facility->f_id] as $session)
                                     <option value="{{ $session->time }}">{{ $session->time }}</option>
-                                    <option value="{{ $session->rooms}}">{{ $session->rooms }}</option>
+                                    <!-- <option value="{{ $session->rooms}}">{{ $session->rooms }}</option> -->
                                 @endforeach
                             </select>
                             <div class = "book-now">

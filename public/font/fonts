@@ -2,3 +2,8 @@
   font-family: 'Anuphan';
   src: url('/font/Anuphan-VariableFont_wght.ttf') format('truetypefont');
 }
+
+@font-face {
+  font-family: 'Unbounded';
+  src: url('/font/Unbounded-VariableFont_wght.ttf') format('truetypefont');
+}

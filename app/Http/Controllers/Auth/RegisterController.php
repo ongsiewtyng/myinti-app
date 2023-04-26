@@ -73,10 +73,14 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
 
+        $parts = explode('@', $request->email);
+        $studentid = $parts[0];
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($request->password),       
+            'studentid' => $studentid,
         ]);
 
         event(new Registered($user));
