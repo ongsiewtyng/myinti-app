@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 class EditProfileController extends Controller
 {
@@ -29,22 +30,18 @@ class EditProfileController extends Controller
         $user = User::find($id);
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->password = $request->input('password');
-        $user->password = $request->input('password_confirmation');
+        $user->password = Hash::make($request->input('password'));
+        $user->password = Hash::make($request->input('password_confirmation'));
 
         if($request->hasFile('pic')){
-            $destination = 'uploads/users/'.$user->pic;
-            if(File::exists($destination)){
-                File::delete($destination);
-            }
-            $file = $request->file('pic');
-            $extension = $file->getClientOriginalExtension();
-            $filename = user->id. '.' . $extension;
-            $file->move(public_path('uploads/users'),$filename);
-            $user->pic = $filename;
+            $request->validate(['pic' => 'image|mimes:jpg,png,jpeg|max:1000']);
+            $file = $request->pic;
+            $fileName = time() . uniqid() . '.' . $file->extension();
+                $storeFile = $file->move(public_path('uploads/users'), $fileName);
+                $user->pic = $fileName;
         }
 
-        $user->update();
+        $user->save();
         return redirect()->back()->with('success', 'Your profile has been updated.');
 
     }

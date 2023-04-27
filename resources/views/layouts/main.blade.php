@@ -25,6 +25,7 @@
             font-family: 'Kopi Senja Sans', sans-serif;
             font-size:50px;
         }
+
         .navbar-nav.me-auto {
             margin-left: 20px;
         }
@@ -42,13 +43,15 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}" style="font-size:30px;">
+                <a class="navbar-brand" href="{{ url('/') }}" style="font-size:30px; color:#FF4141; ">
                     MyINTI
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -95,7 +98,8 @@
                             @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <img src="{{ asset('uploads/users/'.(Auth::user()->pic ?? 'pic.png')) }}" style="width: 30px; height: 30px; border-radius: 50%;">
+                                <img src="{{ asset('uploads/users/'.(Auth::user()->pic ?? 'pic.png')) }}" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+                                {{ Auth::user()->name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}"

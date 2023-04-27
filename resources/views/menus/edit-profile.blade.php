@@ -13,32 +13,36 @@
             
             <h2>Edit Profile</h2>
             <div class="inputbox">
-                <input type="text" name="name" id="name" value="{{ $user->name }}" required autocomplete="name">
+                <input type="text" name="name" id="name" value="{{ $user->name }}"  autocomplete="name">
                 <label for="name">{{ __('Name') }}</label>
                 <ion-icon name="person-outline"></ion-icon>
             </div>
 
             <div class="inputbox">
-                <input type="email" name="email" id="email" value="{{ $user->email }}" required autocomplete="email">
-                <label for="email">{{ __('Email Address') }}</label>
+                <input type="email" name="email" id="email" value="{{ $user->email }}" readonly>
+                <label for="email" style="top:0%" >{{ __('Email Address') }}</label>
                 <ion-icon name="mail-outline"></ion-icon>
             </div>
 
             <div class="inputbox">
-                <input type="password" name="password" id="password" required autocomplete="new-password">
+                <input type="password" name="password" id="password" autocomplete="new-password">
                 <label for="password">{{ __('New Password') }}</label>
                 <ion-icon name="eye-outline" onclick="togglePasswordVisibility()"></ion-icon>
             </div>
 
             <div class="inputbox">
-                <input type="password" name="password_confirmation" id="password_confirmation" required autocomplete="new-password">
+                <input type="password" name="password_confirmation" id="password_confirmation" autocomplete="new-password">
                 <label for="password_confirmation">{{ __('Confirm New Password') }}</label>
                 <ion-icon class="confirm" name="eye-outline" onclick="toggleConfirmPasswordVisibility()" id="password-toggle"></ion-icon>
             </div>
-        
+            
             <div class="avatar">
                 <input id="pic" type="file" class="form-control" name = "pic">
-                <img src="{{ asset('myinti/users/' . ($user->pic ? $user->pic : 'pic.png')) }}" style="width: 100px; height: 100px; border-radius: 50%;">
+                @if(Auth::user()->pic)
+                <img src="{{ asset('uploads/users/'. Auth::user()->pic) }}" style="width: 100px; height: 100px; border-radius: 50%;">
+                @else
+                <img src="{{ asset('uploads/users/pic.png')}}" style="width: 100px; height: 100px; border-radius: 50%;">
+                @endif
             </div>
 
             <button type="submit" style="margin-top: 20px;">{{ __('Save Changes') }}</button>

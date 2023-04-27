@@ -10,6 +10,7 @@
                     <div class="card">
                         <div class="circle"></div>
                         <div class="card-body">
+                        <a href="/service2">
                             <div class="row">
                                 <div class="col-md-6">
                                     <h2 style="color: #000000;" class="order">ORDER</h2>
@@ -19,7 +20,7 @@
                                 <div class="col-md-6 text-right">
                                     <img src="{{ asset('image/icons/noodles.png') }}" class="noodle" alt="Banner Image 1">
                                     <img src="{{ asset('image/icons/queue.png') }}" class="queue" alt="Banner Image 2">
-                                </div>
+                                </div></a>
                             </div>
                         </div>
                     </div>
@@ -30,6 +31,7 @@
                     <div class="card">
                         <div class="circle2"></div>
                         <div class="card-body">
+                        <a href="/service1">
                             <div class="row">
                                 <div class="col-md-6">
                                     <h2 style="color: #000000;" class="need">NEED</h2>
@@ -39,7 +41,7 @@
                                 <div class="col-md-6 text-right">
                                     <img src="{{ asset('image/icons/folder.png') }}" class="folder" alt="Banner Image 1">
                                     <img src="{{ asset('image/icons/check.png') }}" class="check" alt="Banner Image 2">
-                                </div>
+                                </div></a>
                             </div>
                         </div>
                     </div>
@@ -50,6 +52,7 @@
                     <div class="card">
                         <div class="circle3"></div>
                         <div class="card-body">
+                        <a href="/service3">
                             <div class="row">
                                 <div class="col-md-6">
                                     <h2 style="color: #000000;" class="free">FREE</h2>
@@ -59,7 +62,7 @@
                                 <div class="col-md-6 text-right">
                                     <img src="{{ asset('image/icons/basketball.png') }}" class="games" alt="Banner Image 1">
                                     <img src="{{ asset('image/icons/dice.png') }}" class="dice" alt="Banner Image 2">
-                                </div>
+                                </div></a>
                             </div>
                         </div>
                     </div>
@@ -68,23 +71,24 @@
         </div>
         <!-- Add pagination bullets -->
         <div class="swiper-pagination" style="position:inherit"></div>
+            
 
+        <!-- Initialize Swiper -->
+        <script>
+        var swiper = new Swiper('.swiper-container', {
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
         
+            },
+            autoplay: {
+                delay: 4500,
+            },
+            loop: true,
+        });
 
-    <!-- Initialize Swiper -->
-    <script>
-    var swiper = new Swiper('.swiper-container', {
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-    
-        },
-        autoplay: {
-            delay: 5000,
-        },
-        loop: true,
-    });
-    </script>
+        </script>
+    </div>
 </body>
 @endsection
 
@@ -104,11 +108,6 @@
         justify-content: center;
         align-items: center;
     }
-
-    .swiper-wrapper{
-       
-    }
-
 
     .card-body{
         width: 1403px;
@@ -233,7 +232,7 @@
         width: 350px;
         height:350px;
         margin-top: -10px;
-        right:90px;
+        left:600px;
         z-index: 2;
     }
 

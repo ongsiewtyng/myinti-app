@@ -1,7 +1,6 @@
 @extends('layouts.main')
 
 @section('content')
-
 <body>
     <div class="header">
         <h1>Host Your Dream Event on Campus</h1>
@@ -18,36 +17,54 @@
         <img src = "{{ asset('image/pic2.png') }}">
     </div>
     <div class="form">
-    <form action="/submit-proposal" method="post">
-      @csrf <!-- add CSRF token for security -->
-      <div class="form-group">
-        <label for="club-name">Club Name:</label>
-        <input type="text" class="form-control" id="club-name" name="club_name" required>
-      </div>
-      <div class="form-group">
-        <label for="event-title">Event Title:</label>
-        <input type="text" class="form-control" id="event-title" name="event_title" required>
-      </div>
-      <div class="form-group">
-        <label for="date-time">Date and Time:</label>
-        <input type="datetime-local" class="form-control" id="date-time" name="date_time" required>
-      </div>
-      <div class="form-group">
-        <label for="urgency">How urgent do you need this event to be approved?</label>
-        <select class="form-control" id="urgency" name="urgency" required>
-          <option value="">Select urgency</option>
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
-      </div>
-      <div class="form-group">
+        <form action="/submit-proposal" method="post">
+        @csrf <!-- add CSRF token for security -->
+        <div class="form-group">
+            <label for="club-name">Club Name:</label>
+            <input type="text" class="form-control" id="club-name" name="club_name" required>
+        </div>
+        <div class="form-group">
+            <label for="event-title">Event Title:</label>
+            <input type="text" class="form-control" id="event-title" name="event_title" required>
+        </div>
+        <div class="form-group">
+            <label for="date-time">Date and Time:</label>
+            <input type="datetime-local" class="form-control" id="date-time" name="date_time" required>
+        </div>
+        <div class="form-group">
+            <label for="urgency">How urgent do you need this event to be approved?</label>
+            <select class="form-control" id="urgency" name="urgency" required>
+            <option value="">Select urgency</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+            </select>
+        </div>
+        <div class="form-group">
         <label for="document">Attach Document:</label>
-        <input type="file" class="form-control-file" id="document" name="document" required>
-      </div>
-      <button type="submit" class="btn btn-primary" style = "background: #5E5BFF">Submit Proposal</button>
-    </form>
-  </div>
+        <label class="document-container" for="document">
+            <ion-icon name="document-outline" id="logo" alt="Attach Document" style="cursor:pointer;"></ion-icon>
+            <span id="document-label">Select files</span>
+            <input type="file" class="form-control" id="document" name="document" style="display: none;" multiple required>
+        </label>
+        </div>
+        <button type="submit" class="btn btn-primary" style = "background: #5E5BFF">Submit Proposal</button>
+        </form>
+    </div>
+    <script>
+    const input = document.getElementById('document');
+    const label = document.getElementById('document-label');
+    input.addEventListener('change', () => {
+        if (input.value) {
+            label.textContent = input.value.split('\\').pop();
+        } else {
+            label.textContent = 'Attach Document';
+        }
+    });
+
+    
+    </script>
+
 </body>
 @endsection
 
@@ -164,20 +181,53 @@
         bottom: 20%;
     }
 
-        @keyframes scale {
-        0% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(0.6);
-        }
-        100% {
-            transform: scale(1);
-        }
-        }
+    @keyframes scale {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.6);
+    }
+    100% {
+        transform: scale(1);
+    }
+    }
 
-        .img1, .img2 {
-        animation: scale 3s infinite;
-        }
+    .img1, .img2 {
+    animation: scale 3s infinite;
+    }
+
+    #logo {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        left: 20px;
+        top: 381px;
+    }
+
+    .document-container {
+        background-color: #f8fafc;
+        display: block;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        padding: 7px;
+        height:38px;
+    }
+    
+    .document-icon {
+        cursor: pointer;
+    }
+    
+    .document-input {
+        display: none;
+    }
+
+    #document-label {
+        margin-left: 32px;
+        margin-bottom: 50px;
+        
+    }
+
+    
 
 </style>
