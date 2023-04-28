@@ -29,7 +29,13 @@ class EditProfileController extends Controller
     public function update(Request $request,$id){
         $user = User::find($id);
         $user->name = $request->input('name');
-        $user->email = $request->input('email');
+        if(empty($request->input('password')) || empty($request->input('password_confirmation'))) {
+            $user->password = $user->password;
+        } else {
+            $user->password = Hash::make($request->input('password'));
+            $user->password = Hash::make($request->input('password_confirmation'));
+        }
+        
         $user->password = Hash::make($request->input('password'));
         $user->password = Hash::make($request->input('password_confirmation'));
 
