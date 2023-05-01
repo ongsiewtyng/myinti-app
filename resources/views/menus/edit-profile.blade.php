@@ -4,7 +4,18 @@
 
 <title>@yield('title', 'Edit Profile')</title>
 
-<body?>
+<body>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('message'))
+        <div class="alert alert-info">
+            {{ session('message') }}
+        </div>
+    @endif
     <section>
     <div class="form-box">
         <form method="POST" action="{{ url('update/'.$user->id) }}" enctype="multipart/form-data">
@@ -36,13 +47,24 @@
                 <ion-icon class="confirm" name="eye-outline" onclick="toggleConfirmPasswordVisibility()" id="password-toggle"></ion-icon>
             </div>
             
-            <div class="avatar">
-                <input id="pic" type="file" class="form-control" name = "pic">
-                @if(Auth::user()->pic)
-                <img src="{{ asset('uploads/users/'. Auth::user()->pic) }}" style="width: 100px; height: 100px; border-radius: 50%;">
-                @else
-                <img src="{{ asset('uploads/users/pic.png')}}" style="width: 100px; height: 100px; border-radius: 50%;">
-                @endif
+            <div class="avatar-container">
+                <div class="avatar">
+                    <input id="pic" type="file" class="form-control" name = "pic" style="display: none;">
+                    <div class="circle">
+                        <label class="avatar-label" for="pic">
+                            <ion-icon name="create-outline" style="cursor:pointer;"></ion-icon>
+                        </label>
+                        @if(Auth::user()->pic)
+                        <img id="preview" src="{{ asset('uploads/users/'. Auth::user()->pic) }}" style="width: 200px; height: 200px; border-radius: 50%;">
+                        @else
+                        <img id="preview" src="{{ asset('pic.png')}}" style="width: 200px; height: 200px; border-radius: 50%;">
+                        @endif
+                    </div>
+                </div>
+                <div class="joined">
+                    <p style="font-weight: bold;">Joined</p>
+                    <p>{{ Auth::user()->created_at->format('d/m/Y') }}</p>
+                </div>
             </div>
 
             <button type="submit" style="margin-top: 20px;">{{ __('Save Changes') }}</button>
@@ -75,6 +97,27 @@
                 confirmEyeOffIcon.setAttribute("name", "eye-outline");
             }
         }
+
+        function previewFile(input) {
+            var preview = document.querySelector('#preview');
+            var file    = input.files[0];
+            var reader  = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "";
+            }
+        }
+
+        var picInput = document.querySelector('#pic');
+        picInput.addEventListener('change', function() {
+            previewFile(this);
+        });
 
     </script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -160,29 +203,6 @@
         transform: translateY(-50%);
     }
 
-    .profile{
-        margin: 70px 0 15px ;
-        height: 20px;
-        font-size: .9em;
-        color:#000000;
-        display: flex; 
-    }
-
-    .profile label{
-        display: flex;
-        justify-content: space-between; 
-        align-items: center;
-        width: 100%;
-    }
-
-    .profile label input{
-        margin-right: 2px;
-    }
-
-    .profile label a:hover{
-        text-decoration: underline;
-    }
-
     button{
         width: 100%;
         height: 40px;
@@ -205,7 +225,7 @@
 
     .avatar {
         position: absolute;
-        left: 20%;
+        left: 50%;
         transform: translateX(-50%);
         top: 50%;
         margin-top: -200px; /* adjust the margin as necessary */
@@ -215,13 +235,65 @@
         align-items: center;
     }
 
-
     .avatar img {
-        width: 100px;
-        height: 100px;
         object-fit: cover;
-        border-radius: 50%;
         margin-bottom: 20px;
+    }
+
+    .avatar-container{
+        box-sizing: border-box;
+
+        position: absolute;
+        width: 300px;
+        height: 500px;
+        left: 251px;
+        top: 160px;
+
+        border: 1px solid #000000;
+        border-radius: 20px;
+
+    }
+
+    .avatar-label {
+        position: absolute;
+        display: none;
+        left: 30px;
+        top: 35px;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        
+    }
+
+    .avatar:hover .avatar-label {
+        display: block;
+        
+    }
+    
+    .avatar-label ion-icon {
+        position: absolute;
+        width: 70px;
+        height: 80px;
+        left: 40px;
+        top: 20px;
+        
+        
+    }
+
+    .circle:hover{
+        width: 200px; 
+        height: 200px; 
+        background:#CECECE;
+        border-radius: 50%;
+        opacity:50%;
+
+    }
+
+    .joined{
+        position: absolute;
+        left: 105px;
+        top: 290px;
+        text-align:center;
+        font-family:'Anuphan','sans-serif';
     }
 
     .error-message{
@@ -234,5 +306,13 @@
         color: green;
         font-size: 0.8
     }
+
+    .alert {
+        width: 236px;
+        height: 58px;
+        left: 750px;
+        top: 11px;
+    }
+
 </style>
 

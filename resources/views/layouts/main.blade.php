@@ -98,7 +98,11 @@
                             @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <img src="{{ asset('uploads/users/'.(Auth::user()->pic ?? 'pic.png')) }}" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+                                @if(Auth::user()->pic)
+                                <img src="{{ asset('uploads/users/'. Auth::user()->pic) }}" style="width: 50px; height: 50px; border-radius: 50%;">
+                                @else
+                                <img src="{{ asset('pic.png')}}" style="width: 50px; height: 50px; border-radius: 50%;">
+                                @endif
                                 {{ Auth::user()->name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
