@@ -46,9 +46,6 @@
     min-height: 50vh;
     width: 100%;
     
-    background: url('background6.jpg')no-repeat;
-    background-position: center;
-    background-size: cover;
     }
     .form-box{
     position: relative;
@@ -62,18 +59,7 @@
     justify-content: center;
     align-items: center;
     }
-    .form-box{
-    position: relative;
-    width: 400px;
-    height: 300px;
-    background: #B3D6C6;
-    border: 2px solid rgba(255,255,255,0.5);
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    }
+    
     h2{
         height:50px;
         font-size: 2em;

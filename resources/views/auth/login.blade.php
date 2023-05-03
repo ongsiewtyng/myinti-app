@@ -2,6 +2,16 @@
 
 @section('content')
 <body style="overflow: hidden;">
+    @if ($errors->has('login') || $errors->has('password'))
+        <div class="alert alert-danger" role="alert">
+            @if($errors->has('login'))
+                {{ $errors->first('login') }}
+            @endif
+            @if($errors->has('password'))
+                {{ $errors->first('password') }}
+            @endif
+        </div>
+    @endif
     <section>
         <div class="form-box">
             <div class="form-value">
@@ -35,7 +45,11 @@
                     </div>
                     <button type="submit">Log in</button>
                     <div class="fpass">
+                    @if(auth()->check())
+                        <a href="{{ route('password.request', ['email' => auth()->user()->email]) }}">Forget Password</a>
+                    @else
                         <a href="{{ route('password.request') }}">Forget Password</a>
+                    @endif
                     </div>
                     <div class="register">
                         <p>New Student? <a href="{{ route('register') }}">Register</a></p>
@@ -215,6 +229,14 @@
         transform: translateX(-50%);
 
     }
+
+    .alert {
+        width: 330px;
+        height: 58px;
+        left: 710px;
+        top: 50px;
+    }
+
     
 </style>
                 

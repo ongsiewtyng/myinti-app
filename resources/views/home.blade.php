@@ -2,6 +2,11 @@
 
 @section('content')
 <body>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <!-- slide images start -->
