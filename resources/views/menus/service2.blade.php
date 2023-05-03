@@ -105,7 +105,7 @@
             <h2>Chicken Chop </h2>
 			<p>A dish consisting of a seasoned and breaded chicken breast that has been pan-fried or grilled until crispy, 
                 and served with a variety of side dishes like fries or potato wedges.</p>
-            <p>Price : RM 0</p>
+            <p>Price : RM 000 8888</p>
         </article>
 
 </main>
