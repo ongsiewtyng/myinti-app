@@ -99,7 +99,8 @@ class LoginController extends Controller
             return redirect()->intended('/home');
         } else {
             return back()->withErrors([
-                'login' => 'The provided credentials do not match our records.',
+                'login' => 'Please re-enter your username or email correctly.',
+                'password'=>'The password you entered does not match',
             ])->withInput();
         }
 
