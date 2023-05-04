@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('sessions', function (Blueprint $table) {
             $table->id();
-            $table->f_id();
-            $table->studentid();
-            $table->rooms();
-            $table->time();
-            $table->booked();
+            $table->string('f_id');
+            $table->string('studentid');
+            $table->string('rooms');
+            $table->string('time');
+            $table->string('booked');
             $table->timestamps();
         });
     }
