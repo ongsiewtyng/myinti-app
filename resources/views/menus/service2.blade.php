@@ -52,7 +52,7 @@
 
 <body>
 	<header>
-		<h1>Food Canteen</h1>
+		<h1>Food Canteennn</h1>
 		<p>Delicious food at affordable prices</p>
 	</header>
 
