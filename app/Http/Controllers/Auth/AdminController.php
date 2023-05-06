@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -54,8 +55,42 @@ class AdminController extends Controller
 
     public function home()
     {
-        return view('admin.dashboard');
+        $totalStudents = $this->getTotalStudents();
+
+        // Retrieve the users' data
+        $users = User::all();
+
+        return view('admin.dashboard', ['totalStudents' => $totalStudents],['users' => $users]);
     }
+
+    public function food(){
+
+        return view('admin.food');
+    }
+
+    public function approval(){
+
+        return view('admin.approval');
+    }
+
+    public function booking(){
+
+        return view('admin.booking');
+    }
+
+    public function message(){
+
+        return view('admin.message');
+    }
+
+    public function getTotalStudents()
+    {
+        $totalStudents = User::whereNotNull('created_at')->count();
+
+        return $totalStudents;
+    }
+
+    
 
     /**
      * Get the validation rules that apply to the request.
