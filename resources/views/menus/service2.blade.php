@@ -2,8 +2,6 @@
 
 @section('content')
 
-<title>@yield('title', 'Tapau! Food')</title>
-
 <head>
 	<title>Food Canteen</title>
 	<meta charset="UTF-8">
@@ -139,41 +137,37 @@
 	<main>
 
 		<article>
-			<!--  <img src="https://via.placeholder.com/300x200.png?text=Food+Item+1" alt="Food Item ">   -->
-            <!--  <img src = {{ asset('sandwich/.jpg')}}>  -->
-            <img src = "{{ asset('cafeMenu/sandwich.jpg') }}" alt="Facility Icon">
-
-
+            <img src = "{{ asset('cafeMenu/sandwich.png') }}" alt="Sandwich" class= "Sandwich">
 			<h2>Sandwiches</h2>
 		</article>
 
 		<article>
-			
+            <img src = "{{ asset('cafeMenu/burger.jpg') }}" alt="Burgers" class= "Burgers">
 			<h2>Burgers</h2>
 		</article>
 
 		<article>
-			
+            <img src = "{{ asset('cafeMenu/sandwich.png') }}" alt="Wraps" class= "Wraps">
             <h2>Wraps</h2>
         </article>
 
         <article>
-
+            <img src = "{{ asset('cafeMenu/sandwich.png') }}" alt="Snacks" class= "Snacks">
             <h2>Snacks</h2>
         </article>
 
         <article>
-
+            <img src = "{{ asset('cafeMenu/sandwich.png') }}" alt="Western" class= "Western">
             <h2>Western Food</h2>
         </article>
 
         <article>
-
+            <img src = "{{ asset('cafeMenu/sandwich.png') }}" alt="Rice" class= "Rice">
             <h2>Fried Rice</h2>
         </article>
 
         <article>
-            
+            <img src = "{{ asset('cafeMenu/sandwich.png') }}" alt="Noodles" class= "Noodles">
             <h2>Noodles</h2>
         </article>
 
