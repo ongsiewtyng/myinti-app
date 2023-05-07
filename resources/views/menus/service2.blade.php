@@ -50,13 +50,80 @@
 	</style>
 </head>
 
+<!-- 1 // HOME SECTION -->
+<body>
+        <header>
+            <h1>INTI Cafeteria</h1>
+            <p>Delicious food at affordable prices</p>
+        </header>
+    
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Menu</a>
+            <a href="#">Contact</a>
+        </nav>
+        <main>
+
+            <section>
+                <h2>About Us</h2>
+                <p>We are Inti Canteen that provides a wide range of delicious and affordable meals for our customers. Our menu consists of a variety of local and international dishes, prepared by our experienced chefs.</p>
+            </section>
+    
+            <section>
+                <h2>Menu</h2>
+                <p>Check out our menu and order online:</p>
+                <ul>
+                    <li><a href="#">Sandwiches</a></li>
+                    <li><a href="#">Burgers</a></li>
+                    <li><a href="#">Wraps</a></li>
+                    <li><a href="#">Snakcs</a></li>
+                    <li><a href="#">Western Food</a></li>
+                    <li><a href="#">Fried Rice</a></li>
+                    <li><a href="#">Noodles</a></li>
+                </ul>
+            </section>
+    
+            <section>
+                <h2>Order Online</h2>
+                <p>Place your order online :</p>
+                <form>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name"><br><br>
+    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email"><br><br>
+    
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone"><br><br>
+    
+                    <input type="submit" value="ENTER">
+                </form>
+            </section>
+    
+            <section>
+                <h2>Contact Us</h2>
+                <p>Get in touch with us:</p>
+                <ul>
+                    <li>Address: 1-Z, Lebuh Bukit Jambul, Bukit Jambul, 11900 Bayan Lepas, Pulau Pinang</li>
+                    <li>Level : 2nd Floor</li>
+                    <li>Phone: 017-7562177</li>
+                    <li>Email: inticafeteria@penang.com</li>
+                </ul>
+            </section>
+    
+
+    
+        </main>
+</body>
+
+<!--2 // MENU SECTION -->
 <body>
 	<header>
 		<h1>Food Canteennn</h1>
 		<p>Delicious food at affordable prices</p>
 	</header>
 
-	<main>
+<main>
 
 		<article>
 			<img src="https://via.placeholder.com/300x200.png?text=Food+Item+1" alt="Food Item 1">
@@ -107,6 +174,60 @@
                 and served with a variety of side dishes like fries or potato wedges.</p>
             <p>Price : RM 14</p>
         </article>
+  </main>
 
-</main>
+</body>
+
+
+<!-- 3 // CONTACT SECTION -->
+    <body>
+        <header>
+            <h1>INTI Cafeteria</h1>
+            <p>Delicious food at affordable prices</p>
+        </header>
+    
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Menu</a>
+            <a href="#">Contact</a>
+        </nav>
+
+        <main>
+    
+            <section>
+
+                <h2>Get in Touch</h2> 
+
+                <form action="#" method="post">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required> <br><br>
+    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required> <br><br>
+    
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone"> <br><br>
+    
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="10" required></textarea>  <br><br>
+    
+                    <input type="submit" value="SEND">
+                </form>
+            </section>
+    
+            <section>
+                <h2>Visit Us</h2>
+                <p>Our cafeteria is located at :</p>
+                <address>
+                    1-Z, Lebuh Bukit Jambul, Bukit Jambul,<br>
+                     11900 Bayan Lepas, <br>
+                     Pulau Pinang<br> <br>
+
+                    Phone: 017-7562177
+                </address>
+            </section>
+
+    
+        </main>
+    </body>
 @endsection
