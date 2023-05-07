@@ -6,6 +6,81 @@
 	<title>Food Canteen</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		header {
+			background-color: #00c763;
+			color: white;
+			padding: 25px;
+			text-align: center;
+			font-size: 44px;
+		}
+		nav {
+			background-color: #000000;
+			color: white;
+			overflow: hidden;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+		}
+		nav a {
+			color: rgb(255, 255, 255);
+			text-decoration: none;
+			padding: 14px 16px;
+			text-align: center;
+			font-size: 18px;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+		nav a:hover {
+			background-color: #00ff26;
+		}
+        
+		main {
+			margin: 40px;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+			align-items: flex-start;
+		}
+		article {
+			width: 300px;
+			margin-bottom: 60px;
+			border: 1px solid #de3434;
+			border-radius: 20px;
+			overflow: hidden;
+			box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+		}
+		article img {
+			width: 100%;
+			height: 200px;
+			object-fit: cover;
+		}
+		article h2 {
+			margin: 10px;
+			font-size: 27px;
+		}
+		article p {
+			margin: 10px;
+			font-size: 16px;
+			line-height: 1.5;
+			text-align: justify;
+		}
+		footer {
+			background-color: #00ff37;
+			color: white;
+			padding: 100px;
+			text-align: center;
+		}
+
+	</style>
+
+    <!--
 	<style>
 		
 		main {
@@ -45,7 +120,8 @@
 			text-align: center;
 		}
 
-	</style>
+	</style> -->
+
 </head>
 
 <!-- 1 // HOME SECTION -->
@@ -137,38 +213,43 @@
 	<main>
 
 		<article>
-            <img src = "{{ asset('cafeMenu/sandwich.png') }}" alt="Sandwich" class= "Sandwich">
+            <img src = "{{ asset('cafeMenu/sandwich.jpg') }}" alt="Sandwich" class= "Sandwich">
 			<h2>Sandwiches</h2>
 		</article>
 
 		<article>
-            <img src = "{{ asset('cafeMenu/burger.jpg') }}" alt="Burgers" class= "Burgers">
+            <img src = "{{ asset('cafeMenu/burgers.jpg') }}" alt="Burgers" class= "Burgers">
 			<h2>Burgers</h2>
 		</article>
 
 		<article>
-            <img src = "{{ asset('cafeMenu/sandwich.png') }}" alt="Wraps" class= "Wraps">
+            <img src = "{{ asset('cafeMenu/wraps.jpg') }}" alt="Wraps" class= "Wraps">
             <h2>Wraps</h2>
         </article>
 
         <article>
-            <img src = "{{ asset('cafeMenu/sandwich.png') }}" alt="Snacks" class= "Snacks">
+            <img src = "{{ asset('cafeMenu/snacks.png') }}" alt="Snacks" class= "Snacks">
             <h2>Snacks</h2>
         </article>
 
         <article>
-            <img src = "{{ asset('cafeMenu/sandwich.png') }}" alt="Western" class= "Western">
+            <img src = "{{ asset('cafeMenu/western food.jpg') }}" alt="Western" class= "Western">
             <h2>Western Food</h2>
         </article>
 
         <article>
-            <img src = "{{ asset('cafeMenu/sandwich.png') }}" alt="Rice" class= "Rice">
+            <img src = "{{ asset('cafeMenu/fried rice.jpg') }}" alt="Rice" class= "Rice">
             <h2>Fried Rice</h2>
         </article>
 
         <article>
-            <img src = "{{ asset('cafeMenu/sandwich.png') }}" alt="Noodles" class= "Noodles">
+            <img src = "{{ asset('cafeMenu/noodles.jpg') }}" alt="Noodles" class= "Noodles">
             <h2>Noodles</h2>
+        </article>
+
+        <article>
+            <img src = "{{ asset('cafeMenu/drinks.png') }}" alt="Noodles" class= "Noodles">
+            <h2>Drinks</h2>
         </article>
 
 	</main>
