@@ -51,6 +51,9 @@
 </head>
 
 <!-- 1 // HOME SECTION -->
+
+<!-- To include the header -->
+<link rel="import" href="home.html">
 <body>
         <header>
             <h1>INTI Cafeteria</h1>
@@ -117,6 +120,9 @@
 </body>
 
 <!--2 // MENU SECTION -->
+
+<!-- To include the header -->
+<link rel="import" href="menu.html">
 <body>
 	<header>
 		<h1>Food Canteennn</h1>
@@ -180,6 +186,10 @@
 
 
 <!-- 3 // CONTACT SECTION -->
+
+<!-- To include the header -->
+<link rel="import" href="contact.html">
+
     <body>
         <header>
             <h1>INTI Cafeteria</h1>
