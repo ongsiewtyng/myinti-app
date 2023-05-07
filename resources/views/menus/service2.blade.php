@@ -65,6 +65,7 @@
             <a href="#">Menu</a>
             <a href="#">Contact</a>
         </nav>
+
         <main>
 
             <section>
@@ -128,6 +129,13 @@
 		<h1>Food Canteennn</h1>
 		<p>Delicious food at affordable prices</p>
 	</header>
+
+    <nav>
+            <a href="#">Home</a>
+            <a href="#">Menu</a>
+            <a href="#">Contact</a>
+    </nav>
+        
 
 <main>
 
