@@ -24,7 +24,11 @@ Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, '
 Route::post('/authenticate', [App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('authenticate');
 Route::post('/reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class,'reset'])->name('password.update');
 Route::get('/admin', [App\Http\Controllers\Auth\AdminController::class, 'index'])->name('admin');
-Route::post('/dashboard', [App\Http\Controllers\Auth\AdminController::class, 'home'])->name('dashboard');
+Route::match(['get', 'post'], '/dashboard', [App\Http\Controllers\Auth\AdminController::class, 'home'])->name('dashboard');
+Route::get('/food', [App\Http\Controllers\Auth\AdminController::class, 'food'])->name('food');
+Route::get('/approval', [App\Http\Controllers\Auth\AdminController::class, 'approval'])->name('approval');
+Route::get('/booking', [App\Http\Controllers\Auth\AdminController::class, 'booking'])->name('booking');
+Route::get('/message', [App\Http\Controllers\Auth\AdminController::class, 'message'])->name('message');
 Route::get('/profile/edit/{id}', [App\Http\Controllers\EditProfileController::class, 'edit'])->name('menus.edit-profile');
 Route::put('update/{id}',[App\Http\Controllers\EditProfileController::class,'update'])->name('update');
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');

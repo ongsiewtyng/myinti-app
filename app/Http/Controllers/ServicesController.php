@@ -5,11 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Session; // Import your Session model
 use App\Models\Facility; // Import your Facility model
+use App\Models\User; // Import your User model
 
 class ServicesController extends Controller
 {
     public function service1(){
-        return view('menus.service1');
+        // Retrieve the users' data
+        $users = User::all();
+
+        // Get the first user (assuming you want to autofill with the first user's data)
+        $user = $users->first();
+
+        return view('menus.service1', [
+            'user' => $user, // Pass the first user to the view
+            'users' => $users
+        ]);
     }
 
     public function service2(){

@@ -18,51 +18,107 @@
     </div>
     <div class="form">
         <form action="/submit-proposal" method="post">
-        @csrf <!-- add CSRF token for security -->
-        <div class="form-group">
-            <label for="club-name">Club Name:</label>
-            <input type="text" class="form-control" id="club-name" name="club_name" required>
-        </div>
-        <div class="form-group">
-            <label for="event-title">Event Title:</label>
-            <input type="text" class="form-control" id="event-title" name="event_title" required>
-        </div>
-        <div class="form-group">
-            <label for="date-time">Date and Time:</label>
-            <input type="datetime-local" class="form-control" id="date-time" name="date_time" required>
-        </div>
-        <div class="form-group">
-            <label for="urgency">How urgent do you need this event to be approved?</label>
-            <select class="form-control" id="urgency" name="urgency" required>
-            <option value="">Select urgency</option>
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-            </select>
-        </div>
-        <div class="form-group">
-        <label for="document">Attach Document:</label>
-        <label class="document-container" for="document">
-            <ion-icon name="document-outline" id="logo" alt="Attach Document" style="cursor:pointer;"></ion-icon>
-            <span id="document-label">Select files</span>
-            <input type="file" class="form-control" id="document" name="document" style="display: none;" multiple required>
-        </label>
-        </div>
-        <button type="submit" class="btn btn-primary" style = "background: #5E5BFF">Submit Proposal</button>
+            @csrf <!-- add CSRF token for security -->
+            <div id="hidden-form" style="display: none;">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="hidden" class="form-control" id="name" name="name" value="{{ $user->name }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="student-id">Student ID:</label>
+                    <input type="hidden" class="form-control" id="student-id" name="student_id" value="{{ $user->studentid }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="club-name">Club Name:</label>
+                <input type="text" class="form-control" id="club-name" name="club_name" required>
+            </div>
+            <div class="form-group">
+                <label for="event-title">Event Title:</label>
+                <input type="text" class="form-control" id="event-title" name="event_title" required>
+            </div>
+            <div class="form-group">
+                <label for="date-time">Date and Time:</label>
+                <input type="datetime-local" class="form-control" id="date-time" name="date_time" required>
+            </div>
+            <div class="form-group">
+                <label for="urgency">How urgent do you need this event to be approved?</label>
+                <select class="form-control" id="urgency" name="urgency" required>
+                <option value="">Select urgency</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="document">Attach Document:</label>
+                <label class="document-container" for="document">
+                    <ion-icon name="document-outline" id="logo" alt="Attach Document" style="cursor:pointer;"></ion-icon>
+                    <span id="document-label">Select files</span>
+                    <input type="file" class="form-control" id="document" name="document[]" style="display: none;" multiple required>
+                </label>
+                <div id="file-preview"></div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit-button" style = "background: #5E5BFF">Submit Proposal</button>
         </form>
     </div>
     <script>
-    const input = document.getElementById('document');
-    const label = document.getElementById('document-label');
-    input.addEventListener('change', () => {
-        if (input.value) {
-            label.textContent = input.value.split('\\').pop();
-        } else {
-            label.textContent = 'Attach Document';
-        }
-    });
+        const input = document.getElementById('document');
+        const label = document.getElementById('document-label');
+        const filePreview = document.getElementById('file-preview');
+        const submitButton = document.getElementById('submit-button');
 
-    
+        const addedFiles = new Set(); // Set to store the filenames of added files
+
+        input.addEventListener('change', () => {
+        if (input.files.length > 0) {
+            label.textContent = `${input.files.length} files selected`;
+
+            const initialMarginValue = parseInt(submitButton.style.marginTop || '0');
+            let marginValue = initialMarginValue;
+
+            // Loop through selected files and create file previews
+            for (let i = 0; i < input.files.length; i++) {
+                const file = input.files[i];
+
+                // Check if the file has already been added
+                if (addedFiles.has(file.name)) {
+                    continue; // Skip the iteration for duplicate files
+                }
+
+                const filePreviewItem = document.createElement('div');
+                filePreviewItem.classList.add('file-preview-item'); // Add the CSS class to the preview item
+
+                // Create the file logo element
+                const fileLogo = document.createElement('ion-icon');
+                fileLogo.setAttribute('name', 'document-outline');
+                fileLogo.setAttribute('class', 'file-logo');
+                filePreviewItem.appendChild(fileLogo);
+
+                // Create the file name element
+                const fileName = document.createElement('span');
+                fileName.style.height = '10px';
+                fileName.textContent = file.name;
+                filePreviewItem.appendChild(fileName);
+
+                filePreview.appendChild(filePreviewItem);
+
+                // Increase the margin value for each additional file
+                marginValue += 30; // Adjust the value as needed
+
+                // Add the filename to the set of added files
+                addedFiles.add(file.name);
+                }
+
+                // Set the updated margin value
+                submitButton.style.marginTop = `${marginValue}px`;
+            } else {
+                label.textContent = 'Select files';
+                submitButton.style.marginTop = '0';
+            }
+        });
+
     </script>
 
 </body>
@@ -79,6 +135,17 @@
         margin: 0;
         padding: 0;
     }
+    .file-logo {
+        margin-right: -4px;
+        margin-top: 10px;
+        width: 45px;
+        height: 20px;
+    }
+
+    .file-preview-item {
+        display: flex;
+        align-items: center;
+        }
     .header {
         font-family: 'Kopi Senja Sans', sans-serif;
         color: #000000;

@@ -5,7 +5,7 @@
     <section>
         <div class="form-box">
             <div class="form-value">
-                <form method="POST" action="{{ route('dashboard') }}"> 
+                <form method="GET" action="{{ route('dashboard') }}"> 
                     @csrf
                     <h2>Admin Login</h2>
                     <div class="inputbox">

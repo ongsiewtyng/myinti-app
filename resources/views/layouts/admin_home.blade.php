@@ -12,170 +12,461 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/kopi-senja-sans">
+
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
  
     @yield('styles')
     @yield('scripts')
-    
+
 
     <style>
-        @import url('https://fonts.cdnfonts.com/css/kopi-senja-sans');
-        body {
-        margin: 0;
-        padding: 0;
+        /* Google Font Import - Poppins */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .navbar-brand {
-        font-family: 'Kopi Senja Sans';
-        padding:10px;
+        :root{
+            /* ===== Colors ===== */
+            --body-color: #fafafa;
+            --sidebar-color: #FFF;
+            --primary-color: #68b4ff;
+            --primary-color-light: #F6F5FF;
+            --toggle-color: #DDD;
+            --text-color: #707070;
+            --box1-color: #D6EAF8;
+            --box2-color: #FFE6AC;
+            --box3-color: #E7D1FC;
+
+            /* ====== Transition ====== */
+            --tran-03: all 0.2s ease;
+            --tran-03: all 0.3s ease;
+            --tran-04: all 0.3s ease;
+            --tran-05: all 0.3s ease;
         }
 
-        .p{
-            margin-top: -15px;
-            margin-bottom: 2rem;
+        body{
+            min-height: 100vh;
+            background-color: var(--body-color);
+            transition: var(--tran-05);
         }
 
-        .sidenav {
-        height: 100%;
-        width: 250px;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #111;
-        overflow-x: hidden;
-        padding-top: 20px;
-        
+        ::selection{
+            background-color: var(--primary-color);
+            color: #fff;
         }
 
-        .sidenav a {
-        padding: 6px 8px 6px 16px;
-        text-decoration: none;
-        font-size: 20px;
-        color: #818181;
-        display: block;
+        body.dark{
+            --body-color: #18191a;
+            --sidebar-color: #242526;
+            --primary-color: #3a3b3c;
+            --primary-color-light: #3a3b3c;
+            --toggle-color: #fff;
+            --text-color: #ccc;
+            --box1-color: #3A3B3C;
+            --box2-color: #3A3B3C;
+            --box3-color: #3A3B3C;
         }
 
-        .sidenav a:hover {
-        color: #f1f1f1;
+        /* ===== Sidebar ===== */
+        .sidebar{
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            padding: 10px 14px;
+            background: var(--sidebar-color);
+            transition: var(--tran-05);
+            z-index: 100;  
+        }
+        .sidebar.close{
+            width: 88px;
         }
 
-        .openbtn{
-            position: absolute;
-            top: 23px;
-            left: 190px;
-            font-size: 30px;
+        /* ===== Reusable code - Here ===== */
+        .sidebar li{
+            height: 50px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .sidebar header .image,
+        .sidebar .icon{
+            min-width: 60px;
+            border-radius: 6px;
+        }
+
+        .sidebar .icon{
+            min-width: 60px;
+            border-radius: 6px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .sidebar .text,
+        .sidebar .icon{
+            color: var(--text-color);
+            transition: var(--tran-03);
+        }
+
+        .sidebar .text{
+            font-size: 17px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 1;
+        }
+        .sidebar.close .text{
+            opacity: 0;
+        }
+        /* =========================== */
+
+        .sidebar header{
+            position: relative;
+        }
+
+        .sidebar header .image-text{
+            display: flex;
+            align-items: center;
+        }
+        .sidebar header .logo-text{
+            display: flex;
+            flex-direction: column;
+        }
+        header .image-text .name {
+            margin-top: 2px;
+            font-size: 18px;
             font-weight: 600;
-            background-color: transparent;
-            color: white;
-            border: none;
         }
-        /* Close button styles */
-        .closebtn {
+
+        header .image-text .profession{
+            font-size: 16px;
+            margin-top: -2px;
+            display: block;
+        }
+
+        .sidebar header .image{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar header .image img{
+            width: 40px;
+            border-radius: 6px;
+        }
+
+        .sidebar header .toggle{
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 50%;
+            right: -25px;
+            transform: translateY(-50%) rotate(180deg);
+            height: 25px;
+            width: 25px;
+            background-color: var(--primary-color);
+            color: var(--sidebar-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            transition: var(--tran-05);
         }
 
-        .main {
-        margin-left: 200px; /* Same as the width of the sidenav */
-        padding: 0 20px;
-        transition: 0.5s;
+        body.dark .sidebar header .toggle{
+            color: var(--text-color);
         }
 
-        @media screen and (max-height: 450px) {
-        .sidenav {padding-top: 15px;}
-        .sidenav a {font-size: 18px;}
+        .sidebar.close .toggle{
+            transform: translateY(-50%) rotate(0deg);
         }
 
+        .sidebar .menu{
+            margin-top: 40px;
+        }
+
+        .sidebar li.search-box{
+            border-radius: 6px;
+            background-color: var(--primary-color-light);
+            cursor: pointer;
+            transition: var(--tran-05);
+        }
+
+        .sidebar li.search-box input{
+            height: 100%;
+            width: 100%;
+            outline: none;
+            border: none;
+            background-color: var(--primary-color-light);
+            color: var(--text-color);
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 500;
+            transition: var(--tran-05);
+        }
+        .sidebar li a{
+            list-style: none;
+            height: 100%;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: var(--tran-03);
+        }
+
+        .sidebar li a:hover{
+            background-color: var(--primary-color);
+        }
+        .sidebar li a:hover .icon,
+        .sidebar li a:hover .text{
+            color: var(--sidebar-color);
+        }
+        body.dark .sidebar li a:hover .icon,
+        body.dark .sidebar li a:hover .text{
+            color: var(--text-color);
+        }
+
+        .sidebar .menu-bar{
+            height: calc(100% - 55px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: scroll;
+        }
+        .menu-bar::-webkit-scrollbar{
+            display: none;
+        }
+        .sidebar .menu-bar .mode{
+            border-radius: 6px;
+            background-color: var(--primary-color-light);
+            position: relative;
+            transition: var(--tran-05);
+        }
+
+        .menu-bar .mode .sun-moon{
+            height: 50px;
+            width: 60px;
+        }
+
+        .mode .sun-moon i{
+            position: absolute;
+        }
+        .mode .sun-moon i.sun{
+            opacity: 0;
+        }
+        body.dark .mode .sun-moon i.sun{
+            opacity: 1;
+        }
+        body.dark .mode .sun-moon i.moon{
+            opacity: 0;
+        }
+
+        .menu-bar .bottom-content .toggle-switch{
+            position: absolute;
+            right: 0;
+            height: 100%;
+            min-width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .toggle-switch .switch{
+            position: relative;
+            height: 22px;
+            width: 40px;
+            border-radius: 25px;
+            background-color: var(--toggle-color);
+            transition: var(--tran-05);
+        }
+
+        .switch::before{
+            content: '';
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            background-color: var(--sidebar-color);
+            transition: var(--tran-04);
+        }
+
+        body.dark .switch::before{
+            left: 20px;
+        }
+
+        .home{
+            position: absolute;
+            top: 0;
+            top: 0;
+            left: 250px;
+            height: 100vh;
+            width: calc(100% - 250px);
+            background-color: var(--body-color);
+            transition: var(--tran-05);
+        }
+        .home .text{
+            font-size: 30px;
+            font-weight: 500;
+            color: var(--text-color);
+            padding: 12px 60px;
+        }
+
+        .sidebar.close ~ .home{
+            left: 78px;
+            height: 100vh;
+            width: calc(100% - 78px);
+        }
+        body.dark .home .text{
+            color: var(--text-color);
+        }
+        
     </style>
 
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <!-- Scripts
+    @vite(['resources/sass/app.scss', 'resources/js/app.js']) -->
 </head>
 <body>
-    <div class="sidenav" id="sidenav">
-        <button class="openbtn">
-            <ion-icon name="close-outline" onclick="closeNav()" id= "close-toggle"></ion-icon>
-        </button>
-        <a class="navbar-brand" href="{{ url('/') }}" style="font-size:30px;">
-            MyINTI <p>ADMIN</p>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <section id="sidebar">
-            <ul class="side-menu top">
-                <li class="active">
-                    <a href="#">
-                        <ion-icon name="log-in-outline"></ion-icon>
-                        <span class="text">Dashboard</span>
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="logo.png" alt="">
+                </span>
+                <div class="text logo-text">
+                    <span class="name">MyINTI</span>
+                    <span class="profession">Admin</span>
+                </div>
+            </div>
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
+        <div class="menu-bar">
+            <div class="menu">
+                <li class="search-box">
+                    <i class='bx bx-search icon'></i>
+                    <input type="text" placeholder="Search...">
+                </li>
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="{{ route('dashboard') }}">
+                            <i class='bx bx-home-alt icon' ></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{{ route('food') }}">
+                            <i class='bx bx-food-menu icon' ></i>
+                            <span class="text nav-text">Food Menu</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{{ route('approval') }}">
+                            <i class='bx bx-file icon' ></i>
+                            <span class="text nav-text">Approvals</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{{ route('message') }}">
+                            <i class='bx bx-bell icon'></i>
+                            <span class="text nav-text">Message</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{{ route('booking') }}">
+                            <i class='bx bx-bookmark-alt-plus icon' ></i>
+                            <span class="text nav-text">Facility Booking</span>
+                        </a>
+                    </li>
+                    <!-- <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-wallet icon' ></i>
+                            <span class="text nav-text">Wallets</span>
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="bottom-content">
+                <li class="">
+                    <a href="{{ route('admin') }}" >
+                        <i class='bx bx-log-out icon' ></i>
+                        <span class="text nav-text">Logout</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <ion-icon name="bag-handle-outline"></ion-icon>
-                        <span class="text">Inventory</span>
-                    </a>
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">Dark mode</span>
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
                 </li>
-                <li>
-                    <a href="#">
-                        <ion-icon name="stats-chart-outline"></ion-icon>
-                        <span class="text">Analytics</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <ion-icon name="chatbubbles-outline"></ion-icon>
-                        <span class="text">Message</span>
-                    </a>
-                </li>
-            </ul>
-            <ul class="side-menu">
-                <li>
-                <a href="#">
-                    <ion-icon name="cog-outline"></ion-icon>
-                    <span class="text">Settings</span>
-                </a>
-                </li>
-                <li>
-                <a href="{{ route('admin') }}" class="logout">
-                <ion-icon name="log-in-outline"></ion-icon>
-                    <span class="text">Logout</span>
-                </a>
-                </li>
-            </ul>
-            </section>
-    </div>
-
+                
+            </div>
+        </div>
+    </nav>
+        
     <script>
-        function closeNav() {
-            var closeIcon = document.querySelector("#close-toggle[name='close-outline']");
-            var openIcon = document.querySelector("#close-toggle[name='menu-outline']");
-            var sidenav = document.getElementById("sidenav");
-            
-            if (closeIcon) {
-                // close the sidebar and show the appropriate icons
-                sidenav.style.width = "80px";
-                closeIcon.setAttribute("name", "menu-outline");
-                openIcon.setAttribute("name", "close-outline");
+        const body = document.querySelector('body');
+        const sidebar = body.querySelector('nav');
+        const toggle = body.querySelector(".toggle");
+        const searchBtn = body.querySelector(".search-box");
+        const modeSwitch = body.querySelector(".toggle-switch");
+        const modeText = body.querySelector(".mode-text");
+        const dashboard = document.getElementById('dashboard');
+
+        toggle.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+            handleSidebarToggle();
+        });
+
+        searchBtn.addEventListener("click", () => {
+            sidebar.classList.remove("close");
+            handleSidebarToggle();
+        });
+
+        modeSwitch.addEventListener("click", () => {
+            body.classList.toggle("dark");
+
+            if (body.classList.contains("dark")) {
+                modeText.innerText = "Light mode";
             } else {
-                openIcon.setAttribute("name", "menu-outline");
+                modeText.innerText = "Dark mode";
             }
+        });
+
+        // Function to handle sidebar open/close event
+        function handleSidebarToggle() {
+            const isSidebarOpen = !sidebar.classList.contains("close");
+            const sidebarWidth = isSidebarOpen ? 250 : 150; // Adjust the values based on your sidebar width and closed state
+
+            dashboard.style.left = `${sidebarWidth}px`;
         }
 
-    
-    </script>           
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <main class="py-4">
+
+    </script>
+
+    <main class="">
         @yield('content')
     </main>
-</div>
 </body>
 </html>
-
-
-
-
-    
-
