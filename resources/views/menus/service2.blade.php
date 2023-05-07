@@ -139,37 +139,41 @@
 	<main>
 
 		<article>
-			<img src="https://via.placeholder.com/300x200.png?text=Food+Item+1" alt="Food Item 1">
+			<!--  <img src="https://via.placeholder.com/300x200.png?text=Food+Item+1" alt="Food Item ">   -->
+            <!--  <img src = {{ asset('sandwich/.jpg')}}>  -->
+            <img src = "{{ asset('cafeMenu/sandwich.jpg') }}" alt="Facility Icon">
+
+
 			<h2>Sandwiches</h2>
 		</article>
 
 		<article>
-			<img src="https://via.placeholder.com/300x200.png?text=Food+Item+2" alt="Food Item 2">
+			
 			<h2>Burgers</h2>
 		</article>
 
 		<article>
-			<img src="https://via.placeholder.com/300x200.png?text=Food+Item+3" alt="Food Item 3">
+			
             <h2>Wraps</h2>
         </article>
 
         <article>
-			<img src="https://via.placeholder.com/300x200.png?text=Food+Item+4" alt="Food Item 4">
+
             <h2>Snacks</h2>
         </article>
 
         <article>
-			<img src="https://via.placeholder.com/300x200.png?text=Food+Item+5" alt="Food Item 5">
+
             <h2>Western Food</h2>
         </article>
 
         <article>
-			<img src="https://via.placeholder.com/300x200.png?text=Food+Item+6" alt="Food Item 6">
+
             <h2>Fried Rice</h2>
         </article>
 
         <article>
-			<img src="https://via.placeholder.com/300x200.png?text=Food+Item+7" alt="Food Item 7">
+            
             <h2>Noodles</h2>
         </article>
 
