@@ -135,20 +135,7 @@
             <a href="#">Menu</a>
             
     </nav>
-        
 
-    <body>
-	<header>
-		<h1>INTI Cafeteria</h1>
-		<p>Delicious food at affordable prices</p>
-	</header>
-
-	<nav>
-		<a href="#">Home</a>
-		<a href="#">Menu</a>
-		<a href="#">Contact</a>
-	</nav>
-    
 	<main>
 
 		<article>
