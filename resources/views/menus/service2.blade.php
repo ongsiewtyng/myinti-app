@@ -126,7 +126,7 @@
 <link rel="import" href="menu.html">
 <body>
 	<header>
-		<h1>Food Canteennn</h1>
+		<h1>INTI Cafeteria</h1>
 		<p>Delicious food at affordable prices</p>
 	</header>
 
