@@ -63,7 +63,7 @@
         <nav>
             <a href="#">Home</a>
             <a href="#">Menu</a>
-            <a href="#">Contact</a>
+            
         </nav>
 
         <main>
@@ -133,7 +133,7 @@
     <nav>
             <a href="#">Home</a>
             <a href="#">Menu</a>
-            <a href="#">Contact</a>
+            
     </nav>
         
 
@@ -195,7 +195,7 @@
 
 <!-- 3 // CONTACT SECTION -->
 
-<!-- To include the header -->
+<!-- To include the header 
 <link rel="import" href="contact.html">
 
     <body>
@@ -232,20 +232,8 @@
                     <input type="submit" value="SEND">
                 </form>
             </section>
-    
-            <section>
-                <h2>Visit Us</h2>
-                <p>Our cafeteria is located at :</p>
-                <address>
-                    1-Z, Lebuh Bukit Jambul, Bukit Jambul,<br>
-                     11900 Bayan Lepas, <br>
-                     Pulau Pinang<br> <br>
-
-                    Phone: 017-7562177
-                </address>
-            </section>
 
     
         </main>
-    </body>
+    </body>  -->
 @endsection
