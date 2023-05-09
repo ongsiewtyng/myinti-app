@@ -10,25 +10,25 @@
 <body>
 
   <!--PAGE TITLE-->
-  <h1>DRINKS</h1>
+  <h1>NOODLES</h1>
 
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st drink row with details-->
+<!--1st noodles row with details-->
 <div class="food-item">
         
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/IceMilo.png') }}">
+    <img src = "{{ asset('cafeNoodles/korean.png') }}">
       </div>
 
       <div class="food-details">
-        <h2>Ice Milo</h2>
-        
+        <h2>Spicy Korean Noodles</h2>
+        <p>Spicy Korean Noodles are instant noodles that have gained immense popularity for their intense spiciness.</p>
       </div>
 
       <div class="food-price">
-        <p class="price">RM 2.50</p>
+        <p class="price">RM 6.00</p>
       </div>
 
       <div class="food-select">
@@ -37,20 +37,21 @@
 
 </div>
 
-<!--2nd drink row with details-->
+<!--2nd noodles row with details-->
 <div class="food-item">
 
       <div class="food-image">
-      <img src = "{{ asset('cafeDrinks/icelemontea.jpg') }}">
+      <img src = "{{ asset('cafeNoodles/tomyam.png') }}">
       </div>
 
       <div class="food-details">
-        <h2>Ice Lemon Tea</h2>
-        
+        <h2>Tomyam Noodles</h2>
+        <p>Instant Tomyam Noodles are inspired by the famous Thai soup called Tomyam. 
+            These instant noodles are flavored with the distinct and tangy Tomyam  soup base. </p>
       </div>
 
       <div class="food-price">
-        <p class="price">RM 2.00</p>
+        <p class="price">RM 6.00</p>
       </div>
 
       <div class="food-select">
@@ -59,20 +60,21 @@
 
 </div>
 
-<!--3rd drink row with details-->
+<!--3rd noodles row with details-->
 <div class="food-item">
 
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icetea.jpg') }}">
+    <img src = "{{ asset('cafeNoodles/curry.jpg') }}">
     </div>
 
     <div class="food-details">
-      <h2>Ice Tea</h2>
-      
+      <h2>Instant Curry Noodles</h2>
+      <p>Instant Curry Noodles are a popular choice for those craving a quick and flavorful meal.
+         These noodles are typically seasoned with a rich and savory curry powder.</p>
     </div>
 
     <div class="food-price">
-      <p class="price">RM 2.00</p>
+      <p class="price">RM 10.50</p>
     </div>
 
     <div class="food-select">
@@ -81,70 +83,7 @@
 
 </div>
 
-<!--4th drink row with details-->
-<div class="food-item">
 
-    <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icecoffee.jpg') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Ice Coffee</h2>
-      
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 1.70</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-<!--5th drink row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/orangejuice.jpg') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Orange Juice</h2>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 3.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-<!--6th drink row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/applejuice.webp') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Apple Juice</h2>
-      
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 3.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
 
     <!-- Add more food items as needed -->
 

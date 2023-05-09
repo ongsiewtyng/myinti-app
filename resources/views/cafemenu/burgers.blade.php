@@ -10,25 +10,27 @@
 <body>
 
   <!--PAGE TITLE-->
-  <h1>DRINKS</h1>
+  <h1>BURGERS</h1>
 
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st drink row with details-->
+<!--1st burger row with details-->
 <div class="food-item">
         
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/IceMilo.png') }}">
-      </div>
-
-      <div class="food-details">
-        <h2>Ice Milo</h2>
+        <img src = "{{ asset('cafeBurgers/hawaiian.png') }}">
         
       </div>
 
+      <div class="food-details">
+        <h2>Hawaiian Burger</h2>
+        <p>Hawaiian burger incorporates a beef or chicken patty topped with 
+            a slice of grilled pineapple, crispy bacon, melted cheese, lettuce.</p>
+      </div>
+
       <div class="food-price">
-        <p class="price">RM 2.50</p>
+        <p class="price">RM 9.50</p>
       </div>
 
       <div class="food-select">
@@ -37,20 +39,21 @@
 
 </div>
 
-<!--2nd drink row with details-->
+<!--2nd burger row with details-->
 <div class="food-item">
 
       <div class="food-image">
-      <img src = "{{ asset('cafeDrinks/icelemontea.jpg') }}">
-      </div>
-
-      <div class="food-details">
-        <h2>Ice Lemon Tea</h2>
+        <img src = "{{ asset('cafeBurgers/mushroom.png') }}">
         
       </div>
 
+      <div class="food-details">
+        <h2>Mushroom Burger</h2>
+        <p>This burger features a juicy patty topped with imported mushrooms and melted Swiss cheese.</p>
+      </div>
+
       <div class="food-price">
-        <p class="price">RM 2.00</p>
+        <p class="price">RM 10.50</p>
       </div>
 
       <div class="food-select">
@@ -59,20 +62,23 @@
 
 </div>
 
-<!--3rd drink row with details-->
+<!--3rd burger row with details-->
 <div class="food-item">
 
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icetea.jpg') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Ice Tea</h2>
+      <img src = "{{ asset('cafeBurgers/veggie.png') }}">
       
     </div>
 
+    <div class="food-details">
+      <h2>Veggie Burger</h2>
+      <p>the veggie burger is a popular choice. Made with a patty consisting of vegetables, legumes, grains, 
+        or soy, it offers a satisfying texture and is often complemented with toppings like lettuce, tomato, 
+        onions, and special sauces.</p>
+    </div>
+
     <div class="food-price">
-      <p class="price">RM 2.00</p>
+      <p class="price">RM 10.00</p>
     </div>
 
     <div class="food-select">
@@ -81,20 +87,23 @@
 
 </div>
 
-<!--4th drink row with details-->
+
+<!--4th burger row with details-->
 <div class="food-item">
 
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icecoffee.jpg') }}">
+      <img src = "{{ asset('cafeBurgers/classic cheese.png') }}">
+
     </div>
 
     <div class="food-details">
-      <h2>Ice Coffee</h2>
-      
+      <h2>Classic Cheeseburger</h2>
+      <p>The classic cheeseburger features a juicy beef patty cooked to perfection, 
+        topped with melted cheese, lettuce, tomato, onions, pickles, and a dollop of ketchup or mayo.</p>
     </div>
 
     <div class="food-price">
-      <p class="price">RM 1.70</p>
+      <p class="price">RM 5.00</p>
     </div>
 
     <div class="food-select">
@@ -103,53 +112,12 @@
 
 </div>
 
-<!--5th drink row with details-->
-<div class="food-item">
 
-    <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/orangejuice.jpg') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Orange Juice</h2>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 3.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-<!--6th drink row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/applejuice.webp') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Apple Juice</h2>
-      
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 3.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
 
     <!-- Add more food items as needed -->
 
 </div>
-
+ 
   <!-- <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>  -->
 </body>
 </html>

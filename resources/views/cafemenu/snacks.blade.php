@@ -10,25 +10,26 @@
 <body>
 
   <!--PAGE TITLE-->
-  <h1>DRINKS</h1>
+  <h1>SNACKS</h1>
 
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st drink row with details-->
+<!--1st snack row with details-->
 <div class="food-item">
         
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/IceMilo.png') }}">
-      </div>
+      <img src = "{{ asset('cafeSnacks/fries.png') }}">
+
+    </div>
 
       <div class="food-details">
-        <h2>Ice Milo</h2>
-        
+        <h2>French Fries</h2>
+        <p>Crispy and golden potato fries, usually served hot and seasoned with salt or other seasonings. </p>
       </div>
 
       <div class="food-price">
-        <p class="price">RM 2.50</p>
+        <p class="price">RM 4.50</p>
       </div>
 
       <div class="food-select">
@@ -37,20 +38,21 @@
 
 </div>
 
-<!--2nd drink row with details-->
+<!--2nd snack row with details-->
 <div class="food-item">
 
       <div class="food-image">
-      <img src = "{{ asset('cafeDrinks/icelemontea.jpg') }}">
+        <img src = "{{ asset('cafeSnacks/nachos.png') }}">
+
       </div>
 
       <div class="food-details">
-        <h2>Ice Lemon Tea</h2>
-        
+        <h2>Nachos</h2>
+        <p>Crispy tortilla chips topped with melted cheese, salsa, guacamole, sour cream.</p>
       </div>
 
       <div class="food-price">
-        <p class="price">RM 2.00</p>
+        <p class="price">RM 5.00</p>
       </div>
 
       <div class="food-select">
@@ -59,20 +61,21 @@
 
 </div>
 
-<!--3rd drink row with details-->
+<!--3rd snack row with details-->
 <div class="food-item">
 
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icetea.jpg') }}">
+       <img src = "{{ asset('cafeSnacks/wings.png') }}"> 
+
     </div>
 
     <div class="food-details">
-      <h2>Ice Tea</h2>
-      
+      <h2>Chicken Wings</h2>
+      <p>Deep-fried chicken wings coated in a variety of sauces like buffalo, barbecue, or teriyaki. </p>
     </div>
 
     <div class="food-price">
-      <p class="price">RM 2.00</p>
+      <p class="price">RM 6.50</p>
     </div>
 
     <div class="food-select">
@@ -81,20 +84,21 @@
 
 </div>
 
-<!--4th drink row with details-->
+
+<!--4th snack row with details-->
 <div class="food-item">
 
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icecoffee.jpg') }}">
+      <img src = "{{ asset('cafeSnacks/popcorn.png') }}">
     </div>
 
     <div class="food-details">
-      <h2>Ice Coffee</h2>
-      
+      <h2>Popcorn</h2>
+      <p>Light and fluffy popped corn kernels, often seasoned with salt or butter. </p>
     </div>
 
     <div class="food-price">
-      <p class="price">RM 1.70</p>
+      <p class="price">RM 5.00</p>
     </div>
 
     <div class="food-select">
@@ -103,19 +107,21 @@
 
 </div>
 
-<!--5th drink row with details-->
+
+<!--5th snack row with details-->
 <div class="food-item">
 
     <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/orangejuice.jpg') }}">
+      <img src = "{{ asset('cafeSnacks/fruit.png') }}">
     </div>
 
     <div class="food-details">
-      <h2>Orange Juice</h2>
+      <h2>Fruit Cups</h2>
+      <p>Fresh fruits, such as watermelon, pineapple, grapes, and berries, served in a cup or container. </p>
     </div>
 
     <div class="food-price">
-      <p class="price">RM 3.00</p>
+      <p class="price">RM 3.50</p>
     </div>
 
     <div class="food-select">
@@ -124,27 +130,7 @@
 
 </div>
 
-<!--6th drink row with details-->
-<div class="food-item">
 
-    <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/applejuice.webp') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Apple Juice</h2>
-      
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 3.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
 
     <!-- Add more food items as needed -->
 

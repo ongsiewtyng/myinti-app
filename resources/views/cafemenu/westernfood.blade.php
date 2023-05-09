@@ -10,25 +10,26 @@
 <body>
 
   <!--PAGE TITLE-->
-  <h1>DRINKS</h1>
+  <h1>WESTERN FOOD</h1>
 
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st drink row with details-->
+<!--1st westernfood row with details-->
 <div class="food-item">
         
-    <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/IceMilo.png') }}">
+      <div class="food-image">
+        <img src = "{{ asset('cafeWestern/chicken chop.png') }}">
       </div>
 
       <div class="food-details">
-        <h2>Ice Milo</h2>
-        
+        <h2>Chicken Chop</h2>
+        <p>Chicken chop is a popular Western dish that features a grilled or pan-fried chicken breast or thigh. 
+            The chicken is seasoned with herbs and spices, cooked until it's juicy and tender.</p>
       </div>
 
       <div class="food-price">
-        <p class="price">RM 2.50</p>
+        <p class="price">RM 10.50</p>
       </div>
 
       <div class="food-select">
@@ -37,20 +38,21 @@
 
 </div>
 
-<!--2nd drink row with details-->
+<!--2nd westernfood row with details-->
 <div class="food-item">
 
       <div class="food-image">
-      <img src = "{{ asset('cafeDrinks/icelemontea.jpg') }}">
+      <img src = "{{ asset('cafeWestern/fish.png') }}">
       </div>
 
       <div class="food-details">
-        <h2>Ice Lemon Tea</h2>
-        
+        <h2>Fish and Chips</h2>
+        <p>Fish and chips is a beloved British dish that has become a global favorite. 
+           It consists of a fillet of white fish, typically cod or haddock, coated in a light batter and deep-fried until crispy and golden.</p>
       </div>
 
       <div class="food-price">
-        <p class="price">RM 2.00</p>
+        <p class="price">RM 10.00</p>
       </div>
 
       <div class="food-select">
@@ -59,20 +61,21 @@
 
 </div>
 
-<!--3rd drink row with details-->
+<!--3rd westernfood row with details-->
 <div class="food-item">
 
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icetea.jpg') }}">
+    <img src = "{{ asset('cafeWestern/grilled.png') }}">
     </div>
 
     <div class="food-details">
-      <h2>Ice Tea</h2>
-      
+      <h2>Grilled Chicken</h2>
+      <p>Grilled chicken is a healthier alternative to fried chicken. It involves marinating chicken pieces, 
+         often boneless and skinless breasts or thighs, in a flavorful blend of herbs, spices, and sometimes a marinade sauce.</p>
     </div>
 
     <div class="food-price">
-      <p class="price">RM 2.00</p>
+      <p class="price">RM 10.50</p>
     </div>
 
     <div class="food-select">
@@ -81,20 +84,21 @@
 
 </div>
 
-<!--4th drink row with details-->
+<!--4th westernfood row with details-->
 <div class="food-item">
 
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icecoffee.jpg') }}">
+    <img src = "{{ asset('cafeWestern/cordon.png') }}">
     </div>
 
     <div class="food-details">
-      <h2>Ice Coffee</h2>
-      
+      <h2>Cordon Bleu</h2>
+      <p>Cordon Bleu is a classic dish that features a breaded and fried chicken breast stuffed with ham and cheese. The chicken breast is pounded thin, 
+        layered with slices of ham and cheese, rolled up, breaded, and then pan-fried or deep-fried until golden and crispy.</p>
     </div>
 
     <div class="food-price">
-      <p class="price">RM 1.70</p>
+      <p class="price">RM 11.00</p>
     </div>
 
     <div class="food-select">
@@ -103,48 +107,8 @@
 
 </div>
 
-<!--5th drink row with details-->
-<div class="food-item">
 
-    <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/orangejuice.jpg') }}">
-    </div>
 
-    <div class="food-details">
-      <h2>Orange Juice</h2>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 3.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-<!--6th drink row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/applejuice.jpg') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Apple Juice</h2>
-      
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 3.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
 
     <!-- Add more food items as needed -->
 

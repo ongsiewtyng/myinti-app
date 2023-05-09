@@ -10,25 +10,26 @@
 <body>
 
   <!--PAGE TITLE-->
-  <h1>DRINKS</h1>
+  <h1>SANDWICHES</h1>
 
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st drink row with details-->
+<!--1st sandwich row with details-->
 <div class="food-item">
         
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/IceMilo.png') }}">
-      </div>
-
-      <div class="food-details">
-        <h2>Ice Milo</h2>
+        <img src = "{{ asset('cafeSandwiches/chicken sandwich.png') }}">
         
       </div>
 
+      <div class="food-details">
+        <h2>Chicken Sandwich</h2>
+        <p>Grilled or breaded chicken breast between two slices of bread or a bun with toppings like lettuce, tomato, and mayo.</p>
+      </div>
+
       <div class="food-price">
-        <p class="price">RM 2.50</p>
+        <p class="price">RM 5.00</p>
       </div>
 
       <div class="food-select">
@@ -37,20 +38,21 @@
 
 </div>
 
-<!--2nd drink row with details-->
+<!--2nd sandwich row with details-->
 <div class="food-item">
 
       <div class="food-image">
-      <img src = "{{ asset('cafeDrinks/icelemontea.jpg') }}">
-      </div>
-
-      <div class="food-details">
-        <h2>Ice Lemon Tea</h2>
+        <img src = "{{ asset('cafeSandwiches/veggie sandwich.png') }}">
         
       </div>
 
+      <div class="food-details">
+        <h2>Veggie Sandwich</h2>
+        <p>Fresh vegetables like lettuce, tomato, cucumber, and onions on bread with optional additions like cheese or hummus.</p>
+      </div>
+
       <div class="food-price">
-        <p class="price">RM 2.00</p>
+        <p class="price">RM 4.50</p>
       </div>
 
       <div class="food-select">
@@ -59,20 +61,21 @@
 
 </div>
 
-<!--3rd drink row with details-->
+<!--3rd sandwich row with details-->
 <div class="food-item">
 
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icetea.jpg') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Ice Tea</h2>
+      <img src = "{{ asset('cafeSandwiches/grilled cheese.png') }}">
       
     </div>
 
+    <div class="food-details">
+      <h2>Grilled Cheese Sandwich</h2>
+      <p>Melted cheese between two slices of grilled or toasted bread.</p>
+    </div>
+
     <div class="food-price">
-      <p class="price">RM 2.00</p>
+      <p class="price">RM 6.00</p>
     </div>
 
     <div class="food-select">
@@ -81,41 +84,22 @@
 
 </div>
 
-<!--4th drink row with details-->
+
+<!--4th sandwich row with details-->
 <div class="food-item">
 
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icecoffee.jpg') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Ice Coffee</h2>
+      <img src = "{{ asset('cafeSandwiches/nutella.png') }}">
       
     </div>
 
-    <div class="food-price">
-      <p class="price">RM 1.70</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-<!--5th drink row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/orangejuice.jpg') }}">
-    </div>
-
     <div class="food-details">
-      <h2>Orange Juice</h2>
+      <h2>Nutella Sandwich</h2>
+      <p>Two slices of bread with a generous spread of Nutella, a chocolate hazelnut spread.</p>
     </div>
 
     <div class="food-price">
-      <p class="price">RM 3.00</p>
+      <p class="price">RM 5.00</p>
     </div>
 
     <div class="food-select">
@@ -124,27 +108,7 @@
 
 </div>
 
-<!--6th drink row with details-->
-<div class="food-item">
 
-    <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/applejuice.webp') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Apple Juice</h2>
-      
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 3.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
 
     <!-- Add more food items as needed -->
 
