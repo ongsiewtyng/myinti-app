@@ -178,6 +178,7 @@
         color: #000000;
         border: 1px solid black;
         transition: all 0.3s ease;
+        text-decoration:none;
     }
 
     .book-now-btn:hover {

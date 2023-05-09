@@ -2,6 +2,7 @@
 
 @section('content')
 <body>
+    
     <div class="header">
         <h1>About MyINTI</h1>
         <div class="line"></div>
@@ -155,4 +156,36 @@
         right: 190px;
         top: 87px;
     }
+
+    /* @media query for max-width: 400px */
+    /* @media only screen and (max-width: 400px) {
+        .body {
+            font-size: 14px;
+        }
+
+        .header {
+            padding: 10px;
+        }
+
+        .header2,
+        .paragraph,
+        .header3 {
+            font-size: 14px;
+        }
+
+        .img1 {
+            width: 100%;
+            height: auto;
+            left: 0;
+            top: 0;
+        }
+
+        .facebook,
+        .instagram {
+            width: 30px;
+            height: 30px;
+        }
+    } */
+
 </style>
+@endsection

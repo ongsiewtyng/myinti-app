@@ -39,8 +39,23 @@
                 <input type="text" class="form-control" id="event-title" name="event_title" required>
             </div>
             <div class="form-group">
-                <label for="date-time">Date and Time:</label>
-                <input type="datetime-local" class="form-control" id="date-time" name="date_time" required>
+                <label for="event-start-date">Event Start Date:</label>
+                <input type="date" class="form-control" id="event-start-date" name="event_start_date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="event-end-date">Event End Date:</label>
+                <input type="date" class="form-control" id="event-end-date" name="event_end_date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="event-start-time">Event Start Time:</label>
+                <input type="time" class="form-control" id="event-start-time" name="event_start_time" required>
+            </div>
+
+            <div class="form-group">
+                <label for="event-end-time">Event End Time:</label>
+                <input type="time" class="form-control" id="event-end-time" name="event_end_time" required>
             </div>
             <div class="form-group">
                 <label for="urgency">How urgent do you need this event to be approved?</label>
@@ -73,7 +88,8 @@
 
         input.addEventListener('change', () => {
         if (input.files.length > 0) {
-            label.textContent = `${input.files.length} files selected`;
+            const uniqueFiles = new Set(); // Set to store unique file names
+            let totalFiles = 0; // Variable to track total unique files
 
             const initialMarginValue = parseInt(submitButton.style.marginTop || '0');
             let marginValue = initialMarginValue;
@@ -102,14 +118,29 @@
                 fileName.textContent = file.name;
                 filePreviewItem.appendChild(fileName);
 
+                // Create the delete icon
+                const deleteIcon = document.createElement('ion-icon');
+                deleteIcon.setAttribute('name', 'trash-outline');
+                deleteIcon.setAttribute('class', 'delete-icon');
+                filePreviewItem.appendChild(deleteIcon);
+
+                // Add event listener to delete icon
+                deleteIcon.addEventListener('click', () => {
+                    removeFileFromPreview(filePreviewItem);
+                });
+
+
                 filePreview.appendChild(filePreviewItem);
 
                 // Increase the margin value for each additional file
-                marginValue += 30; // Adjust the value as needed
+                marginValue += 5; // Adjust the value as needed
 
                 // Add the filename to the set of added files
                 addedFiles.add(file.name);
+                totalFiles++;
                 }
+                // Update the label with the total file count
+                label.textContent = `${totalFiles} total file${totalFiles !== 1 ? 's' : ''}`;
 
                 // Set the updated margin value
                 submitButton.style.marginTop = `${marginValue}px`;
@@ -118,6 +149,17 @@
                 submitButton.style.marginTop = '0';
             }
         });
+
+        // Function to remove a file from the preview
+        function removeFileFromPreview(filePreviewItem) {
+            const fileName = filePreviewItem.querySelector('span').textContent;
+            addedFiles.delete(fileName);
+            filePreviewItem.remove();
+
+            // Update the label with the total file count
+            const totalFiles = filePreview.querySelectorAll('.file-preview-item').length;
+            label.textContent = `${totalFiles} total file${totalFiles !== 1 ? 's' : ''}`;
+        }
 
     </script>
 
@@ -145,7 +187,16 @@
     .file-preview-item {
         display: flex;
         align-items: center;
-        }
+    }
+
+    .delete-icon {
+        margin-left: auto;
+        margin-right: 10px;
+        width: 20px;
+        height: 20px;
+        color: #5E5BFF;
+        cursor: pointer;
+    }
     .header {
         font-family: 'Kopi Senja Sans', sans-serif;
         color: #000000;
@@ -225,11 +276,9 @@
 
     .btn-primary{
         position: absolute;
-        width: 134px;
-        height: 48px;
+        width: auto;
+        height: auto;
         left: 10px;
-        top: 430px; 
-        border-radius: 5px;
     }
 
     .img1 {
@@ -269,7 +318,7 @@
         width: 25px;
         height: 25px;
         left: 20px;
-        top: 381px;
+        top: 622px;
     }
 
     .document-container {

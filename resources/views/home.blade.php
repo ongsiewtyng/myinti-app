@@ -2,11 +2,8 @@
 
 @section('content')
 <body>
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <!-- slide images start -->
@@ -351,6 +348,87 @@
         top: 40.37px;
         transform: rotate(-19.48deg);
     }
+
+    /* @media query for max-width: 400px */
+    /* @media only screen and (max-width: 400px) {
+        .card-body {
+            width: auto;
+            height: auto;
+        }
+
+        .circle,
+        .circle2,
+        .circle3 {
+            width: 150px;
+            height: 150px;
+            left: 88%;
+            top: -30px;
+            transform: translateX(-50%);
+        }
+
+        .order,
+        .now,
+        .need,
+        .approval,
+        .free,
+        .time {
+            font-size: 24px;
+            line-height: 30px;
+            left: 110px;
+            top: 70px;
+        }
+
+        .now{
+            width: 180px;
+            height: 60px;
+            left: 136px;
+            top: 100px;
+        }
+
+        .text2,
+        .text3,
+        .text4 {
+            font-size: 16px;
+            line-height: 20px;
+            width: 100%;
+            left: 0;
+            top: 100px;
+            text-align: center;
+        }
+
+        .noodle,
+        .folder,
+        .games {
+            width: 120px;
+            height: 120px;
+            left: 45%;
+            top: 64%;
+            margin-top: 75px;
+            transform: translate(-50%, -50%);
+        }
+
+        .queue {
+            width: 150px;
+            height: 150px;
+            left: 15%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .check {
+            width: 100px;
+            height: 90px;
+            left: 17px;
+            top: 30px;
+        }
+
+        .dice {
+            width: 100px;
+            height: 100px;
+            left: 12.5px;
+            top: 20.19px;
+        }
+    } */
 
 </style>
 @endsection

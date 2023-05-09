@@ -12,6 +12,11 @@
             @endif
         </div>
     @endif
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <section>
         <div class="form-box">
             <div class="form-value">
@@ -80,12 +85,6 @@
 
 @section('styles')
 <style>
-    img {
-    max-width: 100%;
-    height: auto;
-    
-    }
-    
     section{
     display: flex;
     justify-content: center;

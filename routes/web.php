@@ -35,6 +35,7 @@ Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])
 Route::get('/about', [App\Http\Controllers\AboutController::class, 'index'])->name('about');
 Route::get('/service1',[App\Http\Controllers\ServicesController::class,'service1'])->name('service1');
 Route::get('/service2',[App\Http\Controllers\ServicesController::class,'service2'])->name('service2');
+Route::get('/drink',[App\Http\Controllers\DrinkController::class,'drink'])->name('drinks');
 Route::get('/service3',[App\Http\Controllers\ServicesController::class,'service3'])->name('service3');
 Route::get('/confirmBooking',[App\Http\Controllers\BookSessionController::class,'index'])->name('confirmBooking');
 Route::get('/confirmBooking/{id}/{time}', [App\Http\Controllers\BookSessionController::class, 'confirmBooking'])->name('confirmBooking');
