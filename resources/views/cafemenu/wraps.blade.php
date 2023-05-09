@@ -10,25 +10,27 @@
 <body>
 
   <!--PAGE TITLE-->
-  <h1>DRINKS</h1>
+  <h1>WRAPS</h1>
 
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st drink row with details-->
+<!--1st wrap row with details-->
 <div class="food-item">
         
-    <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/IceMilo.png') }}">
+      <div class="food-image">
+        <img src = "{{ asset('cafeWraps/chicken.png') }}">
+        
       </div>
 
       <div class="food-details">
-        <h2>Ice Milo</h2>
-        
+        <h2>Chicken Caesar Wrap</h2>
+        <p>This wrap features grilled or roasted chicken slices wrapped in a soft tortilla, 
+            along with crisp romaine lettuce, grated Parmesan cheese, and a creamy Caesar dressing.</p>
       </div>
 
       <div class="food-price">
-        <p class="price">RM 2.50</p>
+        <p class="price">RM 7.00</p>
       </div>
 
       <div class="food-select">
@@ -37,20 +39,22 @@
 
 </div>
 
-<!--2nd drink row with details-->
+<!--2nd wrap row with details-->
 <div class="food-item">
 
       <div class="food-image">
-      <img src = "{{ asset('cafeDrinks/icelemontea.jpg') }}">
-      </div>
-
-      <div class="food-details">
-        <h2>Ice Lemon Tea</h2>
+        <img src = "{{ asset('cafeWraps/veggie.png') }}">
         
       </div>
 
+      <div class="food-details">
+        <h2>Veggie Hummus Wrap</h2>
+        <p>A perfect choice for vegetarians, this wrap showcases a variety of fresh vegetables such as sliced cucumbers, bell peppers, 
+            shredded carrots, and leafy greens, all nestled in a tortilla spread with creamy hummus.</p>
+      </div>
+
       <div class="food-price">
-        <p class="price">RM 2.00</p>
+        <p class="price">RM 6.50</p>
       </div>
 
       <div class="food-select">
@@ -59,42 +63,22 @@
 
 </div>
 
-<!--3rd drink row with details-->
+<!--3rd wrap row with details-->
 <div class="food-item">
 
     <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icetea.jpg') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Ice Tea</h2>
+      <img src = "{{ asset('cafeWraps/chicken buffalo.png') }}">
       
     </div>
 
-    <div class="food-price">
-      <p class="price">RM 2.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-<!--4th drink row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icecoffee.jpg') }}">
-    </div>
-
     <div class="food-details">
-      <h2>Ice Coffee</h2>
-      
+      <h2>Spicy Buffalo Chicken Wrap</h2>
+      <p>This wrap features tender and spicy buffalo chicken wrapped in a soft tortilla, along with crisp lettuce,
+         diced tomatoes, shredded cheddar cheese, and a zesty ranch or blue cheese dressing.</p>
     </div>
 
     <div class="food-price">
-      <p class="price">RM 1.70</p>
+      <p class="price">RM 8.50</p>
     </div>
 
     <div class="food-select">
@@ -103,48 +87,10 @@
 
 </div>
 
-<!--5th drink row with details-->
-<div class="food-item">
 
-    <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/orangejuice.jpg') }}">
-    </div>
 
-    <div class="food-details">
-      <h2>Orange Juice</h2>
-    </div>
 
-    <div class="food-price">
-      <p class="price">RM 3.00</p>
-    </div>
 
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-<!--6th drink row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/applejuice.jpg') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Apple Juice</h2>
-      
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 3.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
 
     <!-- Add more food items as needed -->
 
