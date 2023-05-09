@@ -158,6 +158,7 @@
                     <li><a href="#">Western Food</a></li>
                     <li><a href="#">Fried Rice</a></li>
                     <li><a href="#">Noodles</a></li>
+					<li><a href="#">Drinks</a></li>
                 </ul>
             </section>
     
@@ -248,7 +249,7 @@
         </article>
 
         <article>
-            <img src = "{{ asset('cafeMenu/drinks.png') }}" alt="Noodles" class= "Noodles">
+            <img src = "{{ asset('cafeMenu/drinks.png') }}" alt="Drinks" class= "Drinks">
             <h2>Drinks</h2>
         </article>
 
