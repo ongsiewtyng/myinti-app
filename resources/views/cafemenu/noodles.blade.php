@@ -64,7 +64,7 @@
 <div class="food-item">
 
     <div class="food-image">
-    <img src = "{{ asset('cafeNoodles/curry.jpg') }}">
+    <img src = "{{ asset('cafeNoodles/curry.png') }}">
     </div>
 
     <div class="food-details">
