@@ -1,7 +1,6 @@
-<!DOCTYPE html>
+@extends('layouts.cafe')
 
-<html>
-
+@section('content')
 <head>
   <title>INTI Cafeteria</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
@@ -116,11 +115,11 @@
 
   <!-- <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>  -->
 </body>
-</html>
+@endsection
 
-
+@section('styles')
 <style>
-body, h1, p, button {
+  body, h1, p, button {
     margin: 0;
     padding: 0;
   }
