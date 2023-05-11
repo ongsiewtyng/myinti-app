@@ -18,7 +18,7 @@
 <div class="food-item">
         
     <div class="food-image">
-    <img src = "{{ asset('cafeNoodles/korean.png') }}">
+    <img src = "{{ asset('cafeNoodles/korean ok.png') }}">
       </div>
 
       <div class="food-details">
@@ -40,7 +40,7 @@
 <div class="food-item">
 
       <div class="food-image">
-      <img src = "{{ asset('cafeNoodles/tomyam.png') }}">
+      <img src = "{{ asset('cafeNoodles/tomyam ok.png') }}">
       </div>
 
       <div class="food-details">
@@ -63,7 +63,7 @@
 <div class="food-item">
 
     <div class="food-image">
-    <img src = "{{ asset('cafeNoodles/curry.png') }}">
+    <img src = "{{ asset('cafeNoodles/curry ok.png') }}">
     </div>
 
     <div class="food-details">
