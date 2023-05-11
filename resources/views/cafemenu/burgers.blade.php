@@ -18,7 +18,7 @@
 <div class="food-item">
         
     <div class="food-image">
-        <img src = "{{ asset('cafeBurgers/hawaiian ok.png') }}">
+        <img src = "{{ asset('path/to/your/cafeBurgers/hawaiian ok.png') }}"  width="300" height="300"  alt="Your Image">
         
       </div>
 
