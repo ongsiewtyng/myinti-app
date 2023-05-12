@@ -86,32 +86,45 @@
             document.getElementById('back-button').addEventListener('click', function() {
                 // Add your logic to go back to the menu section
                 window.location.href = '/service2';
-        });
+             });
 
-        // Cart Functionality
-        var cartCounter = localStorage.getItem('cartCounter') || 0; // Retrieve cart counter from local storage or initialize it to 0
+            // Cart Functionality
+            var cartItems = JSON.parse(localStorage.getItem('cartItems')) || []; // Retrieve cart items from local storage or initialize it to an empty array
+            var cartCounter = cartItems.length; // Get the cart counter based on the number of items
 
-        // Display the cart counter
-        document.querySelector('.cart-counter').textContent = cartCounter;
-
-        // Get all the select buttons
-        var selectButtons = document.querySelectorAll('.select-btn');
-
-        // Add event listeners to each select button
-        selectButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                // Add your logic to handle cart functionality
-                incrementCartCounter();
-            });
-        });
-
-        function incrementCartCounter() {
-            cartCounter++;
+            // Display the cart counter
             document.querySelector('.cart-counter').textContent = cartCounter;
-            localStorage.setItem('cartCounter', cartCounter); // Store the updated cart counter in local storage
-        }
-    });
-</script>
+
+            // Get all the select buttons
+            var selectButtons = document.querySelectorAll('.select-btn');
+
+            // Add event listeners to each select button
+            selectButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    // Add your logic to handle cart functionality
+                    var foodName = button.getAttribute('name');
+                    var unitPrice = button.getAttribute('price');
+                    // var remarks = button.getAttribute('data-remarks');
+                    addItemToCart(foodName, unitPrice, remarks);
+                });
+            });
+
+            function addItemToCart(foodName, unitPrice, remarks) {
+                var item = {
+                    foodName: name,
+                    unitPrice: price,
+                    remarks: remarks
+                };
+
+                cartItems.push(item);
+                cartCounter++;
+                document.querySelector('.cart-counter').textContent = cartCounter;
+                localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Store the updated cart items in local storage
+                // Redirect to payment page with cart items as a parameter
+                window.location.href = '/payment?cartItems=' + encodeURIComponent(JSON.stringify(cartItems));
+            }
+        });
+    </script>
 
 
 </head>
@@ -125,16 +138,18 @@
                 </div>
 
                 <!-- Centered MyINTI -->
-                <a class="navbar-brand mx-auto" href="{{ url('/') }}" style="font-size:40px; color:#FF4141;">
+                <a class="navbar-brand mx-auto" href="{{ url('/service2') }}" style="font-size:40px; color:#FF4141;">
                     MyCafeteria
                 </a>
 
                 <!-- Cart Button with Counter -->
                 <div class="cart-button-container">
-                    <button class="cart-button" type="button" id="cart-button">
-                        <ion-icon class="cart-button" name="cart-outline"></ion-icon>
-                        <span class="cart-counter">0</span>
-                    </button>
+                    <a href="{{ url('/cart') }}">
+                        <button class="cart-button" type="button" id="cart-button">
+                            <ion-icon class="cart-button" name="cart-outline"></ion-icon>
+                            <span class="cart-counter">0</span>
+                        </button>
+                    </a>
                 </div>
             </div>
         </nav>

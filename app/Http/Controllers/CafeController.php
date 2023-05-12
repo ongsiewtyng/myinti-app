@@ -40,7 +40,26 @@ class CafeController extends Controller
         return view('cafemenu.noodles');
     }
 
+    public function cart(){
+        return view('cart.payment');
+    }
 
+    public function showPayment(){
+        $cartItems = json_decode(urldecode(request('cartItems')), true);
 
+        // Check if $cartItems is not empty
+        if (!empty($cartItems)) {
+            // Calculate the total price
+            $totalPrice = 0;
+            foreach ($cartItems as $item) {
+                $totalPrice += $item['[price'];
+            }
+
+            return view('cart.payment', compact('cartItems', 'totalPrice'));
+        }
+
+        // Handle the case when $cartItems is empty (no items in the cart)
+        return redirect()->back()->with('error', 'No items in the cart.');
+    }
 
 }

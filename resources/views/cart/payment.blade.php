@@ -61,7 +61,6 @@
     </style>
 </head>
 
-
 <body>
     <h1>Order Confirmation</h1>
     <p>Thank you for placing an order! Here is your order summary:</p>
@@ -75,27 +74,19 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><img src="burger.jpg"></td>
-                <td><strong style="font-size: 1.2em;">Burger</strong></td>
-                <td><strong style="font-size: 1.2em;">RM10.00</strong></td>
-            </tr>
-            <tr>
-                <td><img src="mee hoon.jpg"></td>
-                <td><strong style="font-size: 1.2em;">Mee hoon</strong></td>
-                <td><strong style="font-size: 1.2em;">RM8.00</strong></td>
-            </tr>
-            <tr>
-                <td><img src="mee goreng.jpg"></td>
-                <td><strong style="font-size: 1.2em;">Mee goreng</strong></td>
-                <td><strong style="font-size: 1.2em;">RM6.00</strong></td>
-            </tr>
+            @foreach ($cartItems as $item)
+                <tr>
+                    <td><img src="{{ asset('cafeMenu/' . $item['name'] . '.jpg') }}"></td>
+                    <td><strong style="font-size: 1.2em;">{{ $item['name'] }}</strong></td>
+                    <td><strong style="font-size: 1.2em;">RM{{ $item['price'] }}</strong></td>
+                    <!-- <td><strong style="font-size: 1.2em;">{{ $item['remarks'] }}</strong></td> -->
+                </tr>
+            @endforeach
             <tr>
                 <td colspan="2" style="text-align: right;"><strong>Total:</strong></td>
-                <td><strong style="font-size: 1.2em;">RM24.00</strong></td>
+                <td><strong style="font-size: 1.2em;">RM{{ $totalPrice }}</strong></td>
             </tr>
         </tbody>
-
     </table>
     <br>
     <p>Please select your preference:</p>

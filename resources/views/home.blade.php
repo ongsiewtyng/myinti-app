@@ -349,7 +349,6 @@
         transform: rotate(-19.48deg);
     }
 
-    /* @media query for max-width: 400px */
     /* @media only screen and (max-width: 400px) {
         .card-body {
             width: auto;

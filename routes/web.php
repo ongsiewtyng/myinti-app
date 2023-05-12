@@ -43,6 +43,8 @@ Route::get('/snack',[App\Http\Controllers\CafeController::class,'snack'])->name(
 Route::get('/western',[App\Http\Controllers\CafeController::class,'western'])->name('westernfood');
 Route::get('/rice',[App\Http\Controllers\CafeController::class,'rice'])->name('friedrice');
 Route::get('/noodles',[App\Http\Controllers\CafeController::class,'noodles'])->name('noodles');
+Route::get('/cart',[App\Http\Controllers\CafeController::class,'cart'])->name('cart');
+Route::get('/payment',[App\Http\Controllers\CafeController::class,'showPayment'])->name('payment');
 Route::get('/service3',[App\Http\Controllers\ServicesController::class,'service3'])->name('service3');
 Route::get('/confirmBooking',[App\Http\Controllers\BookSessionController::class,'index'])->name('confirmBooking');
 Route::get('/confirmBooking/{id}/{time}', [App\Http\Controllers\BookSessionController::class, 'confirmBooking'])->name('confirmBooking');
