@@ -3,7 +3,6 @@
 @section('content')
 <head>
   <title>INTI Cafeteria</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
@@ -14,108 +13,32 @@
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st burger row with details-->
-<div class="food-item">
-        
-    <div class="food-image">
-        <img src = "{{ asset('cafeBurgers/hawaiian ok.png') }}"  style="width: 300px; height: auto; justify-content: center;"   >
-        
+  <!--1st burger row with details-->
+  @foreach ($foods as $food)
+    @if ($food->available)
+      <div class="food-item">
+          <div class="food-image">
+              <img src="{{ asset('cafeBurgers/' . $food->pic) }}" style="width: 300px; height: auto; justify-content: center;">
+          </div>
+
+          <div class="food-details">
+              <h2>{{ $food->name }}</h2>
+              <p>{{ $food->description }}</p>
+          </div>
+
+          <div class="food-price">
+              <p class="price">RM {{ $food->price }}</p>
+          </div>
+
+          <div class="food-select">
+            <button class="select-btn"
+                    name="{{ $food->name }}"
+                    price="{{ $food->price }}"
+                    id="{{ $food->id }}">Select</button>
+          </div>
       </div>
-
-      <div class="food-details">
-        <h2>Hawaiian Burger</h2>
-        <p>Hawaiian burger incorporates a beef or chicken patty topped with 
-            a slice of grilled pineapple, crispy bacon, melted cheese, lettuce.</p>
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 9.50</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--2nd burger row with details-->
-<div class="food-item">
-
-      <div class="food-image">
-        <img src = "{{ asset('cafeBurgers/mushroom ok.png') }}"  style="width: 160px; height: auto;justify-content: center;  "  >
-        
-      </div>
-
-      <div class="food-details">
-        <h2>Mushroom Burger</h2>
-        <p>This burger features a juicy patty topped with imported mushrooms and melted Swiss cheese.</p>
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 10.50</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--3rd burger row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-      <img src = "{{ asset('cafeBurgers/veggie ok.png') }}"  style="width: 200px; height: auto; justify-content: center; ">
-      
-    </div>
-
-    <div class="food-details">
-      <h2>Veggie Burger</h2>
-      <p>the veggie burger is a popular choice. Made with a patty consisting of vegetables, legumes, grains, 
-        or soy, it offers a satisfying texture and is often complemented with toppings like lettuce, tomato, 
-        onions, and special sauces.</p>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 10.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-
-<!--4th burger row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-      <img src = "{{ asset('cafeBurgers/cheeseburger ok.png') }}"  style="width: 200px; height: auto; justify-content: center;">
-
-    </div>
-
-    <div class="food-details">
-      <h2>Classic Cheeseburger</h2>
-      <p>The classic cheeseburger features a juicy beef patty cooked to perfection, 
-        topped with melted cheese, lettuce, tomato, onions, pickles, and a dollop of ketchup or mayo.</p>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 5.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-
-
-    <!-- Add more food items as needed -->
-
-</div>
+    @endif
+  @endforeach
  
   <!-- <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>  -->
 </body>

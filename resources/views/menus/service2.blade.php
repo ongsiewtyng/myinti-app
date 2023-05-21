@@ -15,11 +15,6 @@
             <h1>INTI Cafeteria</h1>
             <p>Delicious food at affordable prices</p>
         </header>
-    
-        <!-- <nav class="navigation">
-            <a class= "home" href="#">Home</a>
-            <a class= "menu" href="#">Menu</a>  
-        </nav> -->
 
         <main>
 
@@ -33,34 +28,8 @@
                 <h2 class="menu">Menu</h2>
 				<div class="line2"></div>
                 <p2>Check out our menu and order online:</p2>
-                <!-- <ul>
-                    <li><a href="/sandwich">Sandwiches</a></li>
-                    <li><a href="/burger">Burgers</a></li>
-                    <li><a href="/wrap">Wraps</a></li>
-                    <li><a href="/snack">Snacks</a></li>
-                    <li><a href="/western">Western Food</a></li>
-                    <li><a href="/rice">Fried Rice</a></li>
-                    <li><a href="/noodles">Noodles</a></li>
-					<li><a href="/drink">Drinks</a></li>
-                </ul> -->
             </section>
-    
-            <!-- <section>
-                <h2>Order Online</h2>
-                <p>Place your order online :</p>
-                <form>
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name"><br><br>
-    
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email"><br><br>
-    
-                    <label for="phone">Phone:</label>
-                    <input type="tel" id="phone" name="phone"><br><br>
-    
-                    <input type="submit" value="ENTER">
-                </form>
-            </section> -->
+
         </main>
 </body>
 
@@ -69,61 +38,16 @@
 <!-- To include the header -->
 <body>
 	<main>
-		<article>
-			<a href="{{ url('/sandwich') }}" style="text-decoration: none; color:#000000">
-            <img src = "{{ asset('cafeMenu/sandwich.jpg') }}" alt="Sandwich" class= "Sandwich">
-			<h2>Sandwiches</h2>
-			</a>
-		</article>
-
-		<article>
-			<a href="{{ url('/burger') }}" style="text-decoration: none; color:#000000">
-            <img src = "{{ asset('cafeMenu/burgers.jpg') }}" alt="Burgers" class= "Burgers">
-			<h2>Burgers</h2>
-			</a>
-		</article>
-
-		<article>
-			<a href="{{ url('/wrap') }}" style="text-decoration: none; color:#000000">
-            <img src = "{{ asset('cafeMenu/wraps.jpg') }}" alt="Wraps" class= "Wraps">
-            <h2>Wraps</h2>
-			</a>
-        </article>
-
-        <article>
-			<a href="{{ url('/snack') }}" style="text-decoration: none; color:#000000">
-            <img src = "{{ asset('cafeMenu/snacks.png') }}" alt="Snacks" class= "Snacks">
-            <h2>Snacks</h2>
-			</a>
-        </article>
-
-        <article>
-			<a href="{{ url('/western') }}" style="text-decoration: none; color:#000000">
-            <img src = "{{ asset('cafeMenu/western food.jpg') }}" alt="Western" class= "Western">
-            <h2>Western Food</h2>
-			</a>
-        </article>
-
-        <article>
-			<a href="{{ url('/rice') }}" style="text-decoration: none; color:#000000">
-            <img src = "{{ asset('cafeMenu/fried rice.jpg') }}" alt="Rice" class= "Rice">
-            <h2>Fried Rice</h2>
-			</a>
-        </article>
-
-        <article>
-			<a href="{{ url('/noodles') }}" style="text-decoration: none; color:#000000">
-            <img src = "{{ asset('cafeMenu/noodles.jpg') }}" alt="Noodles" class= "Noodles">
-            <h2>Noodles</h2>
-			</a>
-        </article>
-
-        <article>
-			<a href="{{ url('/drink') }}" style="text-decoration: none; color:#000000">
-            <img src = "{{ asset('cafeMenu/drinks.png') }}" alt="Drinks" class= "Drinks">
-            <h2>Drinks</h2>
-			</a>
-        </article>
+	@foreach ($categoryGroups as $categoryGroup)
+		@foreach ($categoryGroup as $category)
+			<article>
+				<a href="{{ url('/' . strtolower($category->category)) }}" style="text-decoration: none; color:#000000">
+					<img src="{{ asset('cafeMenu/' . $category->catpic) }}" alt="{{ $category->category }}" class="category-image">
+					<h2>{{ $category->category }}</h2>
+				</a>
+			</article>
+		@endforeach
+	@endforeach
 
 	</main>
 </body>

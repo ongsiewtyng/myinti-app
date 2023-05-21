@@ -3,7 +3,6 @@
 @section('content')
 <head>
   <title>INTI Cafeteria</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
@@ -14,79 +13,32 @@
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st noodles row with details-->
-<div class="food-item">
-        
-    <div class="food-image">
-    <img src = "{{ asset('cafeNoodles/korean ok.png') }}">
+  <!--1st noodles row with details-->
+  @foreach ($foods as $food)
+    @if ($food->available)
+      <div class="food-item">
+          <div class="food-image">
+              <img src="{{ asset('cafeNoodles/' . $food->pic) }}" style="width: 300px; height: auto; justify-content: center;">
+          </div>
+
+          <div class="food-details">
+              <h2>{{ $food->name }}</h2>
+              <p>{{ $food->description }}</p>
+          </div>
+
+          <div class="food-price">
+              <p class="price">RM {{ $food->price }}</p>
+          </div>
+
+          <div class="food-select">
+            <button class="select-btn"
+                    name="{{ $food->name }}"
+                    price="{{ $food->price }}"
+                    id="{{ $food->id }}">Select</button>
+          </div>
       </div>
-
-      <div class="food-details">
-        <h2>Spicy Korean Noodles</h2>
-        <p>Spicy Korean Noodles are instant noodles that have gained immense popularity for their intense spiciness.</p>
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 6.00</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--2nd noodles row with details-->
-<div class="food-item">
-
-      <div class="food-image">
-      <img src = "{{ asset('cafeNoodles/tomyam ok.png') }}">
-      </div>
-
-      <div class="food-details">
-        <h2>Tomyam Noodles</h2>
-        <p>Instant Tomyam Noodles are inspired by the famous Thai soup called Tomyam. 
-            These instant noodles are flavored with the distinct and tangy Tomyam  soup base. </p>
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 6.00</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--3rd noodles row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-    <img src = "{{ asset('cafeNoodles/curry ok.png') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Instant Curry Noodles</h2>
-      <p>Instant Curry Noodles are a popular choice for those craving a quick and flavorful meal.
-         These noodles are typically seasoned with a rich and savory curry powder.</p>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 10.50</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-
-
-    <!-- Add more food items as needed -->
-
-</div>
+    @endif
+  @endforeach
 
   <!-- <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>  -->
 </body>

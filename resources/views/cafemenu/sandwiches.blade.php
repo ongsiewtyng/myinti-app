@@ -3,7 +3,6 @@
 @section('content')
 <head>
   <title>INTI Cafeteria</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
@@ -14,104 +13,32 @@
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st sandwich row with details-->
-<div class="food-item">
-        
-    <div class="food-image">
-        <img src = "{{ asset('cafeSandwiches/chicken sandwich ok.png') }}">
-        
+  <!--1st sandwich row with details-->
+  @foreach ($foods as $food)
+    @if ($food->available)
+      <div class="food-item">
+          <div class="food-image">
+              <img src="{{ asset('cafeSandwiches/' . $food->pic) }}" style="width: 300px; height: auto; justify-content: center;">
+          </div>
+
+          <div class="food-details">
+              <h2>{{ $food->name }}</h2>
+              <p>{{ $food->description }}</p>
+          </div>
+
+          <div class="food-price">
+              <p class="price">RM {{ $food->price }}</p>
+          </div>
+
+          <div class="food-select">
+            <button class="select-btn"
+                    name="{{ $food->name }}"
+                    price="{{ $food->price }}"
+                    id="{{ $food->id }}">Select</button>
+          </div>
       </div>
-
-      <div class="food-details">
-        <h2>Chicken Sandwich</h2>
-        <p>Grilled or breaded chicken breast between two slices of bread or a bun with toppings like lettuce, tomato, and mayo.</p>
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 5.00</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--2nd sandwich row with details-->
-<div class="food-item">
-
-      <div class="food-image">
-        <img src = "{{ asset('cafeSandwiches/veggie sandwich ok.png') }}">
-        
-      </div>
-
-      <div class="food-details">
-        <h2>Veggie Sandwich</h2>
-        <p>Fresh vegetables like lettuce, tomato, cucumber, and onions on bread with optional additions like cheese or hummus.</p>
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 4.50</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--3rd sandwich row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-      <img src = "{{ asset('cafeSandwiches/grilled cheese ok.png') }}">
-      
-    </div>
-
-    <div class="food-details">
-      <h2>Grilled Cheese Sandwich</h2>
-      <p>Melted cheese between two slices of grilled or toasted bread.</p>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 6.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-
-<!--4th sandwich row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-      <img src = "{{ asset('cafeSandwiches/nutella ok.png') }}">
-      
-    </div>
-
-    <div class="food-details">
-      <h2>Nutella Sandwich</h2>
-      <p>Two slices of bread with a generous spread of Nutella, a chocolate hazelnut spread.</p>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 5.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-
-
-    <!-- Add more food items as needed -->
-
-</div>
+    @endif
+  @endforeach
 
   <!-- <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>  -->
 </body>

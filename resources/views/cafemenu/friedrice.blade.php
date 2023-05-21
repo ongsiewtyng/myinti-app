@@ -3,7 +3,6 @@
 @section('content')
 <head>
   <title>INTI Cafeteria</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
@@ -14,103 +13,32 @@
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st fried rice row with details-->
-<div class="food-item">
+  <!--1st fried rice row with details-->
+  @foreach ($foods as $food)
+    @if ($food->available)
+      <div class="food-item">
+          <div class="food-image">
+              <img src="{{ asset('cafeFried/' . $food->pic) }}" style="width: 300px; height: auto; justify-content: center;">
+          </div>
 
-    <div class="food-image">
-      <img src = "{{ asset('cafeFried/yongchow ok.png') }}">
+          <div class="food-details">
+              <h2>{{ $food->name }}</h2>
+              <p>{{ $food->description }}</p>
+          </div>
+
+          <div class="food-price">
+              <p class="price">RM {{ $food->price }}</p>
+          </div>
+
+          <div class="food-select">
+            <button class="select-btn"
+                    name="{{ $food->name }}"
+                    price="{{ $food->price }}"
+                    id="{{ $food->id }}">Select</button>
+          </div>
       </div>
-
-      <div class="food-details">
-        <h2>Yong Chow Fried Rice</h2>
-        <p>Yong Chow Fried Rice is a popular Chinese-style fried rice that typically includes 
-            a combination of diced chicken, shrimp, Chinese sausage (lap cheong), and various vegetables like peas, carrots, and onions. </p>
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 7.00</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--2nd fried rice row with details-->
-<div class="food-item">
-
-      <div class="food-image">
-      <img src = "{{ asset('cafeFried/billis ok.png') }}">
-      </div>
-
-      <div class="food-details">
-        <h2>Ikan Bilis Fried Rice</h2>
-        <p> Ikan Bilis Fried Rice is a Malaysian-style fried rice that features small dried anchovies, known as ikan bilis. </p>
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 7.00</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--3rd fried rice row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-    <img src = "{{ asset('cafeFried/tomyam ok.png') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Tom Yam Fried Rice</h2>
-      <p>Tom Yam Fried Rice is a Thai-inspired fried rice dish infused with the flavors of Tom Yam soup, 
-        which is known for its spicy and tangy taste.</p>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 7.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-<!--4th fried rice row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-    <img src = "{{ asset('cafeFried/garlic ok.png') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Garlic Fried Rice</h2>
-      <p>Garlic Fried Rice is a simple yet flavorful variation of fried rice that highlights the taste of garlic. 
-         The dish is prepared by stir-frying cooked rice with minced garlic and sometimes chopped onions. </p>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 7.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-
-
-
-    <!-- Add more food items as needed -->
-
-</div>
+    @endif
+  @endforeach
 
   <!-- <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>  -->
 </body>

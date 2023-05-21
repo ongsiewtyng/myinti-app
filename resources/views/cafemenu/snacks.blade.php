@@ -3,7 +3,6 @@
 @section('content')
 <head>
   <title>INTI Cafeteria</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
@@ -14,126 +13,32 @@
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st snack row with details-->
-<div class="food-item">
-        
-    <div class="food-image">
-      <img src = "{{ asset('cafeSnacks/fries ok.png') }}">
+  <!--1st snack row with details-->
+  @foreach ($foods as $food)
+    @if ($food->available)
+        <div class="food-item">
+            <div class="food-image">
+                <img src="{{ asset('cafeSnacks/' . $food->pic) }}" style="width: 300px; height: auto; justify-content: center;">
+            </div>
 
-    </div>
+            <div class="food-details">
+                <h2>{{ $food->name }}</h2>
+                <p>{{ $food->description }}</p>
+            </div>
 
-      <div class="food-details">
-        <h2>French Fries</h2>
-        <p>Crispy and golden potato fries, usually served hot and seasoned with salt or other seasonings. </p>
-      </div>
+            <div class="food-price">
+                <p class="price">RM {{ $food->price }}</p>
+            </div>
 
-      <div class="food-price">
-        <p class="price">RM 4.50</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--2nd snack row with details-->
-<div class="food-item">
-
-      <div class="food-image">
-        <img src = "{{ asset('cafeSnacks/nachos ok.png') }}">
-
-      </div>
-
-      <div class="food-details">
-        <h2>Nachos</h2>
-        <p>Crispy tortilla chips topped with melted cheese, salsa, guacamole, sour cream.</p>
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 5.00</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--3rd snack row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-       <img src = "{{ asset('cafeSnacks/wings ok.png') }}"> 
-
-    </div>
-
-    <div class="food-details">
-      <h2>Chicken Wings</h2>
-      <p>Deep-fried chicken wings coated in a variety of sauces like buffalo, barbecue, or teriyaki. </p>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 6.50</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-
-<!--4th snack row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-      <img src = "{{ asset('cafeSnacks/popcorn ok.png') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Popcorn</h2>
-      <p>Light and fluffy popped corn kernels, often seasoned with salt or butter. </p>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 5.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-
-<!--5th snack row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-      <img src = "{{ asset('cafeSnacks/fruit ok.png') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Fruit Cups</h2>
-      <p>Fresh fruits, such as watermelon, pineapple, grapes, and berries, served in a cup or container. </p>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 3.50</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-
-
-    <!-- Add more food items as needed -->
-
-</div>
+            <div class="food-select">
+            <button class="select-btn"
+                    name="{{ $food->name }}"
+                    price="{{ $food->price }}"
+                    id="{{ $food->id }}">Select</button>
+          </div>
+        </div>
+    @endif
+  @endforeach
 
   <!-- <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>  -->
 </body>

@@ -3,63 +3,83 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Food; // Import your Food model
+use App\Models\Category; // Import your Category model
+use App\Models\Cart; // Import your Cart model
 
 class CafeController extends Controller
 {
     //
-    public function drink()
-    {
-        return view('cafemenu.drinks');
+    public function drinks(){
+        $category = 'Drinks';
+        $foods = Food::where('category', $category)->get();
+
+        return view('cafemenu.drinks',['foods' => $foods]);
     }
 
-    public function burger(){
-        return view('cafemenu.burgers');
+    public function burgers(){
+        $category = 'Burgers';
+        $foods = Food::where('category', $category)->get();
+        
+        return view('cafemenu.burgers',['foods' => $foods]);
+
     }
+
     
     public function sandwich(){
-        return view('cafemenu.sandwiches');
+        $category = 'Sandwiches';
+        $foods = Food::where('category', $category)->get();
+
+        return view('cafemenu.sandwiches', ['foods' => $foods]);
     }
 
     public function wrap(){
-        return view('cafemenu.wraps');
+        $category = 'Wraps';
+        $foods = Food::where('category', $category)->get();
+
+        return view('cafemenu.wraps', ['foods' => $foods]);
     }
 
     public function snack(){
-        return view('cafemenu.snacks');
+        $category = 'Snacks';
+        $foods = Food::where('category', $category)->get();
+
+        return view('cafemenu.snacks', ['foods' => $foods]);
     }
 
     public function western(){
-        return view('cafemenu.westernfood');
+        $category = 'Western food';
+        $foods = Food::where('category', $category)->get();
+
+        return view('cafemenu.westernfood', ['foods' => $foods]);
     }
 
     public function rice(){
-        return view('cafemenu.friedrice');
+        $category = 'Fried rice';
+        $foods = Food::where('category', $category)->get();
+
+        return view('cafemenu.friedrice', ['foods' => $foods]);
     }
 
     public function noodles(){
-        return view('cafemenu.noodles');
+        $category = 'Noodles';
+        $foods = Food::where('category', $category)->get();
+
+
+        return view('cafemenu.noodles', ['foods' => $foods]);
     }
 
     public function cart(){
-        return view('cart.payment');
+        $cartItems = Cart::all(); // Retrieve all cart items from the database
+
+        // Retrieve the associated food items
+        $foodItems = Food::whereIn('id', $cartItems->pluck('food_id'))->get();
+
+        return view('cart.payment', compact('cartItems', 'foodItems'));
     }
 
-    public function showPayment(){
-        $cartItems = json_decode(urldecode(request('cartItems')), true);
+    
 
-        // Check if $cartItems is not empty
-        if (!empty($cartItems)) {
-            // Calculate the total price
-            $totalPrice = 0;
-            foreach ($cartItems as $item) {
-                $totalPrice += $item['[price'];
-            }
-
-            return view('cart.payment', compact('cartItems', 'totalPrice'));
-        }
-
-        // Handle the case when $cartItems is empty (no items in the cart)
-        return redirect()->back()->with('error', 'No items in the cart.');
-    }
-
+    
+    
 }

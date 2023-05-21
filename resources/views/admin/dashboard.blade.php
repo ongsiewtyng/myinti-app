@@ -63,9 +63,7 @@
     </section>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-        handleSidebarToggle();
-    });
+    
     </script>
 </body>
 
@@ -80,10 +78,6 @@
         width: calc(100% - 250px);
         padding: 10px 14px;
         transition: var(--tran-05);
-    }
-    nav.close ~ .dashboard{
-        left: 90px;
-        width: calc(100% - 73px);
     }
 
     .dashboard .dash-content{

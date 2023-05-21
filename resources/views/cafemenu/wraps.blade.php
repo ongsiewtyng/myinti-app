@@ -3,7 +3,6 @@
 @section('content')
 <head>
   <title>INTI Cafeteria</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
@@ -14,82 +13,32 @@
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st wrap row with details-->
-<div class="food-item">
-        
-      <div class="food-image">
-        <img src = "{{ asset('cafeWraps/chicken ok.png') }}">
-        
+  <!--1st wrap row with details-->
+  @foreach ($foods as $food)
+    @if ($food->available)
+      <div class="food-item">
+          <div class="food-image">
+              <img src="{{ asset('cafeWraps/' . $food->pic) }}" style="width: 300px; height: auto; justify-content: center;">
+          </div>
+
+          <div class="food-details">
+              <h2>{{ $food->name }}</h2>
+              <p>{{ $food->description }}</p>
+          </div>
+
+          <div class="food-price">
+              <p class="price">RM {{ $food->price }}</p>
+          </div>
+
+          <div class="food-select">
+            <button class="select-btn"
+                    name="{{ $food->name }}"
+                    price="{{ $food->price }}"
+                    id="{{ $food->id }}">Select</button>
+          </div>
       </div>
-
-      <div class="food-details">
-        <h2>Chicken Caesar Wrap</h2>
-        <p>This wrap features grilled or roasted chicken slices wrapped in a soft tortilla, 
-            along with crisp romaine lettuce, grated Parmesan cheese, and a creamy Caesar dressing.</p>
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 7.00</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--2nd wrap row with details-->
-<div class="food-item">
-
-      <div class="food-image">
-        <img src = "{{ asset('cafeWraps/veggie ok.png') }}">
-        
-      </div>
-
-      <div class="food-details">
-        <h2>Veggie Hummus Wrap</h2>
-        <p>A perfect choice for vegetarians, this wrap showcases a variety of fresh vegetables such as sliced cucumbers, bell peppers, 
-            shredded carrots, and leafy greens, all nestled in a tortilla spread with creamy hummus.</p>
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 6.50</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--3rd wrap row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-      <img src = "{{ asset('cafeWraps/chicken buffalo ok.png') }}">
-      
-    </div>
-
-    <div class="food-details">
-      <h2>Spicy Buffalo Chicken Wrap</h2>
-      <p>This wrap features tender and spicy buffalo chicken wrapped in a soft tortilla, along with crisp lettuce,
-         diced tomatoes, shredded cheddar cheese, and a zesty ranch or blue cheese dressing.</p>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 8.50</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-
-    <!-- Add more food items as needed -->
-
-</div>
+    @endif
+  @endforeach
 
   <!-- <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>  -->
 </body>

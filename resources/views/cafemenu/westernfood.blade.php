@@ -3,7 +3,6 @@
 @section('content')
 <head>
   <title>INTI Cafeteria</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
@@ -14,105 +13,32 @@
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st westernfood row with details-->
-<div class="food-item">
-        
-      <div class="food-image">
-        <img src = "{{ asset('cafeWestern/chicken chop ok.png') }}">
-      </div>
+  <!--1st westernfood row with details-->
+  @foreach ($foods as $food)
+    @if ($food->available)
+        <div class="food-item">
+            <div class="food-image">
+                <img src="{{ asset('cafeWestern/' . $food->pic) }}" style="width: 300px; height: auto; justify-content: center;">
+            </div>
 
-      <div class="food-details">
-        <h2>Chicken Chop</h2>
-        <p>Chicken chop is a popular Western dish that features a grilled or pan-fried chicken breast or thigh. 
-            The chicken is seasoned with herbs and spices, cooked until it's juicy and tender.</p>
-      </div>
+            <div class="food-details">
+                <h2>{{ $food->name }}</h2>
+                <p>{{ $food->description }}</p>
+            </div>
 
-      <div class="food-price">
-        <p class="price">RM 10.50</p>
-      </div>
+            <div class="food-price">
+                <p class="price">RM {{ $food->price }}</p>
+            </div>
 
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--2nd westernfood row with details-->
-<div class="food-item">
-
-      <div class="food-image">
-      <img src = "{{ asset('cafeWestern/fish ok.png') }}">
-      </div>
-
-      <div class="food-details">
-        <h2>Fish and Chips</h2>
-        <p>Fish and chips is a beloved British dish that has become a global favorite. 
-           It consists of a fillet of white fish, typically cod or haddock, coated in a light batter and deep-fried until crispy and golden.</p>
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 10.00</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--3rd westernfood row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-    <img src = "{{ asset('cafeWestern/grilled ok.png') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Grilled Chicken</h2>
-      <p>Grilled chicken is a healthier alternative to fried chicken. It involves marinating chicken pieces, 
-         often boneless and skinless breasts or thighs, in a flavorful blend of herbs, spices, and sometimes a marinade sauce.</p>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 10.50</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-<!--4th westernfood row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-    <img src = "{{ asset('cafeWestern/cordon ok.png') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Cordon Bleu</h2>
-      <p>Cordon Bleu is a classic dish that features a breaded and fried chicken breast stuffed with ham and cheese. The chicken breast is pounded thin, 
-        layered with slices of ham and cheese, rolled up, breaded, and then pan-fried or deep-fried until golden and crispy.</p>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 11.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-
-
-
-    <!-- Add more food items as needed -->
-
-</div>
-
+            <div class="food-select">
+            <button class="select-btn"
+                    name="{{ $food->name }}"
+                    price="{{ $food->price }}"
+                    id="{{ $food->id }}">Select</button>
+          </div>
+        </div>
+    @endif
+  @endforeach
   <!-- <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>  -->
 </body>
 @endsection

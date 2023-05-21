@@ -13,140 +13,32 @@
   <!--WEB DESIGN Class name-->
   <div class="food-container">
 
-<!--1st drink row with details-->
-<div class="food-item">
-        
-    <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/IceMilo.png') }}">
+  <!--1st drink row with details-->
+  @foreach ($foods as $food)
+    @if ($food->available)
+      <div class="food-item">
+          <div class="food-image">
+              <img src="{{ asset('cafeDrinks/' . $food->pic) }}" style="width: 300px; height: auto; justify-content: center;">
+          </div>
+
+          <div class="food-details">
+              <h2>{{ $food->name }}</h2>
+              <p>{{ $food->description }}</p>
+          </div>
+
+          <div class="food-price">
+              <p class="price">RM {{ $food->price }}</p>
+          </div>
+
+          <div class="food-select">
+            <button class="select-btn"
+                    name="{{ $food->name }}"
+                    price="{{ $food->price }}"
+                    id="{{ $food->id }}">Select</button>
+          </div>
       </div>
-
-      <div class="food-details">
-        <h2>Ice Milo</h2>
-        
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 2.50</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--2nd drink row with details-->
-<div class="food-item">
-
-      <div class="food-image">
-      <img src = "{{ asset('cafeDrinks/icelemontea ok.png') }}">
-      </div>
-
-      <div class="food-details">
-        <h2>Ice Lemon Tea</h2>
-        
-      </div>
-
-      <div class="food-price">
-        <p class="price">RM 2.00</p>
-      </div>
-
-      <div class="food-select">
-        <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-      </div>
-
-</div>
-
-<!--3rd drink row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icetea ok.png') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Ice Tea</h2>
-      
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 2.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-<!--4th drink row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-    <img src = "{{ asset('cafeDrinks/icecoffee ok.png') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Ice Coffee</h2>
-      
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 1.70</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-<!--5th drink row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/orangejuice ok.png') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Orange Juice</h2>
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 3.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-<!--6th drink row with details-->
-<div class="food-item">
-
-    <div class="food-image">
-        <img src = "{{ asset('cafeDrinks/apple ok.png') }}">
-    </div>
-
-    <div class="food-details">
-      <h2>Apple Juice</h2>
-      
-    </div>
-
-    <div class="food-price">
-      <p class="price">RM 3.00</p>
-    </div>
-
-    <div class="food-select">
-      <button class="select-btn"><i class="fas fa-check"></i>Select</button>
-    </div>
-
-</div>
-
-    <!-- Add more food items as needed -->
-
-</div>
+    @endif
+  @endforeach
 
   <!-- <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>  -->
 </body>

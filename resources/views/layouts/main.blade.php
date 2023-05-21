@@ -29,6 +29,35 @@
         .navbar-nav.me-auto {
             margin-left: 20px;
         }
+        .cart-button {
+            position: relative;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            margin-top: 4px;
+        }
+
+        .cart-button ion-icon {
+            font-size: 30px;
+            color: #000;
+        }
+
+
+        .cart-counter {
+            position: absolute;
+            top: -2px;
+            right: -5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background-color: #FF4141;
+            color: #FFF;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 50%;
+        }
 
         .links{
             color: #000000;
@@ -45,6 +74,29 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        // Function to update the cart counter
+        function updateCartCounter(counter) {
+            const cartCounter = document.querySelector('.cart-counter');
+            cartCounter.textContent = counter.toString();
+        }
+
+        // Fetch the cart count from the server
+        function fetchCartCount() {
+            fetch('{{ route("cart.count") }}')
+                .then(response => response.json())
+                .then(data => {
+                    updateCartCounter(data.count);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+
+        // Call fetchCartCount initially to get the current count
+        fetchCartCount();
+    </script>
+
 
 </head>
 <body>
@@ -96,6 +148,14 @@
                                 </li>
                             @endif-->
                             @else
+                            <li class="nav-item">
+                                <a href="{{ url('/cart') }}" class="nav-link links">
+                                    <button class="cart-button" type="button" id="cart-button">
+                                        <ion-icon class="cart-button" name="cart-outline"></ion-icon>
+                                        <span class="cart-counter">0</span>
+                                    </button>
+                                </a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 @if(Auth::user()->pic)

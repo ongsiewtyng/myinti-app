@@ -17,6 +17,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/solid.css">
  
     @yield('styles')
     @yield('scripts')
@@ -335,12 +336,13 @@
             height: 100vh;
             width: calc(100% - 78px);
         }
+        
         body.dark .home .text{
             color: var(--text-color);
         }
         
     </style>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Scripts
     @vite(['resources/sass/app.scss', 'resources/js/app.js']) -->
 </head>
@@ -420,53 +422,59 @@
                         <span class="switch"></span>
                     </div>
                 </li>
-                
+
             </div>
         </div>
     </nav>
-        
-    <script>
-        const body = document.querySelector('body');
-        const sidebar = body.querySelector('nav');
-        const toggle = body.querySelector(".toggle");
-        const searchBtn = body.querySelector(".search-box");
-        const modeSwitch = body.querySelector(".toggle-switch");
-        const modeText = body.querySelector(".mode-text");
-        const dashboard = document.getElementById('dashboard');
-
-        toggle.addEventListener("click", () => {
-            sidebar.classList.toggle("close");
-            handleSidebarToggle();
-        });
-
-        searchBtn.addEventListener("click", () => {
-            sidebar.classList.remove("close");
-            handleSidebarToggle();
-        });
-
-        modeSwitch.addEventListener("click", () => {
-            body.classList.toggle("dark");
-
-            if (body.classList.contains("dark")) {
-                modeText.innerText = "Light mode";
-            } else {
-                modeText.innerText = "Dark mode";
-            }
-        });
-
-        // Function to handle sidebar open/close event
-        function handleSidebarToggle() {
-            const isSidebarOpen = !sidebar.classList.contains("close");
-            const sidebarWidth = isSidebarOpen ? 250 : 150; // Adjust the values based on your sidebar width and closed state
-
-            dashboard.style.left = `${sidebarWidth}px`;
-        }
-
-
-    </script>
 
     <main class="">
         @yield('content')
     </main>
 </body>
+<script>
+       document.addEventListener("DOMContentLoaded", function() {
+            // Your code here
+            const body = document.querySelector('body');
+            const sidebar = body.querySelector('nav');
+            const toggle = body.querySelector(".toggle");
+            const searchBtn = body.querySelector(".search-box");
+            const modeSwitch = body.querySelector(".toggle-switch");
+            const modeText = body.querySelector(".mode-text");
+            const dashboard = document.getElementById('dashboard');
+            const foodMenu = document.getElementById('food-menu');
+        
+
+            toggle.addEventListener("click", () => {
+                sidebar.classList.toggle("close");
+                handleSidebarToggle();
+            });
+
+            searchBtn.addEventListener("click", () => {
+                sidebar.classList.remove("close");
+                handleSidebarToggle();
+            });
+
+            modeSwitch.addEventListener("click", () => {
+                body.classList.toggle("dark");
+
+                if (body.classList.contains("dark")) {
+                    modeText.innerText = "Light mode";
+                } else {
+                    modeText.innerText = "Dark mode";
+                }
+            });
+
+            // Function to handle sidebar open/close event
+            function handleSidebarToggle() {
+                const isSidebarOpen = !sidebar.classList.contains("close");
+                const sidebarWidth = isSidebarOpen ? 250 : 150; // Adjust the values based on your sidebar width and closed state
+
+                dashboard.style.left = `${sidebarWidth}px`;
+                foodMenu.style.left = `${sidebarWidth}px`;
+            }
+
+            handleSidebarToggle();
+        });
+
+    </script>
 </html>

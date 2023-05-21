@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Session; // Import your Session model
 use App\Models\Facility; // Import your Facility model
 use App\Models\User; // Import your User model
+use App\Models\Food; // Import your Food model
+use App\Models\Category; // Import your Category model
+
 
 class ServicesController extends Controller
 {
@@ -23,8 +26,16 @@ class ServicesController extends Controller
     }
 
     public function service2(){
-        return view('menus.service2');
+        $categoryGroups = Category::all()->groupBy('category');
+        
+        // Retrieve the food items from the database
+        $foodItem = Food::all(); // Replace this with your logic to retrieve food items
+        
+        return view('menus.service2', compact('categoryGroups', 'foodItem'));
     }
+
+
+
 
     public function service3(){
     $available_sessions = Session::where('booked', false)->get(); // Fetch all sessions where booked=false

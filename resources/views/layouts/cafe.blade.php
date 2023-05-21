@@ -12,6 +12,10 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/kopi-senja-sans">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Add this script tag before your custom JavaScript code -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
  
     @yield('styles')
     @yield('scripts')
@@ -86,14 +90,61 @@
             document.getElementById('back-button').addEventListener('click', function() {
                 // Add your logic to go back to the menu section
                 window.location.href = '/service2';
-             });
+            });
 
-            // Cart Functionality
-            var cartItems = JSON.parse(localStorage.getItem('cartItems')) || []; // Retrieve cart items from local storage or initialize it to an empty array
-            var cartCounter = cartItems.length; // Get the cart counter based on the number of items
+            // Function to update the cart counter
+            function updateCartCounter(counter) {
+                const cartCounter = document.querySelector('.cart-counter');
+                cartCounter.textContent = counter.toString();
+            }
 
-            // Display the cart counter
-            document.querySelector('.cart-counter').textContent = cartCounter;
+            // Fetch the cart count from the server
+            function fetchCartCount() {
+                fetch('{{ route("cart.count") }}')
+                    .then(response => response.json())
+                    .then(data => {
+                        updateCartCounter(data.count);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+
+            // Call fetchCartCount initially to get the current count
+            fetchCartCount();
+
+            function addItemToCart(foodName, unitPrice, foodId, userId) {
+                // console.log('Adding item to cart:', foodName, unitPrice, foodId);
+                            
+                // Adjust the URL and data structure based on your backend implementation
+                var url = '{{ route("cart.store") }}'; // Replace with the actual endpoint URL
+                var data = {
+                    food_id: foodId,
+                    quantity: 1,
+                    payment: 'Cash',
+                    order_type:'Dine In',
+                    user_id: userId,
+                    _token: '{{ csrf_token() }}'
+                };
+                            
+                // Perform an AJAX request to add the item to the cart
+                axios.post(url, data)
+                    .then(response => {
+                        if (response.data.success) {
+                            var cartCounterElement = document.querySelector('.cart-counter');
+                            var cartCounter = parseInt(cartCounterElement.textContent);
+                            cartCounter++;
+                            cartCounterElement.textContent = cartCounter;
+                            alert('Item added to cart successfully.');
+                        } else {
+                            alert('Error adding item to cart. Please try again.');
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        alert('Error adding item to cart. Please try again.');
+                    });
+            }
 
             // Get all the select buttons
             var selectButtons = document.querySelectorAll('.select-btn');
@@ -101,28 +152,16 @@
             // Add event listeners to each select button
             selectButtons.forEach(function(button) {
                 button.addEventListener('click', function() {
-                    // Add your logic to handle cart functionality
+                    // Get the relevant attributes from the button
                     var foodName = button.getAttribute('name');
                     var unitPrice = button.getAttribute('price');
-                    // var remarks = button.getAttribute('data-remarks');
-                    addItemToCart(foodName, unitPrice, remarks);
+                    var foodId = button.getAttribute('id');
+                    var userId = '{{ auth()->user()->id }}';
+
+                    // Add the item to the cart
+                    addItemToCart(foodName, unitPrice, foodId, userId);
                 });
             });
-
-            function addItemToCart(foodName, unitPrice, remarks) {
-                var item = {
-                    foodName: name,
-                    unitPrice: price,
-                    remarks: remarks
-                };
-
-                cartItems.push(item);
-                cartCounter++;
-                document.querySelector('.cart-counter').textContent = cartCounter;
-                localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Store the updated cart items in local storage
-                // Redirect to payment page with cart items as a parameter
-                window.location.href = '/payment?cartItems=' + encodeURIComponent(JSON.stringify(cartItems));
-            }
         });
     </script>
 
