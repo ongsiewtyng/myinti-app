@@ -36,9 +36,10 @@ class FoodSeeder extends Seeder
                 $image = $food[3];
                 $price = $this->getFoodPrice($category, $name);
 
-                DB::table('food')->insert([
+                DB::table('food')->firstOrCreate([
                     'category' => $category,
                     'name' => $name,
+                ], [
                     'description' => $description,
                     'availability' => $availability,
                     'image' => $image,
@@ -46,6 +47,7 @@ class FoodSeeder extends Seeder
                 ]);
             }
         }
+
     }
 
     /**
