@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class FoodSeeder extends Seeder
 {
@@ -13,39 +14,43 @@ class FoodSeeder extends Seeder
     public function run(): void
     {
         // Define the food categories and their corresponding names
+        // Define the food categories and their corresponding names
         $categories = [
-            'sandwiches' => ['Chicken Sandwich', 'Grilled or breaded chicken breast between two slices of bread or a bun with toppings like lettuce, tomato, and mayo.',true,'chicken sandwich ok.png'],
-                            ['Veggie Sandwich','Fresh vegetables like lettuce, tomato, cucumber, and onions on bread with optional additions like cheese or hummus.',true,'veggie sandwich ok.png'], 
-                            ['Grilled Cheese Sandwich','Melted cheese between two slices of grilled or toasted bread.',true,'grilled cheese ok.png'], 
-                            ['Nutella Sandwich','Two slices of bread with a generous spread of Nutella, a chocolate hazelnut spread.',true,'nutella ok.png'],
-            'burgers' => ['Hawaiian Burger','Mushroom Burger', 'Classic Burger', 'Veggie Burger'],
+            'sandwiches' => [
+                ['Chicken Sandwich', 'Grilled or breaded chicken breast between two slices of bread or a bun with toppings like lettuce, tomato, and mayo.', true, 'chicken sandwich ok.png'],
+                ['Veggie Sandwich', 'Fresh vegetables like lettuce, tomato, cucumber, and onions on bread with optional additions like cheese or hummus.', true, 'veggie sandwich ok.png'],
+                ['Grilled Cheese Sandwich', 'Melted cheese between two slices of grilled or toasted bread.', true, 'grilled cheese ok.png'],
+                ['Nutella Sandwich', 'Two slices of bread with a generous spread of Nutella, a chocolate hazelnut spread.', true, 'nutella ok.png'],
+            ],
+            'burgers' => ['Hawaiian Burger', 'Mushroom Burger', 'Classic Burger', 'Veggie Burger'],
             'noodles' => ['Spicy Korean Noodles', 'Tomyam Noodles', 'Instant Curry Noodles'],
-            'drinks' => ['Ice Milo', 'Ice Lemon Tea','Ice Tea', 'Ice Coffee','Orange Juice', 'Apple Juice'],
-            'fried rice' => ['Yong Chow Fried Rice', 'Ikan Bilis Fried Rice', 'Tom Yam Fried Rice','Garlic Fried Rice'],
-            'western food' => ['Chicken Chop','Fish and Chips','Grilled Chicken', 'Cordon Bleu'],
-            'snacks' => ['French Fries', 'Nachos','Popcorn','Fruit Cups','Chicken Wings'],
+            'drinks' => ['Ice Milo', 'Ice Lemon Tea', 'Ice Tea', 'Ice Coffee', 'Orange Juice', 'Apple Juice'],
+            'fried rice' => ['Yong Chow Fried Rice', 'Ikan Bilis Fried Rice', 'Tom Yam Fried Rice', 'Garlic Fried Rice'],
+            'western food' => ['Chicken Chop', 'Fish and Chips', 'Grilled Chicken', 'Cordon Bleu'],
+            'snacks' => ['French Fries', 'Nachos', 'Popcorn', 'Fruit Cups', 'Chicken Wings'],
             'wraps' => ['Chicken Caesar Wrap', 'Veggie Hummus Wrap', 'Spicy Buffalo Chicken Wrap'],
         ];
 
+
         // Seed the food data
         foreach ($categories as $category => $foods) {
-            foreach ($foods as $food) {
-                $name = $food[0];
-                $description = $food[1];
-                $availability = $food[2];
-                $image = $food[3];
+            foreach ($foods as [$name, $description, $available, $pic]) {
                 $price = $this->getFoodPrice($category, $name);
+                $now = Carbon::now();
 
                 DB::table('food')->insert([
                     'category' => $category,
                     'name' => $name,
                     'description' => $description,
-                    'availability' => $availability,
-                    'image' => $image,
+                    'available' => $available,
+                    'pic' => $pic,
                     'price' => $price,
+                    'created_at' => $now,
+                    'updated_at' => $now,
                 ]);
             }
         }
+
     }
 
     /**
