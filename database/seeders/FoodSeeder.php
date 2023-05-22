@@ -14,7 +14,10 @@ class FoodSeeder extends Seeder
     {
         // Define the food categories and their corresponding names
         $categories = [
-            'sandwiches' => ['Chicken Sandwich', 'Veggie Sandwich', 'Grilled Cheese Sandwich', 'Nutella Sandwich'],
+            'sandwiches' => ['Chicken Sandwich', 'Grilled or breaded chicken breast between two slices of bread or a bun with toppings like lettuce, tomato, and mayo.',true,'chicken sandwich ok.png'],
+                            ['Veggie Sandwich','Fresh vegetables like lettuce, tomato, cucumber, and onions on bread with optional additions like cheese or hummus.',true,'veggie sandwich ok.png'], 
+                            ['Grilled Cheese Sandwich','Melted cheese between two slices of grilled or toasted bread.',true,'grilled cheese ok.png'], 
+                            ['Nutella Sandwich','Two slices of bread with a generous spread of Nutella, a chocolate hazelnut spread.',true,'nutella ok.png'],
             'burgers' => ['Hawaiian Burger','Mushroom Burger', 'Classic Burger', 'Veggie Burger'],
             'noodles' => ['Spicy Korean Noodles', 'Tomyam Noodles', 'Instant Curry Noodles'],
             'drinks' => ['Ice Milo', 'Ice Lemon Tea','Ice Tea', 'Ice Coffee','Orange Juice', 'Apple Juice'],
