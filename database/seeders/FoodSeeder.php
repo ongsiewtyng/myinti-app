@@ -28,12 +28,20 @@ class FoodSeeder extends Seeder
         ];
 
         // Seed the food data
-        foreach ($categories as $category => $names) {
-            foreach ($names as $name) {
+        foreach ($categories as $category => $foods) {
+            foreach ($foods as $food) {
+                $name = $food[0];
+                $description = $food[1];
+                $availability = $food[2];
+                $image = $food[3];
                 $price = $this->getFoodPrice($category, $name);
+
                 DB::table('food')->insert([
                     'category' => $category,
                     'name' => $name,
+                    'description' => $description,
+                    'availability' => $availability,
+                    'image' => $image,
                     'price' => $price,
                 ]);
             }
