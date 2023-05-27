@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Admin;
 
 class LoginController extends Controller
 {
@@ -71,39 +72,36 @@ class LoginController extends Controller
     }
 
 
-    public function authenticate(Request $request)
-    {
+    public function authenticate(Request $request){
+        $login = $request->input('login');
+        $password = $request->input('password');
 
-        $user = User::where('email', $request->input('login'))->first();
-
-        if (!$user) {
-            $user = User::where('name', $request->input('login'))->first();
+        // Check if the login credentials belong to an admin
+        $admin = Admin::where('email', $login)->first();
+        if ($admin && Hash::check($password, $admin->password)) {
+            Auth::guard('admin')->login($admin, $request->boolean('remember-me'));
+            return redirect()->intended('/dashboard');
         }
 
-        if (!$user || !Hash::check($request->input('password'), $user->password)) {
-            RateLimiter::hit($this->throttleKey($request));
-
-            throw ValidationException::withMessages([
-                'login' => __('auth.failed'),
-            ]);
-        }
-
-        Auth::login($user, $request->boolean('remember-me'));
-        RateLimiter::hit($this->throttleKey($request));
-
-        $credentials = $request->only('login', 'password');
-        $remember = $request->filled('remember-me');
-
-        if (Auth::attempt($credentials, $remember)) {
-            $user = Auth::user();
+        // Check if the login credentials belong to a student (using email)
+        $student = User::where('email', $login)->first();
+        if ($student && Hash::check($password, $student->password)) {
+            Auth::guard('web')->login($student, $request->boolean('remember-me'));
             return redirect()->intended('/home');
-        } else {
-            return back()->withErrors([
-                'login' => 'Please re-enter your username or email correctly.',
-                'password'=>'The password you entered does not match',
-            ])->withInput();
         }
 
+        // Check if the login credentials belong to a student (using name)
+        $student = User::where('name', $login)->first();
+        if ($student && Hash::check($password, $student->password)) {
+            Auth::guard('web')->login($student, $request->boolean('remember-me'));
+            return redirect()->intended('/home');
+        }
+
+        // If the credentials don't match any admin or student, show an error
+        return back()->withErrors([
+            'login' => 'Please re-enter your username or email correctly.',
+            'password' => 'The password you entered does not match',
+        ])->withInput();
     }
 
     /**
@@ -115,4 +113,6 @@ class LoginController extends Controller
     {
         return Str::lower($request->input('email')).'|'.$request->ip();
     }
+    
+    
 }

@@ -9,7 +9,16 @@ use App\Models\Cart; // Import your Cart model
 
 class CafeController extends Controller
 {
-    //
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function drinks(){
         $category = 'Drinks';
         $foods = Food::where('category', $category)->get();
@@ -78,8 +87,4 @@ class CafeController extends Controller
         return view('cart.payment', compact('cartItems', 'foodItems'));
     }
 
-    
-
-    
-    
 }

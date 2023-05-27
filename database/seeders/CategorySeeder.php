@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class CategorySeeder extends Seeder
 {
@@ -15,18 +16,22 @@ class CategorySeeder extends Seeder
     public function run()
     {
         $categories = [
-            ['name' => 'Sandwiches', 'catpic' => 'sandwich.jpg'],
-            ['name' => 'Burgers', 'catpic' => 'burger.jpg'],
-            ['name' => 'Noodles', 'catpic' => 'noodles.jpg'],
-            ['name' => 'Drinks', 'catpic' => 'drinks.png'],
-            ['name' => 'Fried Rice', 'catpic' => 'fried rice.jpg'],
-            ['name' => 'Western Food', 'catpic' => 'western food.jpg'],
-            ['name' => 'Snacks', 'catpic' => 'snacks.jpg'],
-            ['name' => 'Wraps', 'catpic' => 'wraps.jpg'],
+            ['category' => 'Sandwiches', 'catpic' => 'sandwich.jpg'],
+            ['category' => 'Burgers', 'catpic' => 'burgers.jpg'],
+            ['category' => 'Noodles', 'catpic' => 'noodles.jpg'],
+            ['category' => 'Drinks', 'catpic' => 'drinks.png'],
+            ['category' => 'Fried Rice', 'catpic' => 'fried rice.jpg'],
+            ['category' => 'Western Food', 'catpic' => 'western food.jpg'],
+            ['category' => 'Snacks', 'catpic' => 'snacks.png'],
+            ['category' => 'Wraps', 'catpic' => 'wraps.jpg'],
         ];
 
+        $currentTimestamp = Carbon::now();
+
         foreach ($categories as $category) {
-            DB::table('categories')->insert($category);
+            $category['created_at'] = $currentTimestamp;
+            $category['updated_at'] = $currentTimestamp;
+            DB::table('category')->insert($category);
         }
     }
 }

@@ -21,7 +21,7 @@
                     </div>
                     <button type="submit">Log in</button>
                     <div class="student">
-                        <p>Student? <a href="{{ route('login') }}">Login Here</a></p>
+                        <p>Student? <a href="{{ route('/') }}">Login Here</a></p>
                     </div>
                 </form>
             </div>

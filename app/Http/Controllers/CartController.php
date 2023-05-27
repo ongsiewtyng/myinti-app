@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Food;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Items;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -15,6 +16,16 @@ use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(){
         // Retrieve all items in the cart with eager loading of the foodItem relationship
         $cartItems = Cart::with('foodItem')->get();
@@ -142,61 +153,78 @@ class CartController extends Controller
 
         try {
             // Start a database transaction
-            DB::beginTransaction();
+            // DB::beginTransaction();
 
             $userId = auth()->user()->id;
 
             // Retrieve the cart items and calculate the total price
             $cartItems = Cart::where('user_id', $userId)->get();
-            $total = $cartItems->sum('total');
+            
+            // $quantity = $cartItems->sum('quantity');
 
-            // Create an order record
-            $orderData = [
+            //Create a row for order
+            $newOrder = [
                 'user_id' => $userId,
-                'total' => $total,
-                'status' => 'pending',
+                // Other order data (e.g., shipping address, etc.)
             ];
 
-            if ($cartItems->isNotEmpty()) {
-                $firstCartItem = $cartItems->first();
-                $orderData['payment'] = $firstCartItem->payment;
-                $orderData['order_type'] = $firstCartItem->order_type;
-                $orderData['food_id'] = $firstCartItem->food_id;
+            // Create the order
+            $order = Order::create($newOrder);
+            //get the id for newly created order
+            $orderId = $order->id;
+
+            // Create an order record
+            foreach ($cartItems as $cartItem) {
+                // Create an order record for each cart item
+                $orderData = [
+                    'user_id' => $userId,
+                    'total' => $cartItem->total,
+                    'status' => 'Pending',
+                    'order_id' => $orderId,
+                    'payment' => $cartItem->payment,
+                    'order_type' => $cartItem->order_type,
+                    'food_id' => $cartItem->food_id,
+                    'quantity' => $cartItem->quantity,
+                    // Other order data (e.g., shipping address, etc.)
+                ];
+        
+                // Create the item
+                $order = Items::create($orderData);
+
+
+                // Update the cart items with the order ID and retrieve the ordered items data
+                $orderedItems = $cartItems->map(function ($cartItem) use ($order) {
+                    // $cartItem->order_id = $order->id;
+                    $cartItem->save();
+
+                    return [
+                        // 'order_id' => $order->id,
+                        'quantity' => $cartItem->quantity,
+                        'food_name' => $cartItem->food->name,
+                    ];
+                });
             }
 
-            $order = Order::create($orderData);
-
-            // Update the cart items with the order ID and retrieve the ordered items data
-            $orderedItems = $cartItems->map(function ($cartItem) use ($order) {
-                $cartItem->order_id = $order->id;
-                $cartItem->save();
-
-                return [
-                    'order_id' => $order->id,
-                    'quantity' => $cartItem->quantity,
-                    'food_name' => $cartItem->food->name,
-                ];
-            });
-
             // Commit the transaction
-            DB::commit();
+            // DB::commit();
 
             // Clear the cart by deleting all cart items for the current user
-            Cart::where('user_id', $userId)->delete();
+            $delete = Cart::where('user_id', $userId)->delete();
 
             // Perform any additional actions (e.g., sending email notifications, etc.)
 
             // Redirect the user to the order confirmation page or display a success message
             return redirect()
-                ->route('cart.confirmation', ['id' => $order->id])
+                ->route('cart.confirmation', ['id' => $orderId])
                 ->with('success', 'Order placed successfully.')
                 ->with('orderedItems', $orderedItems);
         } catch (\Exception $e) {
             // An error occurred, rollback the transaction
-            DB::rollback();
-
+            // DB::rollback();
+            // Log the error
+            dd($e);
             // Handle the error appropriately (e.g., log the error, display an error message)
-            return redirect()->back()->with('error', 'An error occurred while processing the order. Please try again.');
+            // return redirect()->back()->with('error', 'An error occurred while processing the order. Please try again.');
         }
     }
 
@@ -205,24 +233,27 @@ class CartController extends Controller
     public function confirmation($id){
         // Retrieve the order based on the provided ID
         $order = Order::findOrFail($id);
+        $items = Items::where('order_id', $id)->get();
+        $total = $items->sum('total');
 
         // You can perform any necessary logic or data retrieval here
+        $food = Food::where("id",$order->food_id)->get();
         
 
         // Pass the order data to the view for displaying the confirmation page
-        return view('cart.confirmation', compact('order'));
+        return view('cart.confirmation', compact('order', 'food','total', 'items'));
     }
 
-    public function showOrder($orderId){
-        // Retrieve the order
-        $order = Order::findOrFail($orderId);
+    // public function showOrder($orderId){
+    //     // Retrieve the order
+    //     $order = Order::findOrFail($orderId);
 
-        // Retrieve the ordered food items
-        $orderedItems = $order->foods;
+    //     // Retrieve the ordered food items
+    //     $orderedItems = $order->foods;
 
-        // Pass the order and ordered items to the view
-        return view('cart.confirmation', compact('order', 'orderedItems'));
-    }
+    //     // Pass the order and ordered items to the view
+    //     return view('cart.confirmation', compact('order', 'orderedItems'));
+    // }
 
 
 

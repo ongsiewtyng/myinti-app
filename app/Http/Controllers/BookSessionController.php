@@ -9,7 +9,17 @@ use Illuminate\Support\Facades\Auth; // Import the Auth facade
 
 
 class BookSessionController extends Controller
-{       
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index() {
         // Get the facility object for the requested session
         $facilities = Facility::all();

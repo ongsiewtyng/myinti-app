@@ -58,12 +58,12 @@
                         $categoryMap = [
                             'Burgers' => 'cafeBurgers',
                             'Drinks' => 'cafeDrinks',
-                            'Fried rice' => 'cafeFried',
+                            'Fried Rice' => 'cafeFried',
                             'menu' => 'cafeMenu',
                             'Noodles' => 'cafeNoodles',
                             'Sandwiches' => 'cafeSandwiches',
                             'Snacks' => 'cafeSnacks',
-                            'Western food' => 'cafeWestern',
+                            'Western Food' => 'cafeWestern',
                             'Wraps' => 'cafeWraps',
                         ];
 
@@ -227,10 +227,10 @@
 <style>
     .food-menu {
         position: relative;
-        left: 200px;
+        left: 70px;
         background-color: var(--panel-color);
         min-height: 100vh;
-        width: calc(100% - 250px);
+        width: calc(100% - 80px);
         padding: 10px 14px;
         transition: var(--tran-05);
     }

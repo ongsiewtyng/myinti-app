@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Items extends Model
 {
     use HasFactory;
 
-    protected $table = 'order';
+    protected $table = 'items';
 
     protected $fillable = [
-        'user_id',
+        'order_id',
         'total',
         'payment',
         'order_type',
@@ -23,26 +23,13 @@ class Order extends Model
         // Add other fillable fields here
     ];
 
-    public function user()
+    public function order()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function items()
-    {
-        return $this->belongsToMany(Cart::class)->withPivot('quantity', 'price');
+        return $this->belongsTo(Order::class);
     }
 
     public function food()
     {
         return $this->belongsTo(Food::class);
     }
-
-    public function item()
-    {
-        return $this->hasMany(Items::class);
-    }
-
-    
-
 }

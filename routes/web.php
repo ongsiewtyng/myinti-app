@@ -20,11 +20,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('register');
+Route::post('/register', [App\Http\Controllers\Auth ::class, 'create'])->name('register');
 Route::post('/authenticate', [App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('authenticate');
+
 Route::post('/reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class,'reset'])->name('password.update');
 
-Route::get('/admin', [App\Http\Controllers\Auth\AdminController::class, 'index'])->name('admin');
+
+Route::get('/admin', [App\Http\Controllers\Auth\AdminController::class, 'admin'])->name('admin');
+Route::post('/access', [App\Http\Controllers\Auth\AdminController::class, 'access'])->name('access');
 Route::match(['get', 'post'], '/dashboard', [App\Http\Controllers\Auth\AdminController::class, 'home'])->name('dashboard');
 Route::get('/food', [App\Http\Controllers\Auth\AdminController::class, 'food'])->name('food');
 Route::post('/add-category', [App\Http\Controllers\Auth\AdminController::class, 'addCategory'])->name('add-category');
@@ -35,11 +38,14 @@ Route::put('/food/update/{id}', [App\Http\Controllers\Auth\AdminController::clas
 Route::get('/approval', [App\Http\Controllers\Auth\AdminController::class, 'approval'])->name('approval');
 Route::get('/booking', [App\Http\Controllers\Auth\AdminController::class, 'booking'])->name('booking');
 Route::get('/message', [App\Http\Controllers\Auth\AdminController::class, 'message'])->name('message');
+Route::get('/order', [App\Http\Controllers\Auth\AdminController::class, 'order'])->name('order');
 
 Route::get('/profile/edit/{id}', [App\Http\Controllers\EditProfileController::class, 'edit'])->name('menus.edit-profile');
 Route::put('update/{id}',[App\Http\Controllers\EditProfileController::class,'update'])->name('update');
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::get('/about', [App\Http\Controllers\AboutController::class, 'index'])->name('about');
+Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('order.history');
+Route::get('/orders/{id}', [App\Http\Controllers\OrderController::class, 'details'])->name('order.details');
 
 Route::get('/service1',[App\Http\Controllers\ServicesController::class,'service1'])->name('service1');
 

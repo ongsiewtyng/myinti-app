@@ -20,9 +20,6 @@
     <section>
         <div class="form-box">
             <div class="form-value">
-                <div class="admin">
-                    <a href="{{ route('admin')}}">Admin</a>
-                </div>
                 <form method="POST" action="{{ route('authenticate') }}">
                     @csrf
                     <h2>Login</h2>
@@ -50,11 +47,7 @@
                     </div>
                     <button type="submit">Log in</button>
                     <div class="fpass">
-                    @if(auth()->check())
-                        <a href="{{ route('password.request', ['email' => auth()->user()->email]) }}">Forget Password</a>
-                    @else
                         <a href="{{ route('password.request') }}">Forget Password</a>
-                    @endif
                     </div>
                     <div class="register">
                         <p>New Student? <a href="{{ route('register') }}">Register</a></p>

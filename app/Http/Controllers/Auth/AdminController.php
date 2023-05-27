@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
 use App\Models\User;
 use App\Models\Food;
+use App\Models\Order;
+use App\Models\Items;
 use App\Models\Category;
 
 class AdminController extends Controller
@@ -47,12 +49,11 @@ class AdminController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest:admin')->except('logout');
-    }
-
-    public function index()
+    // public function __construct()
+    // {
+    //     $this->middleware('guest')->except('logout');
+    // }
+    public function admin()
     {
         return view('admin.admin');
     }
@@ -195,6 +196,11 @@ class AdminController extends Controller
         return view('admin.message');
     }
 
+    public function order(){
+
+        return view('admin.order');
+    }
+
     public function getTotalStudents()
     {
         $totalStudents = User::whereNotNull('created_at')->count();
@@ -202,7 +208,6 @@ class AdminController extends Controller
         return $totalStudents;
     }
 
-    
 
     /**
      * Get the validation rules that apply to the request.
@@ -212,38 +217,30 @@ class AdminController extends Controller
     public function rules()
     {
         return [
-            'login' => ['required', 'string'],
+            'email' => ['required', 'string'],
             'password' => ['required', 'string','min:6'],
         ];
     }
 
-
-    public function verified(Request $request)
+    public function access(Request $request)
     {
-    $admin = Admin::where('email', $request->input('login'))->first();
-
-    if (!$admin || !Hash::check($request->input('password'), $admin->password)) {
-        RateLimiter::hit($this->throttleKey($request));
-
-        throw ValidationException::withMessages([
-            'login' => __('auth.failed'),
+        $request->validate([
+            'email' => 'required|email',
+            'password'=> 'required|min:6'
         ]);
-    }
 
-    Auth::guard('admin')->login($admin, $request->boolean('remember-me'));
-    RateLimiter::hit($this->throttleKey($request));
+        $admin = Admin::where('email', $request->email)->first();
 
-    $credentials = $request->only('login', 'password');
-    $remember = $request->filled('remember-me');
+        if(!$admin){
+            return redirect()->back()->with('error', 'Invalid credentials');
+        }
 
-    if (Auth::guard('admin')->attempt($credentials, $remember)) {
-        $admin = Auth::guard('admin')->user();
-        return redirect()->route('admin/dashboard');
-    } else {
-        return back()->withErrors([
-            'login' => 'The provided credentials do not match our records.',
-        ])->withInput();
-    }
+        if(Hash::check($request->password, $admin->password)){
+            Auth::guard('admin')->login($admin);
+            return redirect()->intended('/dashboard');
+        }else{
+            return redirect()->back()->with('error', 'Invalid credentials');
+        }
     }
 
 

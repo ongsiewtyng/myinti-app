@@ -47,4 +47,11 @@ class ResetPasswordController extends Controller
         $user->save();
         
     }
+
+    public function resetPasswordForm($token)
+    {
+        return view('password.request', ['token' => $token]);
+    }
+
+    
 }

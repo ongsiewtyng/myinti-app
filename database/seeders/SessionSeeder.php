@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class SessionSeeder extends Seeder
 {
@@ -34,7 +35,9 @@ class SessionSeeder extends Seeder
                 $insert_data[] = [
                     'f_id' => $i,
                     'time' => $time_slot,
-                    'booked' => 0
+                    'booked' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
                 ];
                 $current_time += $duration + $interval;
             }

@@ -21,9 +21,9 @@ return new class extends Migration
             $table->unsignedBigInteger('food_id');
             $table->foreign('food_id')->references('id')->on('food')->onDelete('cascade');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
-            $table->unsignedBigInteger('order_id')->nullable();
-            $table->foreign('order_id')->references('id')->on('order')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->unsignedBigInteger('order_id')->nullable();
+            // $table->foreign('order_id')->references('id')->on('order')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -5,26 +5,82 @@
         <h1>Order Details</h1>
 
         <p>Order ID: {{ $order->id }}</p>
-        <p>Total: RM {{ $order->total }}</p>
+        <p>Total: RM {{ $total }}</p>
 
         <h2>Ordered Items</h2>
-        @php
-            $orderedItems = session('orderedItems');
-        @endphp
 
-        <ul>
-        @if ($orderedItems)
-            @foreach ($orderedItems as $orderedItem)
-                <p>Food Name: {{ $orderedItem['food_name'] }}</p>
-                <p>Quantity: {{ $orderedItem['quantity'] }}</p>
-            @endforeach
-        @endif
+        <ul class="item-list">
+                @foreach ($items as $item)
+            <li>
+                <span class="item-name">{{ $item->food->name }}</span><br>
+                @php
+                    $categoryMap = [
+                        'Burgers' => 'cafeBurgers',
+                        'Drinks' => 'cafeDrinks',
+                        'Fried Rice' => 'cafeFried',
+                        'menu' => 'cafeMenu',
+                        'Noodles' => 'cafeNoodles',
+                        'Sandwiches' => 'cafeSandwiches',
+                        'Snacks' => 'cafeSnacks',
+                        'Western Food' => 'cafeWestern',
+                        'Wraps' => 'cafeWraps',
+                    ];
+
+                    $defaultCategory = 'cafeSandwiches'; // Default directory
+                    $categoryDirectory = $categoryMap[$item->food->category] ?? $defaultCategory;
+                    $imagePath = "{$categoryDirectory}/{$item->food->pic}";
+                @endphp
+                <img src="{{ asset($imagePath) }}" alt="Food Image" class="item-pic"><br>
+                <span class="item-price">Price: RM {{ $item->food->price }}</span><br>
+                <span class="item-quantity">Quantity: {{ $item->quantity }}</span>
+            </li>
+        @endforeach
         </ul>
 
-
         <!-- Display any other relevant order details here -->
-
-
-        <p>Thank you for your order!</p>
+        
+        <p class="thanks">Thank you for your order!</p>
+        <!-- Add a button to go back home -->
+        <a href="{{ route('home') }}" class="btn btn-primary">Back to Home</a>
+        <a href="{{ route('order.history') }}" class="btn btn-primary">Order History</a>
     </div>
 @endsection
+
+@section('styles')
+<style>
+    .item-list {
+        list-style-type: none;
+        padding: 10px;
+        margin: 0;
+    }
+
+    .item-list li {
+        margin-bottom: 10px;
+    }
+
+    .item-name {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .item-pic {
+        max-width: 20%;
+        height: auto;
+        margin-bottom: 5px;
+    }
+
+    .item-price,
+    .item-quantity {
+        font-size: 14px;
+    }
+
+    .thanks {
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        background-color:#FFF672;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+</style>

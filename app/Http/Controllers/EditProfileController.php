@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Hash;
 class EditProfileController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Show the form for editing the user's profile.
      *
      * @return \Illuminate\View\View

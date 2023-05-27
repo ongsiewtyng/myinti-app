@@ -12,6 +12,16 @@ use App\Models\Category; // Import your Category model
 
 class ServicesController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function service1(){
         // Retrieve the users' data
         $users = User::all();

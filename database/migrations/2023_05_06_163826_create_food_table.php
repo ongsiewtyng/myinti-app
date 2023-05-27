@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('catpic')->nullable();
             $table->string('name')->nullable();
             $table->string('price')->nullable();
-            $table->string('image')->nullable();
-            $table->string('description')->nullable();
+            $table->string('pic')->nullable();
+            $table->longText('description')->nullable();
             $table->boolean('available')->nullable();
             $table->string('order_id')->nullable();
             $table->timestamps();

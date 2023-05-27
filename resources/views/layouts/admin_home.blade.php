@@ -314,7 +314,7 @@
             left: 20px;
         }
 
-        .home{
+        /* .home{
             position: absolute;
             top: 0;
             top: 0;
@@ -335,10 +335,19 @@
             left: 78px;
             height: 100vh;
             width: calc(100% - 78px);
-        }
+        } */
         
-        body.dark .home .text{
+        body.dark .content .text{
             color: var(--text-color);
+        }
+
+        .content {
+            margin-left: 250px; /* Adjust this value based on your sidebar width */
+            transition: margin-left var(--tran-05);
+        }
+
+        .sidebar.close ~ .content {
+            margin-left: 88px; /* Adjust this value based on your collapsed sidebar width */
         }
         
     </style>
@@ -397,17 +406,17 @@
                             <span class="text nav-text">Facility Booking</span>
                         </a>
                     </li>
-                    <!-- <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-wallet icon' ></i>
-                            <span class="text nav-text">Wallets</span>
+                    <li class="nav-link">
+                        <a href="{{ route('order') }}">
+                            <i class='bx bx-receipt icon' ></i>
+                            <span class="text nav-text">Order History</span>
                         </a>
-                    </li> -->
+                    </li>
                 </ul>
             </div>
             <div class="bottom-content">
                 <li class="">
-                    <a href="{{ route('admin') }}" >
+                    <a href="{{ route('login') }}" >
                         <i class='bx bx-log-out icon' ></i>
                         <span class="text nav-text">Logout</span>
                     </a>
@@ -427,7 +436,7 @@
         </div>
     </nav>
 
-    <main class="">
+    <main class="content">
         @yield('content')
     </main>
 </body>
@@ -440,8 +449,7 @@
             const searchBtn = body.querySelector(".search-box");
             const modeSwitch = body.querySelector(".toggle-switch");
             const modeText = body.querySelector(".mode-text");
-            const dashboard = document.getElementById('dashboard');
-            const foodMenu = document.getElementById('food-menu');
+            const content = body.querySelector(".content")
         
 
             toggle.addEventListener("click", () => {
@@ -467,10 +475,10 @@
             // Function to handle sidebar open/close event
             function handleSidebarToggle() {
                 const isSidebarOpen = !sidebar.classList.contains("close");
-                const sidebarWidth = isSidebarOpen ? 250 : 150; // Adjust the values based on your sidebar width and closed state
+                const sidebarWidth = isSidebarOpen ? 250 : 88; // Adjust these values based on your sidebar width and collapsed state
 
-                dashboard.style.left = `${sidebarWidth}px`;
-                foodMenu.style.left = `${sidebarWidth}px`;
+                const content = document.querySelector('.content');
+                content.style.marginLeft = `${sidebarWidth}px`;
             }
 
             handleSidebarToggle();
