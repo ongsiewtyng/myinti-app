@@ -22,8 +22,10 @@
                                 <td>{{ $order->created_at }}</td>
                                 <td>{{ $total }}</td>
                                 <td>
-                                    <div class = "box">
-                                        <span class="status">{{ $status[0] }}</span>
+                                    <div class="box">
+                                        <span class="status {{ $items->where('order_id', $order->id)->contains('status', 'completed') ? 'text-success' : 'text-warning' }}">
+                                            {{ $items->where('order_id', $order->id)->contains('status', 'completed') ? 'Completed' : 'Pending' }}
+                                        </span>
                                     </div>
                                 </td>
                                 <td><a href="{{ route('order.details', ['id' => $order->id]) }}">View</a></td>
@@ -36,16 +38,25 @@
                 @endif
             </div>
         </div>
+    </div>
+
 @endsection
 
 @section('styles')
 <style>
-    .box {
-        background-color: red;
-        color:white;
+   .box {
         border-radius: 7px;
         padding: 5px 10px;
         display: inline-block;
+        font-weight: bold;
+    }
+
+    .text-success {
+        background-color: white;
+    }
+
+    .text-warning {
+        background-color: white;
     }
 
     

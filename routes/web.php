@@ -20,9 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/register', [App\Http\Controllers\Auth ::class, 'create'])->name('register');
+Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('register');
 Route::post('/authenticate', [App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('authenticate');
-
 Route::post('/reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class,'reset'])->name('password.update');
 
 
@@ -39,6 +38,8 @@ Route::get('/approval', [App\Http\Controllers\Auth\AdminController::class, 'appr
 Route::get('/booking', [App\Http\Controllers\Auth\AdminController::class, 'booking'])->name('booking');
 Route::get('/message', [App\Http\Controllers\Auth\AdminController::class, 'message'])->name('message');
 Route::get('/order', [App\Http\Controllers\Auth\AdminController::class, 'order'])->name('order');
+Route::post('/update-status', [App\Http\Controllers\Auth\AdminController::class,'updateStatus'])->name('updateStatus');
+
 
 Route::get('/profile/edit/{id}', [App\Http\Controllers\EditProfileController::class, 'edit'])->name('menus.edit-profile');
 Route::put('update/{id}',[App\Http\Controllers\EditProfileController::class,'update'])->name('update');

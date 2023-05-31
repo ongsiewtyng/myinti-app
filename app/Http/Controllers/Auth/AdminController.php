@@ -197,9 +197,37 @@ class AdminController extends Controller
     }
 
     public function order(){
-
-        return view('admin.order');
+        $orders = Order::all();
+        $items = Items::all();
+        $food = Food::all();
+        
+        return view('admin.order', compact('orders', 'items', 'food'));
     }
+
+    public function updateStatus(Request $request){
+        $orderId = $request->input('order_id');
+
+        // Retrieve all items with the given order_id
+        $items = Items::where('order_id', $orderId)->get();
+
+        if ($items->isNotEmpty()) {
+            // Determine the new status based on the current status of the first item
+            $currentStatus = $items->first()->status;
+            $newStatus = $currentStatus === 'completed' ? 'pending' : 'completed';
+
+            // Update the status of all items with the given order_id
+            $items->each(function ($item) use ($newStatus) {
+                $item->status = $newStatus;
+                $item->save();
+            });
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
+    }
+
+    
 
     public function getTotalStudents()
     {
