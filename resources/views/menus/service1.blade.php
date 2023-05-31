@@ -1,83 +1,114 @@
 @extends('layouts.main')
 
 @section('content')
+@if(session('success'))
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="alert alert-success text-center">
+                {{ session('success') }}
+            </div>
+        </div>
+    </div>
+@endif
 <body>
-    <div class="header">
-        <h1>Host Your Dream Event on Campus</h1>
-        <div class="line"></div>
-    </div>
-    <div class="container">
-        <p>If you're looking to host an event on campus, you're in the right place. Our platform provides a comprehensive event proposal system that streamlines the process of getting your event approved by the university.</p>
-        <p2>Fill out the form below to submit your event proposal and take the first step towards hosting your dream event on campus!</p2>
-    </div>
-    <div class = "img1">
-        <img src = "{{ asset('image/pic1.png') }}">
-    </div>
-    <div class = "img2">
-        <img src = "{{ asset('image/pic2.png') }}">
-    </div>
-    <div class="form">
-        <form action="/submit-proposal" method="post">
-            @csrf <!-- add CSRF token for security -->
-            <div id="hidden-form" style="display: none;">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="hidden" class="form-control" id="name" name="name" value="{{ $user->name }}">
-                </div>
+    <div class="container text-center">
+        <div class="header">
+            <h1>Host Your Dream Event on Campus</h1>
+            <div class="line"></div>
+        </div>
 
-                <div class="form-group">
-                    <label for="student-id">Student ID:</label>
-                    <input type="hidden" class="form-control" id="student-id" name="student_id" value="{{ $user->studentid }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="club-name">Club Name:</label>
-                <input type="text" class="form-control" id="club-name" name="club_name" required>
-            </div>
-            <div class="form-group">
-                <label for="event-title">Event Title:</label>
-                <input type="text" class="form-control" id="event-title" name="event_title" required>
-            </div>
-            <div class="form-group">
-                <label for="event-start-date">Event Start Date:</label>
-                <input type="date" class="form-control" id="event-start-date" name="event_start_date" required>
-            </div>
-
-            <div class="form-group">
-                <label for="event-end-date">Event End Date:</label>
-                <input type="date" class="form-control" id="event-end-date" name="event_end_date" required>
-            </div>
-
-            <div class="form-group">
-                <label for="event-start-time">Event Start Time:</label>
-                <input type="time" class="form-control" id="event-start-time" name="event_start_time" required>
-            </div>
-
-            <div class="form-group">
-                <label for="event-end-time">Event End Time:</label>
-                <input type="time" class="form-control" id="event-end-time" name="event_end_time" required>
-            </div>
-            <div class="form-group">
-                <label for="urgency">How urgent do you need this event to be approved?</label>
-                <select class="form-control" id="urgency" name="urgency" required>
-                <option value="">Select urgency</option>
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="document">Attach Document:</label>
-                <label class="document-container" for="document">
-                    <ion-icon name="document-outline" id="logo" alt="Attach Document" style="cursor:pointer;"></ion-icon>
-                    <span id="document-label">Select files</span>
-                    <input type="file" class="form-control" id="document" name="document[]" style="display: none;" multiple required>
-                </label>
-                <div id="file-preview"></div>
-            </div>
-            <button type="submit" class="btn btn-primary" id="submit-button" style = "background: #5E5BFF">Submit Proposal</button>
-        </form>
+        <div class="mt-4">
+            <p>If you're looking to host an event on campus, you're in the right place. Our platform provides a comprehensive event proposal system that streamlines the process of getting your event approved by the university.</p>
+            <p2>Fill out the form below to submit your event proposal and take the first step towards hosting your dream event on campus!</p2>
+        </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="img1">
+                <img src="{{ asset('image/pic1.png') }}" class="img-fluid">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="img2">
+                <img src="{{ asset('image/pic2.png') }}" class="img-fluid">
+            </div>
+        </div>
+    </div>
+
+        <div class="container">
+            <div class="form">
+                <form action="{{ route('submit.proposal') }}" method="POST" enctype="multipart/form-data">
+                    @csrf <!-- add CSRF token for security -->
+
+                    <div class="form-group">
+                        <label for="club-name">Club Name:</label>
+                        <select class="form-control" id="club-name" name="club_name" required>
+                            <option value="">Select a club</option>
+                            <option value="club1">Japanese ACG Society</option>
+                            <option value="club2">Nerf Club</option>
+                            <option value="club3">24 Festive Drums</option>
+                            <option value="club4">Dance Club</option>
+                            <option value="club5">Lions Club</option>
+                            <option value="club6">BYIC Society</option>
+                            <option value="club7">Debate Club</option>
+                            <option value="club8">Chess Club</option>
+                            <option value="club9">IT Club</option>
+                            <option value="club10">INTIMA</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event-title">Event Title:</label>
+                        <input type="text" class="form-control" id="event-title" name="event_title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="start-date">Event Start Date:</label>
+                        <input type="date" class="form-control" id="start-date" name="start_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="end-date">Event End Date:</label>
+                        <input type="date" class="form-control" id="end-date" name="end_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="start-time">Event Start Time:</label>
+                        <input type="time" class="form-control" id="start-time" name="start_time" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="end-time">Event End Time:</label>
+                        <input type="time" class="form-control" id="end-time" name="end_time" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="urgency">How urgent do you need this event to be approved?</label>
+                        <select class="form-control" id="urgency" name="urgency" required>
+                            <option value="">Select urgency</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="document">Attach Document:</label>
+                        <label class="document-container" for="document">
+                            <ion-icon name="document-outline" id="logo" alt="Attach Document" style="cursor:pointer;"></ion-icon>
+                            <span id="document-label">Select files</span>
+                            <input type="file" class="form-control" id="document" name="document[]" style="display: none;" multiple required>
+                        </label>
+                        <div id="file-preview"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="submit-button" style="background: #5E5BFF">Submit Proposal</button>
+                </form>
+            </div>
+        </div>
+
     <script>
         const input = document.getElementById('document');
         const label = document.getElementById('document-label');
@@ -114,7 +145,7 @@
 
                 // Create the file name element
                 const fileName = document.createElement('span');
-                fileName.style.height = '10px';
+                fileName.style.height = '12px';
                 fileName.textContent = file.name;
                 filePreviewItem.appendChild(fileName);
 
@@ -175,7 +206,7 @@
         font-size: 16px;
         line-height: 1.5;
         margin: 0;
-        padding: 0;
+        padding: 10px;
     }
     .file-logo {
         margin-right: -4px;

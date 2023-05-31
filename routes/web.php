@@ -43,12 +43,16 @@ Route::post('/update-status', [App\Http\Controllers\Auth\AdminController::class,
 
 Route::get('/profile/edit/{id}', [App\Http\Controllers\EditProfileController::class, 'edit'])->name('menus.edit-profile');
 Route::put('update/{id}',[App\Http\Controllers\EditProfileController::class,'update'])->name('update');
+
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
+Route::post('/contact/submit', [App\Http\Controllers\ContactController::class, 'submitForm'])->name('contact.submit');
+
 Route::get('/about', [App\Http\Controllers\AboutController::class, 'index'])->name('about');
 Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('order.history');
 Route::get('/orders/{id}', [App\Http\Controllers\OrderController::class, 'details'])->name('order.details');
 
-Route::get('/service1',[App\Http\Controllers\ServicesController::class,'service1'])->name('service1');
+Route::get('/service1',[App\Http\Controllers\EventController::class,'service1'])->name('service1');
+Route::post('/submit-proposal', [App\Http\Controllers\EventController::class, 'submitProposal'])->name('submit.proposal');
 
 Route::get('/service2',[App\Http\Controllers\ServicesController::class,'service2'])->name('service2');
 Route::get('/drinks',[App\Http\Controllers\CafeController::class,'drinks'])->name('drinks');
@@ -72,7 +76,7 @@ Route::get('/cart/count', [App\Http\Controllers\CartController::class,'count'])-
 Route::match(['get', 'post'], '/cart/checkout', [App\Http\Controllers\CartController::class, 'checkout'])->name('cart.checkout');
 Route::get('/cart/confirmation/{id}', [App\Http\Controllers\CartController::class, 'confirmation'])->name('cart.confirmation');
 
-// Route::get('/payment',[App\Http\Controllers\CartController::class,'showPayment'])->name('payment');
+
 Route::get('/service3',[App\Http\Controllers\ServicesController::class,'service3'])->name('service3');
 Route::get('/confirmBooking',[App\Http\Controllers\BookSessionController::class,'index'])->name('confirmBooking');
 Route::get('/confirmBooking/{id}/{time}', [App\Http\Controllers\BookSessionController::class, 'confirmBooking'])->name('confirmBooking');

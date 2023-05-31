@@ -8,31 +8,41 @@
     </div>
 </head>
 <body>
-    <div class="paragraph">
-        <p>New Service? Complaint? Bug? Feedback?</p>
-        <p>Please fill in the form and let us know your concern about the site.We'll get back to you as soon as possible.</p>
+    <div class="container">
+        <div class="paragraph">
+            <p>New Service? Complaint? Bug? Feedback?</p>
+            <p>Please fill in the form and let us know your concern about the site. We'll get back to you as soon as possible.</p>
+        </div>
+        <div class="form">
+            <form action="{{ route('contact.submit') }}" method="post">
+                @csrf <!-- add CSRF token for security -->
+                <div class="form-group mb-3">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" required value="{{ $name }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" required value="{{ $email }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="subject">What is your message about?</label>
+                    <select class="form-control" id="subject" name="subject">
+                        <option value="New service in college">New service in college</option>
+                        <option value="Complaint">Complaint</option>
+                        <option value="Bug">Bug</option>
+                        <option value="Feedback">Feedback</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="message">Describe your message:</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
     </div>
-    <div class="form">
-    <form action="/submit-proposal" method="post">
-        @csrf <!-- add CSRF token for security -->
-        <label for="name" style="font-size: 20px; font-weight: bold;">Name:</label><br>
-        <input type="text" id="name" name="name" required style="width: 100%; padding: 10px; border-radius: 5px; border: none;"><br><br>
-        <label for="email" style="font-size: 20px; font-weight: bold;">Email:</label><br>
-        <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; border-radius: 5px; border: none;"><br><br>
-        <label for="subject" style="font-size: 20px; font-weight: bold;">What is your message about?</label><br>
-        <select id="subject" name="subject" style="width: 100%; padding: 10px; border-radius: 5px; border: none;">
-            <option value="New service in college">New service in college</option>
-            <option value="Complaint">Complaint</option>
-            <option value="Bug">Bug</option>
-            <option value="Feedback">Feedback</option>
-        </select><br><br>
-        <label for="message" style="font-size: 20px; font-weight: bold;">Describe your message:</label><br>
-        <textarea id="message" name="message" rows="4" cols="50" required style="width: 100%; padding: 10px; border-radius: 5px; border: none;"></textarea><br><br>
-        <button type="submit" class="btn btn-primary" style="background: #5E5BFF; border-radius: 5px; border: none;">Submit</button>
-  </form>
-</div>
-
 </body>
+
 
 @endsection
 

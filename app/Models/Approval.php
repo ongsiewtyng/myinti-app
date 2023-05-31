@@ -5,7 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class approval extends Model
+class Approval extends Model
 {
     use HasFactory;
+
+    protected $table = 'approval';
+
+    protected $fillable = [
+        'club_name', 
+        'event_title', 
+        'start_date', 
+        'end_date', 
+        'start_time', 
+        'end_time', 
+        'urgency'
+    ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    
+
 }
