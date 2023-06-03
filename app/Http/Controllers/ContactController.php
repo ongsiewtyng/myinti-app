@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\message;
+use App\Models\Message;
 
 class ContactController extends Controller
 {
@@ -36,7 +36,7 @@ class ContactController extends Controller
         ]);
 
         // Create a new instance of the Contact model
-        $contact = new message();
+        $contact = new Message();
         $contact->name = $request->name;
         $contact->email = $request->email;
         $contact->subject = $request->subject;

@@ -12,6 +12,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/kopi-senja-sans">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- Latest compiled and minified CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     
@@ -169,6 +170,12 @@
                                 {{ Auth::user()->name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('order.history') }}">
+                                    {{ __('Order History') }}
+                                </a>
+                                <a class="dropdown-item" href="{{ route('menus.edit-profile',['id' => Auth::id()]) }}" method="POST">
+                                    {{ __('Edit Profile') }}
+                                </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
@@ -177,13 +184,6 @@
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
-                                <a class="dropdown-item" href="{{ route('order.history') }}">
-                                    {{ __('Order History') }}
-                                </a>
-                                <a class="dropdown-item" href="{{ route('menus.edit-profile',['id' => Auth::id()]) }}" method="POST">
-                                    {{ __('Edit Profile') }}
-                                </a>
-                                </div>
                             </div>
                         </li>
                     @endguest

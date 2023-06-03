@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('end_time')->nullable();
             $table->string('urgency')->nullable();
             $table->string('document')->nullable();
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

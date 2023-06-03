@@ -19,6 +19,9 @@ use App\Models\Food;
 use App\Models\Order;
 use App\Models\Items;
 use App\Models\Category;
+use App\Models\Approval;
+use App\Models\Facility;
+use App\Models\Message;
 
 class AdminController extends Controller
 {
@@ -32,8 +35,6 @@ class AdminController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
-
 
     use AuthenticatesUsers;
 
@@ -65,7 +66,13 @@ class AdminController extends Controller
         // Retrieve the users' data
         $users = User::all();
 
-        return view('admin.dashboard', ['totalStudents' => $totalStudents , 'users' => $users]);
+        // Retrieve revenue
+        $revenue = $this->calculateRevenue();
+
+        // Retrieve the count of orders pending approval
+        $approvalPendingCount = $this->getApprovalPendingCount();
+
+        return view('admin.dashboard', compact('totalStudents', 'users', 'revenue', 'approvalPendingCount'));
     }
 
     public function food(){
@@ -181,9 +188,32 @@ class AdminController extends Controller
         }
     }
 
-    public function approval(){
+    public function approval(Request $request){
 
-        return view('admin.approval');
+        $urgency = $request->input('urgency');
+
+        $submissions = Approval::when($urgency, function ($query) use ($urgency) {
+            return $query->where('urgency', $urgency);
+        })->get();
+
+        return view('admin.approval', compact('submissions'));
+    }
+
+    public function toggle($id)
+    {
+        $submission = Approval::findOrFail($id);
+        $submission->status = $submission->status === 'pending' ? 'approved' : 'pending';
+        $submission->save();
+
+        return redirect()->route('approval')->with('success', 'Approval status toggled successfully.');
+    }
+
+    public function download($id)
+    {
+        $submission = Approval::findOrFail($id);
+        $filePath = storage_path('app/' . $submission->document);
+
+        return response()->download($filePath);
     }
 
     public function booking(){
@@ -192,8 +222,26 @@ class AdminController extends Controller
     }
 
     public function message(){
+        $messages = Message::orderBy('subject')->get();
 
-        return view('admin.message');
+        return view('admin.message',compact('messages'));
+    }
+
+    public function reply(Request $request)
+    {
+        $request->validate([
+            'message_id' => 'required|exists:messages,id',
+            'reply' => 'required|string',
+        ]);
+
+        $message = Message::findOrFail($request->message_id);
+        $message->reply = $request->reply;
+        $message->save();
+
+        // Send email to the user
+        Mail::to($message->email)->send(new ReplyMessage($message));
+
+        return redirect()->route('messages.index')->with('success', 'Message replied successfully.');
     }
 
     public function order(){
@@ -235,6 +283,23 @@ class AdminController extends Controller
 
         return $totalStudents;
     }
+
+    private function calculateRevenue()
+    {
+        // Logic to calculate the revenue based on order items
+        $revenue = Items::sum('total');
+
+        return $revenue;
+    }
+
+    private function getApprovalPendingCount()
+    {
+        // Logic to retrieve the count of orders pending approval from the approval table
+        $approvalPendingCount = Approval::where('status', 'pending')->count();
+
+        return $approvalPendingCount;
+    }
+
 
 
     /**

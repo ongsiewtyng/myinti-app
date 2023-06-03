@@ -18,7 +18,9 @@ class Approval extends Model
         'end_date', 
         'start_time', 
         'end_time', 
-        'urgency'
+        'urgency',
+        'document',
+        'status'
     ];
 
 

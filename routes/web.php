@@ -35,8 +35,14 @@ Route::post('/food/{id}/toggle-availability', [App\Http\Controllers\Auth\AdminCo
 Route::put('/food/update/{id}', [App\Http\Controllers\Auth\AdminController::class,'updateFood'])->name('food.update');
 
 Route::get('/approval', [App\Http\Controllers\Auth\AdminController::class, 'approval'])->name('approval');
+Route::get('/approval/toggle/{id}', [App\Http\Controllers\Auth\AdminController::class, 'toggle'])->name('approval.toggle');
+Route::get('/approval/download/{id}', [App\Http\Controllers\Auth\AdminController::class, 'download'])->name('approval.download');
+
 Route::get('/booking', [App\Http\Controllers\Auth\AdminController::class, 'booking'])->name('booking');
+
 Route::get('/message', [App\Http\Controllers\Auth\AdminController::class, 'message'])->name('message');
+Route::post('/messages/reply', [App\Http\Controllers\Auth\AdminController::class, 'reply'])->name('messages.reply');
+
 Route::get('/order', [App\Http\Controllers\Auth\AdminController::class, 'order'])->name('order');
 Route::post('/update-status', [App\Http\Controllers\Auth\AdminController::class,'updateStatus'])->name('updateStatus');
 

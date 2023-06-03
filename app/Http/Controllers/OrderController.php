@@ -25,12 +25,21 @@ class OrderController extends Controller
     public function index(){
         $user_id = auth()->user()->id;
         $orders = Order::where('user_id', $user_id)->get();
-        $items = Items::whereIn('order_id', $orders->pluck('id'))->get();
-        $total = $items->sum('total');
+        $orderIds = $orders->pluck('id');
+        $items = Items::whereIn('order_id', $orderIds)->get();
+        
+        // Calculate order total for each order
+        $totals = [];
+        foreach ($orders as $order) {
+            $total = $items->where('order_id', $order->id)->sum('total');
+            $totals[$order->id] = $total;
+        }
+        
         $status = $items->pluck('status')->unique();
 
-        return view('menus.orders', compact('orders', 'items', 'total', 'status'));
+        return view('menus.orders', compact('orders', 'items', 'totals', 'status'));
     }
+
 
     public function details($id){
         $user_id = auth()->user()->id;

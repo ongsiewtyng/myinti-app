@@ -44,18 +44,17 @@
                     <div class="form-group">
                         <label for="club-name">Club Name:</label>
                         <select class="form-control" id="club-name" name="club_name" required>
-                            <option value="">Select a club</option>
-                            <option value="club1">Japanese ACG Society</option>
-                            <option value="club2">Nerf Club</option>
-                            <option value="club3">24 Festive Drums</option>
-                            <option value="club4">Dance Club</option>
-                            <option value="club5">Lions Club</option>
-                            <option value="club6">BYIC Society</option>
-                            <option value="club7">Debate Club</option>
-                            <option value="club8">Chess Club</option>
-                            <option value="club9">IT Club</option>
-                            <option value="club10">INTIMA</option>
-                            <!-- Add more options as needed -->
+                        <option value="">Select a club</option>
+                            <option value="Japanese ACG Society">Japanese ACG Society</option>
+                            <option value="Nerf Club">Nerf Club</option>
+                            <option value="24 Festive Drums">24 Festive Drums</option>
+                            <option value="Dance Club">Dance Club</option>
+                            <option value="Lions Club">Lions Club</option>
+                            <option value="BYIC Society">BYIC Society</option>
+                            <option value="Debate Club">Debate Club</option>
+                            <option value="Chess Club">Chess Club</option>
+                            <option value="IT Club">IT Club</option>
+                            <option value="INTIMA">INTIMA</option>
                         </select>
                     </div>
 
@@ -164,7 +163,7 @@
                 filePreview.appendChild(filePreviewItem);
 
                 // Increase the margin value for each additional file
-                marginValue += 5; // Adjust the value as needed
+                marginValue += 10; // Adjust the value as needed
 
                 // Add the filename to the set of added files
                 addedFiles.add(file.name);
@@ -224,7 +223,7 @@
         margin-left: auto;
         margin-right: 10px;
         width: 20px;
-        height: 20px;
+        height: 30px;
         color: #5E5BFF;
         cursor: pointer;
     }
@@ -371,8 +370,7 @@
 
     #document-label {
         margin-left: 32px;
-        margin-bottom: 50px;
-        
+        margin-bottom: 50px; 
     }
 
     

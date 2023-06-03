@@ -19,8 +19,8 @@
                         @foreach($orders as $order)
                             <tr>
                                 <td>{{ $order->id }}</td>
-                                <td>{{ $order->created_at }}</td>
-                                <td>{{ $total }}</td>
+                                <td>{{ $order->created_at->format('j F Y') }}</td>
+                                <td>{{ $totals[$order->id] }}</td>
                                 <td>
                                     <div class="box">
                                         <span class="status {{ $items->where('order_id', $order->id)->contains('status', 'completed') ? 'text-success' : 'text-warning' }}">

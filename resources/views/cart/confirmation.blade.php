@@ -10,31 +10,35 @@
         <h2>Ordered Items</h2>
 
         <ul class="item-list">
-                @foreach ($items as $item)
-            <li>
-                <span class="item-name">{{ $item->food->name }}</span><br>
-                @php
-                    $categoryMap = [
-                        'Burgers' => 'cafeBurgers',
-                        'Drinks' => 'cafeDrinks',
-                        'Fried Rice' => 'cafeFried',
-                        'menu' => 'cafeMenu',
-                        'Noodles' => 'cafeNoodles',
-                        'Sandwiches' => 'cafeSandwiches',
-                        'Snacks' => 'cafeSnacks',
-                        'Western Food' => 'cafeWestern',
-                        'Wraps' => 'cafeWraps',
-                    ];
+            @php
+                $uniqueItems = $items->unique('food_id');
+            @endphp
 
-                    $defaultCategory = 'cafeSandwiches'; // Default directory
-                    $categoryDirectory = $categoryMap[$item->food->category] ?? $defaultCategory;
-                    $imagePath = "{$categoryDirectory}/{$item->food->pic}";
-                @endphp
-                <img src="{{ asset($imagePath) }}" alt="Food Image" class="item-pic"><br>
-                <span class="item-price">Price: RM {{ $item->food->price }}</span><br>
-                <span class="item-quantity">Quantity: {{ $item->quantity }}</span>
-            </li>
-        @endforeach
+            @foreach ($uniqueItems as $item)
+                <li>
+                    <span class="item-name">{{ $item->food->name }}</span><br>
+                    @php
+                        $categoryMap = [
+                            'Burgers' => 'cafeBurgers',
+                            'Drinks' => 'cafeDrinks',
+                            'Fried Rice' => 'cafeFried',
+                            'menu' => 'cafeMenu',
+                            'Noodles' => 'cafeNoodles',
+                            'Sandwiches' => 'cafeSandwiches',
+                            'Snacks' => 'cafeSnacks',
+                            'Western Food' => 'cafeWestern',
+                            'Wraps' => 'cafeWraps',
+                        ];
+
+                        $defaultCategory = 'cafeSandwiches'; // Default directory
+                        $categoryDirectory = $categoryMap[$item->food->category] ?? $defaultCategory;
+                        $imagePath = "{$categoryDirectory}/{$item->food->pic}";
+                    @endphp
+                    <img src="{{ asset($imagePath) }}" alt="Food Image" class="item-pic"><br>
+                    <span class="item-price">Price: RM {{ $item->food->price }}</span><br>
+                    <span class="item-quantity">Quantity: {{ $items->where('food_id', $item->food_id)->sum('quantity') }}</span>
+                </li>
+            @endforeach
         </ul>
 
         <!-- Display any other relevant order details here -->

@@ -29,49 +29,46 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($cartItems as $cartItem)
+                    @php
+                        $groupedItems = $cartItems->groupBy('name');
+                    @endphp
+
+                    @foreach ($groupedItems as $name => $items)
+                        @php
+                            $quantity = $items->sum('quantity');
+                            $total = $items->sum('total');
+                        @endphp
+
                         <tr>
-                            <td>{{ $cartItem->name }}</td>
+                            <td>{{ $name }}</td>
                             <td>
-                                <form action="{{ route('cart.destroy', $cartItem->id) }}" method="POST">
+                                <form action="{{ route('cart.destroy', $items->first()->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="remove-btn">
                                         <i class="bx bx-trash"></i>
-                                        <i class='bx bx-trash bx-tada' ></i>
+                                        <i class='bx bx-trash bx-tada'></i>
                                     </button>
                                 </form>
                             </td>
-                            <!-- <td>
-                                <img src="{{ asset($cartItem->pic) }}" alt="{{ $cartItem->name }}" width="100">
-                            </td> -->
                             <td>
-                                <form action="{{ route('cart.update', $cartItem->id) }}" method="POST" class="update-form">
+                                <form action="{{ route('cart.update', $items->first()->id) }}" method="POST" class="update-form">
                                     @csrf
                                     @method('PATCH')
-                                    <input type="number" name="quantity" value="{{ $cartItem->quantity }}" class="quantity-input">
+                                    <input type="number" name="quantity" value="{{ $quantity }}" class="quantity-input">
                                 </form>
                             </td>
-                            <td>{{ $cartItem->total }}</td>
+                            <td>{{ $total }}</td>
                         </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
-                @php
-                    $total = 0; // Initialize the total variable
+                    @php
+                        $total = $groupedItems->sum(function ($items) {
+                            return $items->sum('total');
+                        });
                     @endphp
 
-                    @foreach ($cartItems as $cartItem)
-                        <!-- Your existing code for displaying cart items -->
-                        <!-- ... -->
-
-                        <!-- Calculate the total price for each item and add it to the total variable -->
-                        @php
-                        $total += $cartItem->total;
-                        @endphp
-                    @endforeach
-
-                    <!-- Display the total sum of prices -->
                     <tr>
                         <td colspan="2"></td>
                         <td class="total-label" style="font-weight:bold;">Total:</td>
@@ -81,13 +78,13 @@
                         <td colspan="2"></td>
                         <td class="payment-label" style="font-weight:bold;">Payment:</td>
                         <td class="payment-value">
-                            <form action="{{ route('cart.updatePayment', $cartItem->user_id) }}" method="POST" class="update-pay">
+                            <form action="{{ route('cart.updatePayment', $cartItems->first()->user_id) }}" method="POST" class="update-pay">
                                 @csrf
                                 @method('PATCH')
                                 <select name="payment" class="payment-select" id="payment">
-                                    <option value="Cash" {{ $cartItem->payment === 'Cash' ? 'selected' : '' }}>Cash</option>
-                                    <option value="Online Banking" {{ $cartItem->payment === 'Online Banking' ? 'selected' : '' }}>Online Banking</option>
-                                    <option value="Card" {{ $cartItem->payment === 'Card' ? 'selected' : '' }}>Card</option>
+                                    <option value="Cash" {{ $cartItems->first()->payment === 'Cash' ? 'selected' : '' }}>Cash</option>
+                                    <option value="Online Banking" {{ $cartItems->first()->payment === 'Online Banking' ? 'selected' : '' }}>Online Banking</option>
+                                    <option value="Card" {{ $cartItems->first()->payment === 'Card' ? 'selected' : '' }}>Card</option>
                                     <!-- Add more options as needed -->
                                 </select>
                             </form>
@@ -97,12 +94,12 @@
                         <td colspan="2"></td>
                         <td class="order-label" style="font-weight:bold;">Order Type:</td>
                         <td class="order-value">
-                            <form action="{{ route('cart.updateOrder', $cartItem->user_id) }}" method="POST" class="update-order">
-                                    @csrf
-                                    @method('PATCH')
+                            <form action="{{ route('cart.updateOrder', $cartItems->first()->user_id) }}" method="POST" class="update-order">
+                                @csrf
+                                @method('PATCH')
                                 <select name="order_type" id="order_type" class="order-type-select">
-                                    <option value="Dine In" {{ $cartItem->order_type === 'Dine In' ? 'selected' : '' }}>Dine In</option>
-                                    <option value="Takeaway" {{ $cartItem->order_type === 'Takeaway' ? 'selected' : '' }}>Takeaway</option>
+                                    <option value="Dine In" {{ $cartItems->first()->order_type === 'Dine In' ? 'selected' : '' }}>Dine In</option>
+                                    <option value="Takeaway" {{ $cartItems->first()->order_type === 'Takeaway' ? 'selected' : '' }}>Takeaway</option>
                                     <!-- Add more options as needed -->
                                 </select>
                             </form>

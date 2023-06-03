@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <body>
     <section>
         <div class="form-box">

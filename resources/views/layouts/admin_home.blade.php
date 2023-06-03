@@ -482,6 +482,7 @@
             modeSwitch.addEventListener("click", () => {
                 darkModeEnabled = !darkModeEnabled;
                 body.classList.toggle("dark", darkModeEnabled);
+                content.classList.toggle("dark", darkModeEnabled);
                 modeText.innerText = darkModeEnabled ? "Light mode" : "Dark mode";
 
                 // Store the updated dark mode state in local storage

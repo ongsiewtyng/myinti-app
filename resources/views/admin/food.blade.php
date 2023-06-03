@@ -386,7 +386,7 @@
     }
 
     .available {
-        background-color: green;
+        background-color: #68f151;
         color: white;
     }
 
@@ -396,17 +396,18 @@
     }
 
     .toggle-availability {
-        background-color: #4caf50;
-        color: #fff;
-        border: none;
+        border: 2px solid #85FF76;
+        color: black;
         padding: 8px 16px;
         font-size: 14px;
         cursor: pointer;
         border-radius: 4px;
+        transition: border-color 0.3s;
     }
 
     .toggle-availability:hover {
-        background-color: #45a049;
+        background-color: #00FF5D;
+        color:white;
     }
 
     .toggle-availability:focus {

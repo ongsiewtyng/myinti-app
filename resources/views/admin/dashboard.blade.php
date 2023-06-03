@@ -13,17 +13,17 @@
                     <div class="box box1">
                         <i class="uil uil-user-check"></i>
                         <span class="text">Total Students</span>
-                        <span class="number"><?php echo $totalStudents; ?></span>
+                        <span class="number">{{ $totalStudents }}</span>
                     </div>
                     <div class="box box2">
-                        <i class="uil uil-comments"></i>
-                        <span class="text">Unread Messages</span>
-                        <span class="number">20,120</span>
+                        <i class="uil uil-bill"></i>
+                        <span class="text">Revenue</span>
+                        <span class="number">{{ $revenue }}</span>
                     </div>
                     <div class="box box3">
                         <i class="uil uil-file-check-alt"></i>
                         <span class="text">Approval Pending</span>
-                        <span class="number">10,120</span>
+                        <span class="number">{{ $approvalPendingCount }}</span>
                     </div>
                 </div>
             </div>
