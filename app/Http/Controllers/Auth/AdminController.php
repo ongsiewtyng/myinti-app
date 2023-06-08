@@ -13,6 +13,9 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Message;
+use App\Mail\ReplyMessage;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Admin;
 use App\Models\User;
 use App\Models\Food;
@@ -21,7 +24,8 @@ use App\Models\Items;
 use App\Models\Category;
 use App\Models\Approval;
 use App\Models\Facility;
-use App\Models\Message;
+use App\Models\Booking;
+
 
 class AdminController extends Controller
 {
@@ -216,32 +220,101 @@ class AdminController extends Controller
         return response()->download($filePath);
     }
 
+    // BOOKING SECTION
     public function booking(){
+        $facilities = Facility::with('booking')->get();
 
-        return view('admin.booking');
+        return view('admin.booking', compact('facilities'));
     }
 
+    public function create()
+    {
+        return view('admin.facilities.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'cost' => 'required|numeric',
+        ]);
+
+        $imagePath = $request->file('image')->store('facilities', 'public');
+
+        $facility = new Facility();
+        $facility->name = $request->input('name');
+        $facility->image = $imagePath;
+        $facility->cost = $request->input('cost');
+        $facility->availability = true;
+        $facility->save();
+
+        return redirect()->route('booking')->with('success', 'Facility created successfully.');
+    }
+
+    public function edit($id)
+    {
+        $facility = Facility::findOrFail($id);
+        return view('admin.facilities.edit', compact('facility'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'cost' => 'required|numeric',
+        ]);
+
+        $facility = Facility::findOrFail($id);
+        $facility->name = $request->input('name');
+        $facility->cost = $request->input('cost');
+
+        if ($request->hasFile('image')) {
+            Storage::disk('public')->delete($facility->image);
+            $imagePath = $request->file('image')->store('facilities', 'public');
+            $facility->image = $imagePath;
+        }
+
+        $facility->availability = $request->input('availability', false);
+        $facility->save();
+
+        return redirect()->route('booking')->with('success', 'Facility updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        $facility = Facility::findOrFail($id);
+        Storage::disk('public')->delete($facility->image);
+        $facility->delete();
+
+        return redirect()->route('booking')->with('success', 'Facility deleted successfully.');
+    }
+
+    // BOOKING SECTION END
+
+
+    // MESSAGES SECTION
     public function message(){
         $messages = Message::orderBy('subject')->get();
 
         return view('admin.message',compact('messages'));
     }
 
-    public function reply(Request $request)
-    {
+    public function reply(Request $request){
         $request->validate([
-            'message_id' => 'required|exists:messages,id',
+            'message_id' => 'required|exists:message,id',
             'reply' => 'required|string',
         ]);
 
-        $message = Message::findOrFail($request->message_id);
-        $message->reply = $request->reply;
-        $message->save();
+        $message = Message::find($request->message_id);
+        $userEmail = $message->email;
+        $reply = $request->reply;
 
-        // Send email to the user
-        Mail::to($message->email)->send(new ReplyMessage($message));
+        // Send the reply email
+        Mail::to($userEmail)->send(new ReplyMessage($message, $reply));
 
-        return redirect()->route('messages.index')->with('success', 'Message replied successfully.');
+        return redirect()->route('message')->with('success', 'Message replied successfully.');
     }
 
     public function order(){

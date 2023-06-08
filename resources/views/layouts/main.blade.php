@@ -3,36 +3,43 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>@yield('title', 'MyINTI')</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/kopi-senja-sans">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/solid.css">
+
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <!-- Latest compiled and minified CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     
- 
-    @yield('styles')
-    @yield('scripts')
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     
 
     <style>
-        @import url('https://fonts.cdnfonts.com/css/kopi-senja-sans');
-        .navbar-brand{
-            margin:0;
-            padding:0;
+        .navbar-brand {
+            margin: 0;
+            padding: 0;
             font-family: 'Kopi Senja Sans', sans-serif;
-            font-size:50px;
+            font-size: 50px;
         }
 
         .navbar-nav.me-auto {
             margin-left: 20px;
         }
+
         .cart-button {
             position: relative;
             border: none;
@@ -45,7 +52,6 @@
             font-size: 30px;
             color: #000;
         }
-
 
         .cart-counter {
             position: absolute;
@@ -63,21 +69,88 @@
             border-radius: 50%;
         }
 
-        .links{
-            color: #000000;
+        .links {
+            color: #5a5a5a;
             text-decoration: none;
         }
-        .height{
+
+        .height {
             height: 60px;
         }
     </style>
 
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    @yield('styles')
+    @yield('scripts')
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand d-flex justify-content-center" href="{{ url('/') }}" style="font-size: 40px; color: #FF4141;">MyINTI</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a href="{{ route('about') }}" class="nav-link links">About</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle links" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Services</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('service1') }}">Event Approval</a>
+                                <a class="dropdown-item" href="{{ route('service2') }}">Tapau! Food</a>
+                                <a class="dropdown-item" href="{{ route('service3') }}">Facility Reservation</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('contact') }}" class="nav-link links">Contact</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto">
+                        @guest
+                            <!-- Place your guest links here -->
+                        @else
+                            <li class="nav-item">
+                                <a href="{{ url('/cart') }}" class="nav-link links">
+                                    <button class="cart-button" type="button" id="cart-button">
+                                        <ion-icon class="cart-button" name="cart-outline"></ion-icon>
+                                        <span class="cart-counter">0</span>
+                                    </button>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    @if(Auth::user()->pic)
+                                        <img src="{{ asset('uploads/users/'. Auth::user()->pic) }}" style="width: 50px; height: 50px; border-radius: 50%;">
+                                    @else
+                                        <img src="{{ asset('pic.png')}}" style="width: 50px; height: 50px; border-radius: 50%;">
+                                    @endif
+                                    {{ Auth::user()->name }}
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('order.history') }}">Order History</a>
+                                    <a class="dropdown-item" href="{{ route('menus.edit-profile',['id' => Auth::id()]) }}" method="POST">Edit Profile</a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <main class="py-4" style="overflow: hidden;">
+            @yield('content')
+        </main>
+    </div>
+    
+    @yield('scripts')
     <script>
         // Function to update the cart counter
         function updateCartCounter(counter) {
@@ -100,102 +173,5 @@
         // Call fetchCartCount initially to get the current count
         fetchCartCount();
     </script>
-
-
-</head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}" style="font-size:40px; color:#FF4141;">
-                    MyINTI
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a href="{{ route('about') }}" class="nav-link links">About</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle links" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Services
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('service1') }}">Event Approval</a>
-                                <a class="dropdown-item" href="{{ route('service2') }}">Tapau! Food</a>
-                                <a class="dropdown-item" href="{{ route('service3') }}">Facility Reservation</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('contact') }}" class="nav-link links">Contact</a>
-                        </li>
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <!--@if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href
-                                    ="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif-->
-                            @else
-                            <li class="nav-item">
-                                <a href="{{ url('/cart') }}" class="nav-link links">
-                                    <button class="cart-button" type="button" id="cart-button">
-                                        <ion-icon class="cart-button" name="cart-outline"></ion-icon>
-                                        <span class="cart-counter">0</span>
-                                    </button>
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                @if(Auth::user()->pic)
-                                <img src="{{ asset('uploads/users/'. Auth::user()->pic) }}" style="width: 50px; height: 50px; border-radius: 50%;">
-                                @else
-                                <img src="{{ asset('pic.png')}}" style="width: 50px; height: 50px; border-radius: 50%;">
-                                @endif
-                                {{ Auth::user()->name }}
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('order.history') }}">
-                                    {{ __('Order History') }}
-                                </a>
-                                <a class="dropdown-item" href="{{ route('menus.edit-profile',['id' => Auth::id()]) }}" method="POST">
-                                    {{ __('Edit Profile') }}
-                                </a>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                    @endguest
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <main class="py-4" style="overflow:hidden">
-        @yield('content')
-    </main>
-<!-- Add this script tag before the closing </body> tag of your HTML file -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script> -->
 </body>
 </html>

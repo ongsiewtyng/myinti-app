@@ -39,6 +39,11 @@ Route::get('/approval/toggle/{id}', [App\Http\Controllers\Auth\AdminController::
 Route::get('/approval/download/{id}', [App\Http\Controllers\Auth\AdminController::class, 'download'])->name('approval.download');
 
 Route::get('/booking', [App\Http\Controllers\Auth\AdminController::class, 'booking'])->name('booking');
+Route::get('facilities/create', [App\Http\Controllers\Auth\AdminController::class, 'create'])->name('admin.facilities.create');
+Route::post('facilities', [App\Http\Controllers\Auth\AdminController::class, 'store'])->name('admin.facilities.store');
+Route::get('facilities/{id}/edit', [App\Http\Controllers\Auth\AdminController::class, 'edit'])->name('admin.facilities.edit');
+Route::put('facilities/{id}', [App\Http\Controllers\Auth\AdminController::class, 'update'])->name('admin.facilities.update');
+Route::delete('facilities/{id}', [App\Http\Controllers\Auth\AdminController::class, 'destroy'])->name('admin.facilities.destroy');
 
 Route::get('/message', [App\Http\Controllers\Auth\AdminController::class, 'message'])->name('message');
 Route::post('/messages/reply', [App\Http\Controllers\Auth\AdminController::class, 'reply'])->name('messages.reply');
@@ -83,6 +88,8 @@ Route::match(['get', 'post'], '/cart/checkout', [App\Http\Controllers\CartContro
 Route::get('/cart/confirmation/{id}', [App\Http\Controllers\CartController::class, 'confirmation'])->name('cart.confirmation');
 
 
-Route::get('/service3',[App\Http\Controllers\ServicesController::class,'service3'])->name('service3');
-Route::get('/confirmBooking',[App\Http\Controllers\BookSessionController::class,'index'])->name('confirmBooking');
-Route::get('/confirmBooking/{id}/{time}', [App\Http\Controllers\BookSessionController::class, 'confirmBooking'])->name('confirmBooking');
+// Route::get('/service3',[App\Http\Controllers\ServicesController::class,'service3'])->name('service3');
+Route::get('/service3', [App\Http\Controllers\FacilityController::class, 'index'])->name('service3');
+Route::post('/booking', [App\Http\Controllers\FacilityController::class, 'store'])->name('booking.store');
+Route::get('/get-session-id', [App\Http\Controllers\FacilityController::class, 'getSessionID'])->name('get-session-id');
+

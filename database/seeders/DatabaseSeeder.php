@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             CategorySeeder::class,
             FoodSeeder::class,
-            SessionSeeder::class,
             FacilitySeeder::class,
+            SessionSeeder::class,
         ]);
     }
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('subject')->nullable();
             $table->longText('message')->nullable();
+            $table->longText('reply')->nullable();
             $table->timestamps();
         });
     }

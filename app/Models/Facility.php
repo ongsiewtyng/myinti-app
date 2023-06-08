@@ -11,13 +11,25 @@ class Facility extends Model
 
     protected $fillable = [
         'name',
-        // Add any other fields you need here
+        'image',
+        'cost',
+        'availability',
     ];
+
+    public function booking()
+    {
+        return $this->hasMany(Booking::class, 'f_id');
+    }
 
     public function sessions()
     {
-        return $this->hasMany(Session::class);
+        return $this->hasMany(Session::class, 'f_id');
     }
+
+    public function getRoomsAttribute(){
+        return $this->sessions->pluck('rooms')->unique();
+    }
+
 
     // Add any other methods you need here
 }

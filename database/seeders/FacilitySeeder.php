@@ -15,16 +15,16 @@ class FacilitySeeder extends Seeder
     public function run(): void{
 
         $facilities = [
-            ['f_name' =>'Snooker Table'],
-            ['f_name' =>'Pool Table'],
-            ['f_name' =>'Ping Pong'],
-            ['f_name' =>'Music Room'],
-            ['f_name' =>'Basketball Court'],
-            ['f_name' =>'Tennis Court'],
-            ['f_name' =>'Discussion Room'],
-            ['f_name' =>'Class Room']
-    
+            ['f_name' => 'Snooker Table', 'img' => 'snooker.png','cost'=> 5],
+            ['f_name' => 'Ping Pong', 'img' => 'ping-pong.png','cost'=> 0],
+            ['f_name' => 'Music Room', 'img' => 'music.png','cost'=> 0],
+            ['f_name' => 'Basketball Court', 'img' => 'basketball.png','cost'=> 0],
+            ['f_name' => 'Tennis Court', 'img' => 'tennis.png','cost'=> 0],
+            ['f_name' => 'Discussion Room', 'img' => 'room.png','cost'=> 0],
+            // ['f_name' => 'Class Room', 'img' => 'class.png']
         ];
+        
+        
 
         $currentTimestamp = Carbon::now();
 

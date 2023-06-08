@@ -9,6 +9,12 @@
 </head>
 <body>
     <div class="container">
+        @if(session('success'))
+            <div style="width:fit-content" class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="paragraph">
             <p>New Service? Complaint? Bug? Feedback?</p>
             <p>Please fill in the form and let us know your concern about the site. We'll get back to you as soon as possible.</p>
@@ -42,7 +48,6 @@
         </div>
     </div>
 </body>
-
 
 @endsection
 
@@ -108,4 +113,18 @@
     input, select, textarea {
         font-family: 'Anuphan', sans-serif;
     }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .container {
+            padding: 10px;
+        }
+
+        .form {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    }
+
 </style>

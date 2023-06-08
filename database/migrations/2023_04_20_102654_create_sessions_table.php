@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('facilities', function (Blueprint $table) {
+        Schema::create('sessions', function (Blueprint $table) {
             $table->id();
-            $table->string('f_name');
+            $table->unsignedBigInteger('f_id')->nullable();
+            $table->foreign('f_id')->references('id')->on('facilities')->onDelete('cascade');
+            $table->string('rooms')->nullable();
+            $table->string('time');
+            $table->boolean('booked');
             $table->timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('facilities');
+        Schema::dropIfExists('sessions');
     }
 };
