@@ -28,28 +28,32 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach ($submissions as $submission)
-                    <div class="approval-item" data-urgency="{{ $submission->urgency }}">
+                <tbody>
+                    @if ($submissions->isEmpty())
+                        <tr>
+                        <td colspan="5">No submissions</td>
+                        </tr>
+                    @else
+                        @foreach ($submissions as $submission)
                         <tr>
                             <td>{{ $submission->id }}</td>
                             <td>{{ $submission->user->name }}</td>
                             <td>{{ $submission->urgency }}</td>
                             <td>
-                                @if ($submission->status == 'pending')
-                                    <span class="badge-warning" style="color:red">Pending</span>
-                                @else
-                                    <span class="badge-success" style="color:green">Approved</span>
-                                @endif
+                            @if ($submission->status == 'pending')
+                                <span class="badge badge-warning" style="color: red">Pending</span>
+                            @else
+                                <span class="badge badge-success" style="color: green">Approved</span>
+                            @endif
                             </td>
                             <td>
-                                <a href="{{ route('approval.toggle', ['id' => $submission->id]) }}" class="btn btn-primary">Toggle Approval</a>
-                                <a href="{{ route('approval.download', ['id' => $submission->id]) }}" class="btn btn-secondary">Download File</a>
+                            <a href="{{ route('approval.toggle', ['id' => $submission->id]) }}" class="btn btn-primary">Toggle Approval</a>
+                            <a href="{{ route('approval.download', ['id' => $submission->id]) }}" class="btn btn-secondary">Download File</a>
                             </td>
                         </tr>
-                    </div>
-                @endforeach
-            </tbody>
+                        @endforeach
+                    @endif
+                </tbody>
         </table>
     </div>
 

@@ -40,9 +40,22 @@
                 <h6 class="card-subtitle mb-2 text-muted">Bookings:</h6>
                 <ul>
                     @forelse ($facility->booking as $booking)
-                        <li>{{ $booking->session->name }} - {{ $booking->start_time }} to {{ $booking->end_time }}</li>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $booking->name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ $booking->studentid }}</h6>
+                            <p class="card-text">Session Time: {{ $booking->session->time }}</p>
+                            @if ($facility->id == 6)
+                                <p class="card-text">Room: {{ $booking->session->rooms }}</p>
+                            @endif
+                        </div>
+                    </div>
                     @empty
-                        <li>No bookings found</li>
+                        <div class = "card">
+                            <div class = "card-body">
+                                <h5 class = "card-title">No bookings</h5>
+                            </div>
+                        </div>
                     @endforelse
                 </ul>
                 <button class="btn btn-primary editFacilityBtn" data-facility-id="{{ $facility->id }}">Edit</button>

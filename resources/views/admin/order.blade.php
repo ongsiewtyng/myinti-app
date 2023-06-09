@@ -6,50 +6,57 @@
 
   <div class="container justify-content-center">
     <div class="row">
-      @foreach($orders as $order)
-        @php
-          $orderItems = $items->where('order_id', $order->id);
-          $totalAmount = $orderItems->sum('total');
-          $orderStatus = $orderItems->pluck('status')->unique()->first();
-          $statusClass = $orderStatus === 'completed' ? 'completed' : 'pending';
-        @endphp
-      <div class="col-md-6">
-        <div class="order card mb-4">
-          <div class="card-header d-flex justify-content-between">
-            <strong>Order ID: {{ $order->id }}</strong>
-            <div class="status">
-                <div class="toggle-status-text 
-                    {{ $orderStatus === 'completed' ? 'text-success' : 'text-warning' }}
-                    {{ $orderStatus === 'completed' ? 'non-clickable' : '' }}"
-                    onclick="{{ $orderStatus !== 'completed' ? 'toggleStatus(event)' : '' }}"
-                    data-order-id="{{ $order->id }}" data-status="{{ $orderStatus }}">
-                    {{ $orderStatus === 'completed' ? 'Status: Completed' : 'Status: Pending' }}
+      @if ($orders->isEmpty())
+        <div class="col-md-12 text-center">
+          <h3>No orders</h3>
+        </div>
+      @else
+        @foreach($orders as $order)
+          @php
+            $orderItems = $items->where('order_id', $order->id);
+            $totalAmount = $orderItems->sum('total');
+            $orderStatus = $orderItems->pluck('status')->unique()->first();
+            $statusClass = $orderStatus === 'completed' ? 'completed' : 'pending';
+          @endphp
+          <div class="col-md-6">
+            <div class="order card mb-4">
+              <div class="card-header d-flex justify-content-between">
+                <strong>Order ID: {{ $order->id }}</strong>
+                <div class="status">
+                  <div class="toggle-status-text 
+                      {{ $orderStatus === 'completed' ? 'text-success' : 'text-warning' }}
+                      {{ $orderStatus === 'completed' ? 'non-clickable' : '' }}"
+                      onclick="{{ $orderStatus !== 'completed' ? 'toggleStatus(event)' : '' }}"
+                      data-order-id="{{ $order->id }}" data-status="{{ $orderStatus }}">
+                      {{ $orderStatus === 'completed' ? 'Status: Completed' : 'Status: Pending' }}
+                  </div>
                 </div>
+              </div>
+              <div class="card-body">
+                @foreach($orderItems as $item)
+                  @php
+                    $foodItem = $food->where('id', $item->food_id)->first();
+                  @endphp
+                  <div class="item-details">
+                    <div><strong>Item:</strong> {{ $foodItem ? $foodItem->name : 'N/A' }}</div>
+                    <div><strong>Quantity:</strong> {{ $item->quantity }}</div>
+                    <div><strong>Price:</strong> RM {{ $item->food->price }}</div>
+                    <div><strong>Payment:</strong> {{ $item->payment }}</div>
+                  </div>
+                  <div class="item-spacing"></div>
+                @endforeach
+              </div>
+              <div class="card-footer">
+                <div class="order-total"><strong>Order Total:</strong> RM {{ $totalAmount }}</div>
+              </div>
             </div>
           </div>
-          <div class="card-body">
-            @foreach($orderItems as $item)
-              @php
-                $foodItem = $food->where('id', $item->food_id)->first();
-              @endphp
-              <div class="item-details">
-                <div><strong>Item:</strong> {{ $foodItem ? $foodItem->name : 'N/A' }}</div>
-                <div><strong>Quantity:</strong> {{ $item->quantity }}</div>
-                <div><strong>Price:</strong> RM {{ $item->food->price }}</div>
-                <div><strong>Payment:</strong> {{ $item->payment }}</div>
-              </div>
-              <div class="item-spacing"></div>
-            @endforeach
-          </div>
-          <div class="card-footer">
-            <div class="order-total"><strong>Order Total:</strong> RM {{ $totalAmount }}</div>
-          </div>
-        </div>
-      </div>
-      @endforeach
+        @endforeach
+      @endif
     </div>
   </div>
 </body>
+
 
 
   <script>

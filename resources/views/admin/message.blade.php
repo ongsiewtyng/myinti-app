@@ -14,19 +14,25 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($messages as $message)
+                @if ($messages->isEmpty())
+                    <tr>
+                    <td colspan="3">No messages</td>
+                    </tr>
+                @else
+                    @foreach($messages as $message)
                     <tr>
                         <td>{{ $message->subject }}</td>
                         <td>{{ $message->message }}</td>
                         <td>
-                            @if($message->reply)
-                                {{ $message->reply }}
-                            @else
-                                <button class="btn btn-primary reply-btn" data-message-id="{{ $message->id }}">Reply</button>
-                            @endif
+                        @if($message->reply)
+                            {{ $message->reply }}
+                        @else
+                            <button class="btn btn-primary reply-btn" data-message-id="{{ $message->id }}">Reply</button>
+                        @endif
                         </td>
                     </tr>
-                @endforeach
+                    @endforeach
+                @endif
             </tbody>
         </table>
     </div>

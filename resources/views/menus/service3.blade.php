@@ -1,9 +1,16 @@
 @extends('layouts.main')
 
 @section('content')
+@if(session()->has('success'))
+    <div class="container text-center">
+        <div class="alert alert-success">
+            {{ session()->get('success') }}
+        </div>
+    </div>
+@endif
+
 <div class="container">
     <h1>Facility Booking</h1>
-
     <table class="table">
         <thead>
             <tr>
@@ -24,42 +31,28 @@
                     <td class="text-center">
                         @if($facility->id == 6)
                             <select class="form-control">
+                                <option disabled selected>Select Room</option>
                                 @foreach($facility->sessions->where('f_id', 6)->pluck('rooms')->unique() as $room)
                                     @php
                                         $session = $facility->sessions->where('rooms', $room)->first();
+                                        $isSessionAvailable = !$session->booked;
                                     @endphp
                                     @if(!$session->booked)
                                         <option value="{{ $room }}">{{ $room }}</option>
+                                    @else
+                                        <option value="{{ $room }}" disabled>{{ $room }}</option>
                                     @endif
                                 @endforeach
                             </select>
                             <select id="time-select" class="form-control">
-                            <option disabled selected>Select Time</option>
+                                <option disabled selected>Select Time</option>
                                 @php
                                     $timeOptions = $facility->sessions->where('f_id', 6)->pluck('time')->unique();
-                                    $currentTime = \Carbon\Carbon::now();
+                                    $currentDateTime = \Carbon\Carbon::now()->setTimezone('Asia/Kuala_Lumpur');
+                                    $startTime = \Carbon\Carbon::createFromFormat('h:i A', explode(' - ', $session->time)[0], 'Asia/Kuala_Lumpur');
+                                    $isSessionAvailable = !$session->booked && $startTime->gt($currentDateTime);
                                 @endphp
                                 @foreach($timeOptions as $time)
-                                    @php
-                                        $timePattern = '/(\d{1,2}):(\d{2}) (AM|PM) - (\d{1,2}):(\d{2}) (AM|PM)/';
-                                        $currentTime = \Carbon\Carbon::now();
-                                        preg_match($timePattern, $time, $matches);
-
-                                        $startHour = (int)$matches[1];
-                                        $endHour = (int)$matches[4];
-
-                                        if ($matches[3] === 'PM' && $startHour !== 12) {
-                                            $startHour += 12;
-                                        }
-                                        if ($matches[6] === 'PM' && $endHour !== 12) {
-                                            $endHour += 12;
-                                        }
-
-                                        $sessionStartTime = \Carbon\Carbon::createFromTime($startHour, 0);
-                                        $sessionEndTime = \Carbon\Carbon::createFromTime($endHour, 0);
-
-                                        $isSessionAvailable = !$session->booked && $sessionStartTime->greaterThan($currentTime) && $sessionEndTime->greaterThan($currentTime);
-                                    @endphp
                                     @if($isSessionAvailable)
                                         <option value="{{ $time }}">{{ $time }}</option>
                                     @else
@@ -72,24 +65,9 @@
                                 <option disabled selected>Select Time</option>
                                 @foreach($facility->sessions as $session)
                                     @php
-                                        $timePattern = '/(\d{1,2}):(\d{2}) (AM|PM) - (\d{1,2}):(\d{2}) (AM|PM)/';
-                                        $currentTime = \Carbon\Carbon::now();
-                                        preg_match($timePattern, $session->time, $matches);
-
-                                        $startHour = (int)$matches[1];
-                                        $endHour = (int)$matches[4];
-
-                                        if ($matches[3] === 'PM' && $startHour !== 12) {
-                                            $startHour += 12;
-                                        }
-                                        if ($matches[6] === 'PM' && $endHour !== 12) {
-                                            $endHour += 12;
-                                        }
-
-                                        $sessionStartTime = \Carbon\Carbon::createFromTime($startHour, 0);
-                                        $sessionEndTime = \Carbon\Carbon::createFromTime($endHour, 0);
-
-                                        $isSessionAvailable = !$session->booked && $sessionStartTime->greaterThan($currentTime) && $sessionEndTime->greaterThan($currentTime);
+                                        $currentDateTime = \Carbon\Carbon::now()->setTimezone('Asia/Kuala_Lumpur');
+                                        $startTime = \Carbon\Carbon::createFromFormat('h:i A', explode(' - ', $session->time)[0], 'Asia/Kuala_Lumpur');
+                                        $isSessionAvailable = !$session->booked && $startTime->gt($currentDateTime);
                                     @endphp
                                     @if($isSessionAvailable)
                                         <option value="{{ $session->time }}">{{ $session->time }}</option>
@@ -101,10 +79,16 @@
                         @endif
                     </td>
                     <td>
-                        @if($isSessionAvailable)
-                            <button id="book-now-btn" class="btn btn-primary">Book Now</button>
+                        @php
+                            $currentTime = \Carbon\Carbon::now()->setTimezone('Asia/Kuala_Lumpur');
+                            $startTime = \Carbon\Carbon::createFromFormat('h:i A', explode(' - ', $session->time)[0], 'Asia/Kuala_Lumpur');
+                            $isSessionAvailable = !$session->booked && $startTime->gt($currentTime);
+                            $isAfter430PM = $currentTime->gte(\Carbon\Carbon::createFromTime(16, 30, 0, 'Asia/Kuala_Lumpur'));
+                        @endphp
+                        @if($isSessionAvailable && !$isAfter430PM)
+                            <button class="book-btn btn btn-primary" data-facility-id="{{ $facility->id }}">Book Now</button>
                         @else
-                            <button id="book-now-btn" class="btn btn-primary" disabled>Unavailable</button>
+                            <button class="book-btn btn btn-primary" disabled>Unavailable</button>
                         @endif
                     </td>
                 </tr>
@@ -149,6 +133,12 @@
                         <label for="studentId">Student ID:</label>
                         <input type="text" class="form-control" id="studentId" name="studentid" value="{{ Auth::user()->studentid }}" readonly>
                     </div>
+                    <div id="priceSection" style="display:none;">
+                        <div class="form-group">
+                            <label for="cost">Price:</label>
+                            <input type="text" class="form-control" id="cost" name="cost" value="{{ $facility->cost }}" readonly>
+                        </div>
+                    </div>
                     <div class="form-group mt-3">
                         <button type="submit" class="btn btn-primary">Confirm Booking</button>
                     </div>
@@ -185,13 +175,15 @@
                     if (response.success) {
                         $('#sessionID').val(response.session_id);
                         $('#room').val(response.room);
+                        $('#cost').val(response.cost)
                     } else {
                         console.log('Unable to retrieve session ID.');
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.log('AJA    X request error:', error);
+                    console.log('AJAX request error:', error);
                 }
+                
             });
         });
 
@@ -220,7 +212,7 @@
             // Set the selected timeslot in the dropdown
             dropdown.val(selectedTimeslot);
 
-            if (facilityId === 6 || facilityId === 7) {
+            if (facilityId == 6) {
                 // Show the rooms and duration section
                 $('#roomsDurationSection').show();
 
@@ -237,9 +229,25 @@
                 // Set the selected timeslot in the dropdown
                 timeOptionDropdown.val(selectedTimeslot);
                 timeOptionDropdown.trigger('change'); // Trigger change event to update the session ID
+            } else if (facilityId == 1) {
+                // Show the price section
+                $('#priceSection').show();
+
+                var cost = $(this).closest('tr').find('.cost').data('cost');
+                $('#price').val(cost);
+
+                var timeslotDropdown = $(this).closest('tr').find('select').eq(0).clone();
+                var selectedTime = $(this).closest('tr').find('select').eq(0).val();
+                timeslotDropdown.val(selectedTime);
+
+                var dropdown = $('#timeslotDropdown');
+                dropdown.empty().append(timeslotDropdown.html());
+                dropdown.val(selectedTime);
+                dropdown.trigger('change'); // Trigger change event to update the session ID
             } else {
                 // Hide the rooms and duration section
                 $('#roomsDurationSection').hide();
+                $('#priceSection').hide();
 
                 var timeslotDropdown = $(this).closest('tr').find('select').eq(0).clone();
                 var selectedTime = $(this).closest('tr').find('select').eq(0).val();
@@ -265,6 +273,7 @@
             $(modal).modal('hide');
         }
     }
+
 </script>
 
 @endsection
