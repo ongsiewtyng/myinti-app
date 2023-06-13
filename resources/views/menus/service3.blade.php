@@ -61,31 +61,31 @@
                                 @endforeach
                             </select>
                         @else
-                            <select id="time-select" class="form-control">
-                                <option disabled selected>Select Time</option>
-                                @foreach($facility->sessions as $session)
-                                    @php
-                                        $currentDateTime = \Carbon\Carbon::now()->setTimezone('Asia/Kuala_Lumpur');
-                                        $startTime = \Carbon\Carbon::createFromFormat('h:i A', explode(' - ', $session->time)[0], 'Asia/Kuala_Lumpur');
-                                        $isSessionAvailable = !$session->booked && $startTime->gt($currentDateTime);
-                                    @endphp
-                                    @if($isSessionAvailable)
-                                        <option value="{{ $session->time }}">{{ $session->time }}</option>
-                                    @else
-                                        <option value="{{ $session->time }}" disabled>{{ $session->time }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
+                        <select id="time-select" class="form-control">
+                            <option disabled selected>Select Time</option>
+                            @php
+                                $currentDateTime = \Carbon\Carbon::now()->setTimezone('Asia/Kuala_Lumpur');
+                            @endphp
+                            @foreach($facility->sessions as $session)
+                                @php
+                                    $startTime = \Carbon\Carbon::createFromFormat('h:i A', explode(' - ', $session->time)[0], 'Asia/Kuala_Lumpur');
+                                    $isSessionAvailable = !$session->booked && $startTime->gt($currentDateTime);
+                                @endphp
+                                @if($isSessionAvailable)
+                                    <option value="{{ $session->time }}">{{ $session->time }}</option>
+                                @else
+                                    <option value="{{ $session->time }}" disabled>{{ $session->time }}</option>
+                                @endif
+                            @endforeach
+                        </select>
                         @endif
                     </td>
                     <td>
                         @php
                             $currentTime = \Carbon\Carbon::now()->setTimezone('Asia/Kuala_Lumpur');
-                            $startTime = \Carbon\Carbon::createFromFormat('h:i A', explode(' - ', $session->time)[0], 'Asia/Kuala_Lumpur');
-                            $isSessionAvailable = !$session->booked && $startTime->gt($currentTime);
                             $isAfter430PM = $currentTime->gte(\Carbon\Carbon::createFromTime(16, 30, 0, 'Asia/Kuala_Lumpur'));
                         @endphp
-                        @if($isSessionAvailable && !$isAfter430PM)
+                        @if(!$isAfter430PM)
                             <button class="book-btn btn btn-primary" data-facility-id="{{ $facility->id }}">Book Now</button>
                         @else
                             <button class="book-btn btn btn-primary" disabled>Unavailable</button>
@@ -140,7 +140,7 @@
                         </div>
                     </div>
                     <div class="form-group mt-3">
-                        <button type="submit" class="btn btn-primary">Confirm Booking</button>
+                        <button type="submit" class="btn btn-primary" >Confirm Booking</button>
                     </div>
                 </form>
             </div>

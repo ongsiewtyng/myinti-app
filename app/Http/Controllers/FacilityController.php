@@ -24,18 +24,6 @@ class FacilityController extends Controller
     
     public function index(){
         $facilities = Facility::all();
-        $currentTime = Carbon::now();
-
-        foreach ($facilities as $facility) {
-            foreach ($facility->sessions as $session) {
-                $startTime = explode(' - ', $session->time)[1]; // Extract the start time
-                $sessionTime = Carbon::createFromFormat('h:i A', $startTime);
-                if ($currentTime->gt($sessionTime)) {
-                    $session->booked = true; // Mark the session as booked
-                }
-            }
-        }
-
         return view('menus.service3', compact('facilities'));
     }
 
@@ -75,26 +63,38 @@ class FacilityController extends Controller
     public function getSessionID(Request $request){
         $facilityId = $request->input('facility_id');
         $time = $request->input('time');
-    
+
         $session = Session::where('f_id', $facilityId)->where('time', $time)->first();
-    
+
         if ($session) {
             if (!$session->booked || $session->isExpired()) {
+                // Check if the session is already booked
+                if ($session->booked) {
+                    return response()->json(['success' => false, 'message' => 'Session is already booked.']);
+                }
+                
+                // Check if the session is expired
+                if ($session->isExpired()) {
+                    return response()->json(['success' => false, 'message' => 'Session is expired.']);
+                }
+
+                // Mark the session as booked
                 $session->booked = true;
                 $session->save();
-    
+
                 // Retrieve the facility based on the facility ID
                 $facility = Facility::find($facilityId);
                 $cost = $facility ? $facility->cost : null;
-    
+
                 return response()->json(['success' => true, 'session_id' => $session->id, 'room' => $session->rooms, 'cost' => $cost]);
             } else {
                 return response()->json(['success' => false, 'message' => 'Session is already booked.']);
             }
         }
-    
+
         return response()->json(['success' => false]);
     }
+
     
     
 }

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Approval;
+use App\Models\Contact;
+
 class HomeController extends Controller
 {
     /**
@@ -23,6 +26,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $approvedEvents = Approval::where('status', 'approved')->take(5)->get();
+        $info = Contact::all();
+
+        return view('home', compact('approvedEvents','info'));
     }
 }

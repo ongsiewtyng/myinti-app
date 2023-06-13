@@ -91,6 +91,64 @@
 
         </script>
     </div>
+
+    <div class="container">
+        <div class="whats-new">
+            <h2>What's New</h2>
+            <div class="row events">
+                @foreach ($approvedEvents as $event)
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="event-header">
+                                    <!-- <div class="rounded-image">
+                                        <img src="{{ $event->image }}" alt="Event Image">
+                                    </div> -->
+                                    <div class="event-details">
+                                        <h3 class="card-title">{{ $event->event_title }}</h3>
+                                        <p class="club-name"><em>{{ $event->club_name }}</em></p>
+                                        <p class="date-time">
+                                            {{ date('j F Y', strtotime($event->start_date)) }} - {{ date('j F Y', strtotime($event->end_date)) }}
+                                            | {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}
+                                        </p>
+                                    </div>
+                                    <div class="dropdown">
+                                        <ion-icon name="chevron-down-outline"></ion-icon>
+                                        <div class="dropdown-content">
+                                            <p class="contact-info">More Details:</p>
+                                            <div class="social-media-links">
+                                                <a href="{{ $event->contact->email }}"><ion-icon name="mail-outline"></ion-icon></a>
+                                                <a href="{{ $event->contact->fb_link }}"><ion-icon name="logo-facebook"></ion-icon></a>
+                                                <a href="{{ $event->contact->ig_link }}"><ion-icon name="logo-instagram"></ion-icon></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="pagination">
+                <a href="#" class="arrow-left">Previous</a>
+                <a href="#" class="arrow-right">Next</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.5.3/dist/ionicons/ionicons.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.dropdown').on('click', function() {
+                var cardBody = $(this).closest('.card-body');
+                var additionalInfo = cardBody.find('.dropdown-content');
+
+                additionalInfo.slideToggle();
+                $(this).toggleClass('open');
+            });
+        });
+        
+    </script>
 </body>
 @endsection
 

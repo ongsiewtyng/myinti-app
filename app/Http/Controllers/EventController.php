@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Approval;
 use App\Models\User;
+use App\Models\Contact;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,8 +21,8 @@ class EventController extends Controller
     }
 
     public function service1(){
-
-        return view('menus.service1');
+        $clubs = Contact::pluck('club_name');
+        return view('menus.service1', compact('clubs'));
     }
 
     public function submitProposal(Request $request){
@@ -37,6 +38,21 @@ class EventController extends Controller
             'document.*' => 'required|mimes:pdf,doc,docx',
         ]);
 
+        // Check if the uploaded files are in the correct format
+        $uploadedFiles = $request->file('document');
+        foreach ($uploadedFiles as $file) {
+            $extension = $file->getClientOriginalExtension();
+            if (!in_array($extension, ['pdf', 'doc', 'docx'])) {
+                return redirect()->route('service1')->with('error', 'Wrong file format. Please ensure the document is in PDF or Word format.');
+            }
+        }
+
+        // Get the contact ID based on the selected club name
+        $clubName = $request->input('club_name');
+        $contact = Contact::where('club_name', $clubName)->first();
+        $contactId = $contact ? $contact->id : null;
+
+
         // Create a new Approval instance and populate it with the form data
         $approval = new Approval();
         $approval->club_name = $request->input('club_name');
@@ -50,6 +66,7 @@ class EventController extends Controller
         // Get the authenticated user's ID and associate it with the approval
         $user_id = Auth::id();
         $approval->user_id = $user_id;
+        $approval->contact_id = $contactId;
 
         // Handle file upload and store the filename(s) in the approval
         if ($request->hasFile('document')) {

@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             FoodSeeder::class,
             FacilitySeeder::class,
             SessionSeeder::class,
+            ContactsSeeder::class,
         ]);
     }
 }

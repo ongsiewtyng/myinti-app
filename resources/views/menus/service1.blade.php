@@ -42,20 +42,16 @@
                     @csrf <!-- add CSRF token for security -->
 
                     <div class="form-group">
-                        <label for="club-name">Club Name:</label>
-                        <select class="form-control" id="club-name" name="club_name" required>
-                        <option value="">Select a club</option>
-                            <option value="Japanese ACG Society">Japanese ACG Society</option>
-                            <option value="Nerf Club">Nerf Club</option>
-                            <option value="24 Festive Drums">24 Festive Drums</option>
-                            <option value="Dance Club">Dance Club</option>
-                            <option value="Lions Club">Lions Club</option>
-                            <option value="BYIC Society">BYIC Society</option>
-                            <option value="Debate Club">Debate Club</option>
-                            <option value="Chess Club">Chess Club</option>
-                            <option value="IT Club">IT Club</option>
-                            <option value="INTIMA">INTIMA</option>
+                        <label for="club_name">Club Name</label>
+                        <select name="club_name" id="club_name" class="form-control">
+                            <option value="">Select Club</option>
+                            @foreach($clubs as $club)
+                                <option value="{{ $club }}">{{ $club }}</option>
+                            @endforeach
                         </select>
+                        @error('club_name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
@@ -94,7 +90,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="document">Attach Document:</label>
+                        <label for="document">Attach Document (PDF/DOC):</label>
                         <label class="document-container" for="document">
                             <ion-icon name="document-outline" id="logo" alt="Attach Document" style="cursor:pointer;"></ion-icon>
                             <span id="document-label">Select files</span>
@@ -144,7 +140,7 @@
 
                 // Create the file name element
                 const fileName = document.createElement('span');
-                fileName.style.height = '12px';
+                fileName.style.height = '14px';
                 fileName.textContent = file.name;
                 filePreviewItem.appendChild(fileName);
 
@@ -232,27 +228,13 @@
         color: #000000;
         padding: 20px;
     }
-    h1 {
-        position: absolute;
-        width: 512px;
-        height: 43px;
-        left: 650px;
-        top: 150px;
-        font-size: 32px;
-        line-height: 43px;
-        
-        /* identical to box height */
-
-        display: flex;
-        align-items: center;
-
-    }
+    
     .line {
         position: absolute;
         width: 300px;
         height: 0px;
-        left: 730px;
-        top: 210px;
+        left: 700px;
+        top: 190px;
 
         border: 2px solid red;
     }
@@ -348,7 +330,7 @@
         width: 25px;
         height: 25px;
         left: 20px;
-        top: 622px;
+        top: 637px;
     }
 
     .document-container {

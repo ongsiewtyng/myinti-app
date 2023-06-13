@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('contact_id')->nullable();
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('SET NULL');
             $table->string('club_name')->nullable();
             $table->string('event_title')->nullable();
             $table->string('start_date')->nullable();

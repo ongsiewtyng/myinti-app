@@ -192,7 +192,11 @@ class AdminController extends Controller
         }
     }
 
+    // APPROVAL SECTION
+
     public function approval(Request $request){
+
+        $info = Approval::all();
 
         $urgency = $request->input('urgency');
 
@@ -200,7 +204,7 @@ class AdminController extends Controller
             return $query->where('urgency', $urgency);
         })->get();
 
-        return view('admin.approval', compact('submissions'));
+        return view('admin.approval', compact('submissions','info'));
     }
 
     public function toggle($id)
@@ -219,6 +223,8 @@ class AdminController extends Controller
 
         return response()->download($filePath);
     }
+
+    // APPROVAL SECTION END
 
     // BOOKING SECTION
     public function booking(){
@@ -317,6 +323,8 @@ class AdminController extends Controller
         return redirect()->route('message')->with('success', 'Message replied successfully.');
     }
 
+    // ORDER HISTORY SECTION
+
     public function order(){
         $orders = Order::all();
         $items = Items::all();
@@ -348,7 +356,7 @@ class AdminController extends Controller
         return response()->json(['success' => false]);
     }
 
-    
+    // ORDER HISTORY SECTION END
 
     public function getTotalStudents()
     {
