@@ -9,7 +9,7 @@
                 <div class="form-group">
                     <label for="urgency">Filter by Urgency:</label>
                     <select class="form-control" id="urgency" name="urgency">
-                        <option value="">All</option>
+                        <option value="all">All</option>
                         <option value="high">High</option>
                         <option value="medium">Medium</option>
                         <option value="low">Low</option>
@@ -38,7 +38,7 @@
                             <tr class="submission-row">
                                 <td>{{ $submission->id }}</td>
                                 <td>{{ $submission->user->name }}</td>
-                                <td>{{ $submission->urgency }}</td>
+                                <td class = "urgency">{{ $submission->urgency }}</td>
                                 <td>
                                 @if ($submission->status == 'pending')
                                     <span class="badge badge-warning" style="color: red">Pending</span>
@@ -78,18 +78,28 @@
     </div>
 
     <script>
-        $(document).ready(function() {
-            // Handle urgency filter change
-            $('#urgency').change(function() {
-                var urgency = $(this).val();
+        document.addEventListener("DOMContentLoaded", function() {
+            const urgencySelect = document.getElementById('urgency');
+            const infoItems = document.querySelectorAll('.submission-row');
 
-                // Hide/show approval items based on urgency filter
-                if (urgency === '') {
-                    $('.approval-item').show();
-                } else {
-                    $('.approval-item').hide();
-                    $('.approval-item[data-urgency="' + urgency + '"]').show();
-                }
+            urgencySelect.addEventListener('change', function() {
+                const selectedValue = urgencySelect.value;
+
+                infoItems.forEach(function(infoItem) {
+                    const urgency = infoItem.querySelector('.urgency');
+
+                    if (selectedValue === 'all') {
+                        infoItem.style.display = 'table-row';
+                    } else if (selectedValue === 'high' && urgency.textContent.toLowerCase() === 'high') {
+                        infoItem.style.display = 'table-row';
+                    } else if (selectedValue === 'medium' && urgency.textContent.toLowerCase() === 'medium') {
+                        infoItem.style.display = 'table-row';
+                    } else if (selectedValue === 'low' && urgency.textContent.toLowerCase() === 'low') {
+                        infoItem.style.display = 'table-row';
+                    } else {
+                        infoItem.style.display = 'none';
+                    }
+                });
             });
         });
 

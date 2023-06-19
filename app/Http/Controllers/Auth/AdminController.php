@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
+
 use App\Models\Message;
 use App\Mail\ReplyMessage;
 use Illuminate\Support\Facades\Mail;
@@ -216,13 +217,38 @@ class AdminController extends Controller
         return redirect()->route('approval')->with('success', 'Approval status toggled successfully.');
     }
 
-    public function download($id)
-    {
+    public function download($id){
         $submission = Approval::findOrFail($id);
-        $filePath = storage_path('app/' . $submission->document);
+        $filenames = explode(',', $submission->document); // Split the filenames string into an array
 
-        return response()->download($filePath);
+        // Create a zip archive to store the files
+        $zip = new \ZipArchive();
+        $zipName = 'downloaded_files.zip';
+        $zipPath = storage_path('app/documents/' . $zipName);
+
+        if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
+            // Add each file to the zip archive
+            foreach ($filenames as $filename) {
+                $filename = trim($filename); // Remove any whitespace
+                $file = storage_path('app/documents/' . $filename);
+                if (file_exists($file)) {
+                    $zip->addFile($file, $filename);
+                }
+            }
+
+            $zip->close();
+
+            // Download the zip archive
+            return response()->download($zipPath)->deleteFileAfterSend(true);
+        } else {
+            // Unable to create the zip archive
+            return back()->with('error', 'Unable to create the download archive.');
+        }
     }
+
+
+
+
 
     // APPROVAL SECTION END
 

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Approval;
 use App\Models\Contact;
 
+use Carbon\Carbon;
+
 class HomeController extends Controller
 {
     /**
@@ -29,6 +31,19 @@ class HomeController extends Controller
         $approvedEvents = Approval::where('status', 'approved')->take(5)->get();
         $info = Contact::all();
 
-        return view('home', compact('approvedEvents','info'));
+        $events = Approval::select('id', 'event_title', 'start_date', 'end_date')->get();
+
+        $formattedEvents = [];
+
+        foreach ($events as $event) {
+            $formattedEvents[] = [
+                'id' => $event->id,
+                'title' => $event->title,
+                'start' => Carbon::parse($event->start_date)->toIso8601String(),
+                'end' => Carbon::parse($event->end_date)->toIso8601String(),
+            ];
+        }
+
+        return view('home', compact('approvedEvents','info', 'formattedEvents'));
     }
 }

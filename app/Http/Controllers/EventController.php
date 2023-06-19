@@ -74,12 +74,15 @@ class EventController extends Controller
             $filenames = [];
 
             foreach ($files as $file) {
-                $filename = time() . '_' . $file->getClientOriginalName();
+                $timestamp = time();
+                $formattedDate = date('j F Y', $timestamp);
+                $filename = $formattedDate . '_' . $file->getClientOriginalName();
+                $filename = str_replace(['[', ']'], '', $filename); // Remove square brackets
                 $file->storeAs('documents', $filename);
                 $filenames[] = $filename;
             }
 
-            $approval->document = json_encode($filenames);
+            $approval->document = implode(',', $filenames); // Store filenames as comma-separated string
         }
 
 

@@ -113,58 +113,59 @@
         const addedFiles = new Set(); // Set to store the filenames of added files
 
         input.addEventListener('change', () => {
-        if (input.files.length > 0) {
-            const uniqueFiles = new Set(); // Set to store unique file names
-            let totalFiles = 0; // Variable to track total unique files
+            if (input.files.length > 0) {
+                const uniqueFiles = new Set(); // Set to store unique file names
+                let totalFiles = 0; // Variable to track total unique files
 
-            const initialMarginValue = parseInt(submitButton.style.marginTop || '0');
-            let marginValue = initialMarginValue;
+                const initialMarginValue = parseInt(submitButton.style.marginTop || '0');
+                let marginValue = initialMarginValue;
 
-            // Loop through selected files and create file previews
-            for (let i = 0; i < input.files.length; i++) {
-                const file = input.files[i];
+                // Loop through selected files and create file previews
+                for (let i = 0; i < input.files.length; i++) {
+                    const file = input.files[i];
 
-                // Check if the file has already been added
-                if (addedFiles.has(file.name)) {
-                    continue; // Skip the iteration for duplicate files
+                    // Check if the file has already been added
+                    if (addedFiles.has(file.name)) {
+                        continue; // Skip the iteration for duplicate files
+                    }
+
+                    const filePreviewItem = document.createElement('div');
+                    filePreviewItem.classList.add('file-preview-item'); // Add the CSS class to the preview item
+
+                    // Create the file logo element
+                    const fileLogo = document.createElement('ion-icon');
+                    fileLogo.setAttribute('name', 'document-outline');
+                    fileLogo.setAttribute('class', 'file-logo');
+                    filePreviewItem.appendChild(fileLogo);
+
+                    // Create the file name element
+                    const fileName = document.createElement('span');
+                    fileName.style.maxWidth = '200px'; // Set the maximum width for the file name
+                    fileName.style.overflow = 'hidden'; // Hide any overflowing text
+                    fileName.textContent = file.name;
+                    filePreviewItem.appendChild(fileName);
+
+                    // Create the delete icon
+                    const deleteIcon = document.createElement('ion-icon');
+                    deleteIcon.setAttribute('name', 'trash-outline');
+                    deleteIcon.setAttribute('class', 'delete-icon');
+                    filePreviewItem.appendChild(deleteIcon);
+
+                    // Add event listener to delete icon
+                    deleteIcon.addEventListener('click', () => {
+                        removeFileFromPreview(filePreviewItem);
+                    });
+
+                    filePreview.appendChild(filePreviewItem);
+
+                    // Increase the margin value for each additional file
+                    marginValue += 10; // Adjust the value as needed
+
+                    // Add the filename to the set of added files
+                    addedFiles.add(file.name);
+                    totalFiles++;
                 }
-
-                const filePreviewItem = document.createElement('div');
-                filePreviewItem.classList.add('file-preview-item'); // Add the CSS class to the preview item
-
-                // Create the file logo element
-                const fileLogo = document.createElement('ion-icon');
-                fileLogo.setAttribute('name', 'document-outline');
-                fileLogo.setAttribute('class', 'file-logo');
-                filePreviewItem.appendChild(fileLogo);
-
-                // Create the file name element
-                const fileName = document.createElement('span');
-                fileName.style.height = '14px';
-                fileName.textContent = file.name;
-                filePreviewItem.appendChild(fileName);
-
-                // Create the delete icon
-                const deleteIcon = document.createElement('ion-icon');
-                deleteIcon.setAttribute('name', 'trash-outline');
-                deleteIcon.setAttribute('class', 'delete-icon');
-                filePreviewItem.appendChild(deleteIcon);
-
-                // Add event listener to delete icon
-                deleteIcon.addEventListener('click', () => {
-                    removeFileFromPreview(filePreviewItem);
-                });
-
-
-                filePreview.appendChild(filePreviewItem);
-
-                // Increase the margin value for each additional file
-                marginValue += 10; // Adjust the value as needed
-
-                // Add the filename to the set of added files
-                addedFiles.add(file.name);
-                totalFiles++;
-                }
+                
                 // Update the label with the total file count
                 label.textContent = `${totalFiles} total file${totalFiles !== 1 ? 's' : ''}`;
 
@@ -175,6 +176,7 @@
                 submitButton.style.marginTop = '0';
             }
         });
+
 
         // Function to remove a file from the preview
         function removeFileFromPreview(filePreviewItem) {
@@ -204,10 +206,7 @@
         padding: 10px;
     }
     .file-logo {
-        margin-right: -4px;
-        margin-top: 10px;
-        width: 45px;
-        height: 20px;
+        margin-right: 10px;
     }
 
     .file-preview-item {

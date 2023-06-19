@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             FacilitySeeder::class,
             SessionSeeder::class,
             ContactsSeeder::class,
+            EventSeeder::class,
         ]);
     }
 }
