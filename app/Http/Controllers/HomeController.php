@@ -28,7 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $approvedEvents = Approval::where('status', 'approved')->take(5)->get();
+        $approvedEvents = Approval::where('status', 'approved')->get();
         $info = Contact::all();
 
         $events = Approval::select('id', 'event_title', 'start_date', 'end_date')->get();

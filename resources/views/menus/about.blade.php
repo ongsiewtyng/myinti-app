@@ -25,8 +25,8 @@
         <p2>support@myinti.com or <a href="/contact">HERE</a></p2>
 
         <!-- Add social icons -->
-        <a href="https://www.facebook.com/your-page-url"><ion-icon name="logo-facebook" class="facebook"></ion-icon></a>
-        <a href="https://www.instagram.com/your-page-url"><ion-icon name="logo-instagram" class="instagram"></ion-icon></a>
+        <a href="https://www.facebook.com/your-page-url" target="_blank"><ion-icon name="logo-facebook" class="facebook"></ion-icon></a>
+        <a href="https://www.instagram.com/your-page-url" target="_blank"><ion-icon name="logo-instagram" class="instagram"></ion-icon></a>
     </div>
 
     <div class = "img1">

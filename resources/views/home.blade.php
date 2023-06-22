@@ -99,7 +99,9 @@
                 <h2>What's New</h2>
                 <table class="table events">
                     <tbody>
-                        @foreach ($approvedEvents as $event)
+                        @foreach ($approvedEvents->sortByDesc(function ($event) {
+                            return date('Y', strtotime($event->start_date));
+                        }) as $event)
                             <tr>
                                 <div class="col-lg-6">
                                     <div class="event-item">
@@ -120,9 +122,9 @@
                                                 <div class="dropdown-content" style="display: none;">
                                                     <p class="contact-info">Contact Information:</p>
                                                     <div class="social-media-links">
-                                                        <a href="{{ $event->contact->email }}"><ion-icon name="mail-outline"></ion-icon></a>
-                                                        <a href="{{ $event->contact->fb_link }}"><ion-icon name="logo-facebook"></ion-icon></a>
-                                                        <a href="{{ $event->contact->ig_link }}"><ion-icon name="logo-instagram"></ion-icon></a>
+                                                        <a href="{{ $event->contact->email }}" target="_blank"><ion-icon name="mail-outline"></ion-icon></a>
+                                                        <a href="{{ $event->contact->fb_link }}" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a>
+                                                        <a href="{{ $event->contact->ig_link }}" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -134,38 +136,43 @@
                     </tbody>
                 </table>
                 <div class="pagination">
-                    <a href="#" class="arrow-left"><ion-icon name="caret-back-outline"></ion-icon></a>
-                    <a href="#" class="arrow-right"><ion-icon name="caret-forward-outline"></ion-icon></a>
+                    <a href="#" class="arrow-left" id="prevButton"><ion-icon name="caret-back-outline"></ion-icon></a>
+                    <a href="#" class="arrow-right" id="nextButton"><ion-icon name="caret-forward-outline"></ion-icon></a>
                 </div>
             </div>
         </div>
         <div class="col-lg-4">
+            <body class="light">
+
             <div class="calendar">
-            <div class="calendar-header">
-                <span class="month-picker" id="month-picker">February</span>
-                <div class="year-picker">
-                    <span class="year-change" id="prev-year">
-                        <pre><</pre>
-                    </span>
-                    <span id="year">2021</span>
-                    <span class="year-change" id="next-year">
-                        <pre>></pre>
-                    </span>
+                <div class="calendar-header">
+                    <span class="month-picker" id="month-picker">February</span>
+                    <div class="year-picker">
+                        <span class="year-change" id="prev-year">
+                            <pre><</pre>
+                        </span>
+                        <span id="year">2021</span>
+                        <span class="year-change" id="next-year">
+                            <pre>></pre>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="calendar-body">
-                <div class="calendar-week-day">
-                    <div>Sun</div>
-                    <div>Mon</div>
-                    <div>Tue</div>
-                    <div>Wed</div>
-                    <div>Thu</div>
-                    <div>Fri</div>
-                    <div>Sat</div>
+                <div class="calendar-body">
+                    <div class="calendar-week-day">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+                    <div class="calendar-days"></div>
                 </div>
-                <div class="calendar-days"></div>
+                <div class="month-list"></div>
             </div>
-            <div class="month-list"></div>
+
+            </body>
         </div>
     </div>
 
@@ -233,6 +240,25 @@
                         day.classList.add('curr-date')
                     }
                 }
+
+                day.addEventListener('click', () => {
+                    const eventItems = document.querySelectorAll('.event-item-container');
+                    const selectedDate = i - first_day.getDay() + 1;
+
+                    eventItems.forEach((item) => {
+                        const eventDate = parseInt(item.querySelector('.date-time').textContent, 10).split(' ')[0];
+                        const title = item.querySelector('.title');
+
+                        if (parseInt(eventDate, 10) === selectedDate) {
+                            item.classList.toggle('expanded');
+                            title.classList.toggle('expanded');
+                        } else {
+                            item.classList.remove('expanded');
+                            title.classList.remove('expanded');
+                        }
+                    });
+                });
+
                 calendar_days.appendChild(day)
             }
         }
@@ -273,8 +299,60 @@
             generateCalendar(curr_month.value, curr_year.value)
         }
 
+        
+        $(document).ready(function() {
+            var currentPage = 0; // Initialize the current page index
 
-    </script>
+            // Set the number of items per page
+            var itemsPerPage = 5; // Adjust this value according to your needs
+
+            // Get the total number of events
+            var totalEvents = {{ $approvedEvents->count() }};
+
+            // Calculate the total number of pages based on the number of items and itemsPerPage
+            var totalPages = Math.ceil(totalEvents / itemsPerPage);
+
+            // Function to update the page content
+            function updatePageContent() {
+                // Hide all event items
+                $('.event-item').hide();
+
+                // Calculate the range of events to show based on the currentPage and itemsPerPage
+                var startIndex = currentPage * itemsPerPage;
+                var endIndex = (currentPage + 1) * itemsPerPage;
+
+                // Show the events within the range
+                $('.event-item').slice(startIndex, endIndex).show();
+            }
+
+            // Function to handle the click event on the previous button
+            $('#prevButton').click(function(e) {
+                e.preventDefault();
+                if (currentPage > 0) {
+                    currentPage--; // Decrease the current page index
+                    updatePageContent(); // Update the page content
+                }
+            });
+
+            // Function to handle the click event on the next button
+            $('#nextButton').click(function(e) {
+                e.preventDefault();
+                if (currentPage < totalPages - 1) {
+                    currentPage++; // Increase the current page index
+                    updatePageContent(); // Update the page content
+                } else if (currentPage === totalPages - 1) {
+                    currentPage++; // Increase the current page index
+                    updatePageContent(); // Update the page content
+
+                }
+            });
+
+            // Initial update of the page content
+            updatePageContent();
+        });
+</script>
+
+
 </body>
 @endsection
 
