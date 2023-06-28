@@ -31,6 +31,13 @@
     
 
     <style>
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            /* Additional styling for the navigation menu */
+        }
+
         .navbar-brand {
             margin: 0;
             padding: 0;
@@ -79,6 +86,28 @@
         .height {
             height: 60px;
         }
+
+        /* Hide the default scrollbar */
+        ::-webkit-scrollbar {
+        width: 8px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+        }
+
     </style>
 
     @yield('styles')
@@ -86,7 +115,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" id = "navbar">
             <div class="container">
                 <a class="navbar-brand d-flex justify-content-center" href="{{ url('/') }}" style="font-size: 40px; color: #FF4141;">MyINTI</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -174,6 +203,16 @@
 
         // Call fetchCartCount initially to get the current count
         fetchCartCount();
+
+        window.addEventListener('scroll', function() {
+            var navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 0) {
+                navbar.classList.add('sticky');
+            } else {
+                navbar.classList.remove('sticky');
+            }
+        });
+
     </script>
 </body>
 </html>

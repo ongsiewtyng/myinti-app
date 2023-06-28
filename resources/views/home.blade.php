@@ -128,6 +128,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <hr>
                                         </div>
                                     </div>
                                 </div>
@@ -147,7 +148,7 @@
             <div class="calendar">
                 <div class="calendar-header">
                     <span class="month-picker" id="month-picker">February</span>
-                    <div class="year-picker">
+                    <div class="year-picker" id="year-picker">
                         <span class="year-change" id="prev-year">
                             <pre><</pre>
                         </span>
@@ -170,8 +171,8 @@
                     <div class="calendar-days"></div>
                 </div>
                 <div class="month-list"></div>
+                <div class="year-list"></div>
             </div>
-
             </body>
         </div>
     </div>
@@ -264,6 +265,7 @@
         }
 
         let month_list = calendar.querySelector('.month-list')
+        let year_list = calendar.querySelector('.year-list');
 
         month_names.forEach((e, index) => {
             let month = document.createElement('div')
@@ -289,14 +291,37 @@
 
         generateCalendar(curr_month.value, curr_year.value)
 
-        document.querySelector('#prev-year').onclick = () => {
-            --curr_year.value
-            generateCalendar(curr_month.value, curr_year.value)
-        }
+        document.querySelector('#prev-year').onclick = (event) => {
+            if (!year_list.classList.contains('show')) {
+                --curr_year.value;
+                generateCalendar(curr_month.value, curr_year.value);
+            }
+        };
 
-        document.querySelector('#next-year').onclick = () => {
-            ++curr_year.value
-            generateCalendar(curr_month.value, curr_year.value)
+        document.querySelector('#next-year').onclick = (event) => {
+            if (!year_list.classList.contains('show')) {
+                ++curr_year.value;
+                generateCalendar(curr_month.value, curr_year.value);
+            }
+        };
+
+        let year_picker = calendar.querySelector('#year-picker');
+
+        year_picker.onclick = (event) => {
+            if (!event.target.closest('.year-change')) {
+                year_list.classList.toggle('show');
+            }
+        };
+
+        for (let i = currDate.getFullYear() - 10; i <= currDate.getFullYear() + 10; i++) {
+            let year = document.createElement('div');
+            year.innerHTML = `<div data-year="${i}">${i}</div>`;
+            year.querySelector('div').onclick = () => {
+                year_list.classList.remove('show');
+                curr_year.value = i;
+                generateCalendar(curr_month.value, curr_year.value);
+            };
+            year_list.appendChild(year);
         }
 
         
@@ -611,32 +636,8 @@
         transform: rotate(-19.48deg);
     }
 
-    /* Customize the calendar appearance as per your requirements */
-    .calendar {
-    width: 100%;
-    border-collapse: collapse;
-    }
-
-    .calendar caption {
-    text-align: center;
-    padding: 10px;
-    font-weight: bold;
-    }
-
-    .calendar thead th {
-    padding: 8px;
-    text-align: center;
-    border-bottom: 1px solid #ccc;
-    }
-
-    .calendar tbody td {
-    padding: 8px;
-    text-align: center;
-    border: 1px solid #ccc;
-    }
-
-    .calendar tbody td:hover {
-    background-color: lightblue;
+    .year-change pre {
+        margin: 0;
     }
 
     /* Add any additional CSS styles as needed */
@@ -908,6 +909,10 @@
     align-items: center;
     }
 
+    .year-picker span:hover {
+        background-color: var(--color-hover);
+    }
+
     .year-change {
     height: 40px;
     width: 40px;
@@ -978,6 +983,48 @@
     .month-list > div > div:hover {
     background-color: var(--color-hover);
     }
+
+    .year-list {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: var(--bg-main);
+        padding: 20px;
+        grid-template-columns: repeat(4, auto);
+        gap: 5px;
+        display: grid;
+        transform: scale(1.5);
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .year-list.show {
+        transform: scale(1);
+        visibility: visible;
+        pointer-events: visible;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .year-list > div {
+        display: grid;
+        place-items: center;
+    }
+
+    .year-list > div > div {
+        width: 100%;
+        padding: 5px 20px;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        color: var(--color-txt);
+    }
+
+    .year-list > div > div:hover {
+        background-color: var(--color-hover);
+    }
+
 
     @keyframes to-top {
     0% {

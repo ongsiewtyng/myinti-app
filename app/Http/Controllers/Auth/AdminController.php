@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Message;
 use App\Mail\ReplyMessage;
@@ -63,6 +64,20 @@ class AdminController extends Controller
     {
         return view('admin.admin');
     }
+
+    public function search(Request $request){
+        $searchTerm = $request->input('term');
+    
+        // Perform the search query on relevant tables
+        $results = DB::table('users')
+                    ->where('name', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('email', 'like', '%' . $searchTerm . '%')
+                    ->get();
+    
+        // Return the search results as JSON
+        return response()->json(['results' => $results]);
+    }
+    
 
     public function home()
     {
@@ -245,10 +260,6 @@ class AdminController extends Controller
             return back()->with('error', 'Unable to create the download archive.');
         }
     }
-
-
-
-
 
     // APPROVAL SECTION END
 

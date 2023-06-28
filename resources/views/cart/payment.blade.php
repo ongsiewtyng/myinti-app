@@ -55,7 +55,9 @@
                                 <form action="{{ route('cart.update', $items->first()->id) }}" method="POST" class="update-form">
                                     @csrf
                                     @method('PATCH')
-                                    <input type="number" name="quantity" value="{{ $quantity }}" class="quantity-input">
+                                    <div class="quantity-container" data-item-id="{{ $items->first()->id }}">
+                                        <input type="number" name="quantity" value="{{ $quantity }}" class="quantity-input">
+                                    </div>
                                 </form>
                             </td>
                             <td>{{ $total }}</td>
@@ -132,7 +134,7 @@
                 form.submit();
             });
         });
-    </script>
+        </script>
 @endsection
 
 @section('styles')

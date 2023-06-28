@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderReceipt;
 use App\Models\Order;
 use App\Models\Items;
 use App\Models\User;
@@ -9,6 +10,8 @@ use App\Models\Food;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Dompdf\Dompdf;
 
 class OrderController extends Controller
 {   
@@ -51,5 +54,33 @@ class OrderController extends Controller
         return view('menus.details', compact('order', 'items', 'total', 'details'));
     }
 
+    // public function sendReceipt($orderId){
+    //     $user = Auth::user();
+    //     $order = Order::where('user_id', $user->id)->findOrFail($orderId);
+    //     $items = Items::where('order_id', $orderId)->get();
+
+    //     $receiptData = [
+    //         'user' => $user,
+    //         'order' => $order,
+    //         'items' => $items,
+    //     ];
+
+    //     // Generate the receipt PDF using Dompdf
+    //     $pdf = new Dompdf();
+    //     $pdf->loadView('pdf.receipt', compact('receiptData'));
+    //     $pdf->render();
+
+    //     // Save the receipt PDF to a temporary file
+    //     $receiptPath = storage_path('app/public/receipts/') . 'receipt_' . $orderId . '.pdf';
+    //     $pdf->output(['output_file' => $receiptPath]);
+
+    //     // Send the email with the receipt attached
+    //     Mail::to($user->email)->send(new OrderReceipt($receiptData, $receiptPath));
+
+    //     // Delete the temporary receipt file
+    //     unlink($receiptPath);
+
+    //     return redirect()->back()->with('success', 'Receipt sent successfully!');
+    // }
 
 }

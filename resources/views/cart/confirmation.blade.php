@@ -47,6 +47,7 @@
         <!-- Add a button to go back home -->
         <a href="{{ route('home') }}" class="btn btn-primary">Back to Home</a>
         <a href="{{ route('order.history') }}" class="btn btn-primary">Order History</a>
+        <a href="{{ route('service2') }}" class="btn btn-primary order-more-btn">Order More</a>
     </div>
 @endsection
 
@@ -86,5 +87,13 @@
         padding: 10px;
         border-radius: 10px;
     }
+
+    .order-more-btn {
+        background-color: #ff9800; /* Change the background color to your desired color */
+        color: white; /* Change the text color to ensure it's visible */
+        float: right; /* Align the button to the right */
+        margin-left: 10px; /* Add some margin to separate it from other buttons */
+    }
+
 
 </style>

@@ -26,7 +26,9 @@ Route::post('/reset-password', [App\Http\Controllers\Auth\ResetPasswordControlle
 
 
 Route::get('/admin', [App\Http\Controllers\Auth\AdminController::class, 'admin'])->name('admin');
+Route::get('/export', [App\Http\Controllers\ExportController::class, 'exportData'])->name('export.data');
 Route::post('/access', [App\Http\Controllers\Auth\AdminController::class, 'access'])->name('access');
+Route::get('/admin/search', [App\Http\Controllers\Auth\AdminController::class, 'search'])->name('admin.search');
 Route::match(['get', 'post'], '/dashboard', [App\Http\Controllers\Auth\AdminController::class, 'home'])->name('dashboard');
 Route::get('/food', [App\Http\Controllers\Auth\AdminController::class, 'food'])->name('food');
 Route::post('/add-category', [App\Http\Controllers\Auth\AdminController::class, 'addCategory'])->name('add-category');
@@ -61,6 +63,8 @@ Route::post('/contact/submit', [App\Http\Controllers\ContactController::class, '
 Route::get('/about', [App\Http\Controllers\AboutController::class, 'index'])->name('about');
 Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('order.history');
 Route::get('/orders/{id}', [App\Http\Controllers\OrderController::class, 'details'])->name('order.details');
+// Route::get('/orders/{orderId}/send-receipt', [App\Http\Controllers\OrderController::class, 'sendReceipt'])->name('orders.sendReceipt');
+
 
 Route::get('/service1',[App\Http\Controllers\EventController::class,'service1'])->name('service1');
 Route::post('/submit-proposal', [App\Http\Controllers\EventController::class, 'submitProposal'])->name('submit.proposal');
@@ -86,6 +90,7 @@ Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'destro
 Route::get('/cart/count', [App\Http\Controllers\CartController::class,'count'])->name('cart.count');
 Route::match(['get', 'post'], '/cart/checkout', [App\Http\Controllers\CartController::class, 'checkout'])->name('cart.checkout');
 Route::get('/cart/confirmation/{id}', [App\Http\Controllers\CartController::class, 'confirmation'])->name('cart.confirmation');
+
 
 
 // Route::get('/service3',[App\Http\Controllers\ServicesController::class,'service3'])->name('service3');

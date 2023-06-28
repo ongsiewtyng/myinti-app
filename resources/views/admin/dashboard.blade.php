@@ -60,6 +60,13 @@
                 </div>
             </div>
         </div>
+        <div class="export-button">
+            <a href="{{ route('export.data') }}" class="btn btn-custom">
+                <i class='bx bx-export'></i>
+                <i class='bx bx-export bx-tada'></i>
+                Export Data
+            </a>
+        </div>
     </section>
 
     <script>
@@ -168,6 +175,40 @@
         margin-top: 20px;
         white-space: nowrap;
         color: var(--text-color);
+    }
+
+    .export-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    .btn-custom i.bx-export.bx-tada{
+        display: none;
+    }
+
+    .btn-custom:hover i.bx-export{
+        display: none;
+    }
+
+    .btn-custom:hover i.bx-export.bx-tada{
+        display: inline-block;
+    }
+
+    .btn-custom {
+        /* Customize the button styles as per your requirement */
+        /* Example CSS: */
+        background-color: #f8f9fa;
+        color: #343a40;
+        border-color: #6c757d;
+    }
+
+    .btn-custom:hover {
+        /* Example CSS: */
+        background-color: #e2e6ea;
+        color: #343a40;
+        border-color: #6c757d;
     }
 
 </style>

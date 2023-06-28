@@ -7,12 +7,17 @@ use App\Models\Food;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Items;
+use App\Mail\ReceiptMail;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 
 class CartController extends Controller
 {
@@ -41,19 +46,30 @@ class CartController extends Controller
         ]);
 
         $foodItem = Food::findOrFail($request->food_id);
-        // Retrieve the cart items for the current user
-        $cartItems = Cart::where('user_id', auth()->user()->id)->get();
 
-        Cart::create([
-            'name' => $foodItem->name,
-            'pic' => $foodItem->pic,
-            'quantity' => $request->quantity,
-            'total' => $foodItem->price * $request->quantity,
-            'payment' => $request->payment,
-            'order_type' => $request->order_type,
-            'food_id' => $foodItem->id,
-            'user_id' => auth()->user()->id,
-        ]);
+        // Retrieve the cart item for the current user and the selected food item
+        $cartItem = Cart::where('user_id', auth()->user()->id)
+            ->where('food_id', $foodItem->id)
+            ->first();
+
+        if ($cartItem) {
+            // If the cart item already exists, update its quantity and total
+            $cartItem->quantity += $request->quantity;
+            $cartItem->total = $foodItem->price * $cartItem->quantity;
+            $cartItem->save();
+        } else {
+            // If the cart item doesn't exist, create a new one
+            Cart::create([
+                'name' => $foodItem->name,
+                'pic' => $foodItem->pic,
+                'quantity' => $request->quantity,
+                'total' => $foodItem->price * $request->quantity,
+                'payment' => $request->payment,
+                'order_type' => $request->order_type,
+                'food_id' => $foodItem->id,
+                'user_id' => auth()->user()->id,
+            ]);
+        }
 
         // Return a JSON response with the success property
         return response()->json(['success' => true]);
@@ -62,31 +78,41 @@ class CartController extends Controller
     public function addToCart(Request $request){
         $foodId = $request->input('food_id');
         $quantity = $request->input('quantity');
-
-        // Retrieve the food item from the database
-        $foodItem = Food::find($foodId);        
         
-        // Retrieve the cart items for the current user
-        $cartItems = Cart::where('user_id', auth()->user()->id)->get();
-
+        // Retrieve the food item from the database
+        $foodItem = Food::find($foodId);
+        
         if ($foodItem && $quantity > 0) {
-            // Food item exists in the database, now we can add it to the cart
-            $cartItem = new Cart([
-                'name' => $foodItem->name,
-                'pic' => $foodItem->pic,
-                'quantity' => $quantity,
-                'total' => $foodItem->price * $quantity,
-                'payment' => $request->input('payment'),
-                'order_type' => $request->input('order_type'),
-                'food_id' => $foodItem->id,
-                'user_id' => auth()->user()->id,
-            ]);
-
-            $cartItem->save();
+            // Retrieve the cart item for the current user and the selected food item
+            $cartItem = Cart::where('user_id', auth()->user()->id)
+                ->where('food_id', $foodItem->id)
+                ->first();
+            
+            if ($cartItem) {
+                // If the cart item already exists, update its quantity and total
+                $cartItem->quantity += $quantity;
+                $cartItem->total = $foodItem->price * $cartItem->quantity;
+                $cartItem->save();
+            } else {
+                // If the cart item doesn't exist, create a new one
+                $cartItem = new Cart([
+                    'name' => $foodItem->name,
+                    'pic' => $foodItem->pic,
+                    'quantity' => $quantity,
+                    'total' => $foodItem->price * $quantity,
+                    'payment' => $request->input('payment'),
+                    'order_type' => $request->input('order_type'),
+                    'food_id' => $foodItem->id,
+                    'user_id' => auth()->user()->id,
+                ]);
+                
+                $cartItem->save();
+            }
         }
-
+        
         return redirect()->route('cart');
     }
+
 
     public function count(){
         $count = Cart::count();
@@ -152,16 +178,11 @@ class CartController extends Controller
         }
 
         try {
-            // Start a database transaction
-            // DB::beginTransaction();
-
             $userId = auth()->user()->id;
 
             // Retrieve the cart items and calculate the total price
             $cartItems = Cart::where('user_id', $userId)->get();
             
-            // $quantity = $cartItems->sum('quantity');
-
             //Create a row for order
             $newOrder = [
                 'user_id' => $userId,
@@ -191,7 +212,6 @@ class CartController extends Controller
                 // Create the item
                 $order = Items::create($orderData);
 
-
                 // Update the cart items with the order ID and retrieve the ordered items data
                 $orderedItems = $cartItems->map(function ($cartItem) use ($order) {
                     // $cartItem->order_id = $order->id;
@@ -204,10 +224,6 @@ class CartController extends Controller
                     ];
                 });
             }
-
-            // Commit the transaction
-            // DB::commit();
-
             // Clear the cart by deleting all cart items for the current user
             $delete = Cart::where('user_id', $userId)->delete();
 
@@ -219,8 +235,6 @@ class CartController extends Controller
                 ->with('success', 'Order placed successfully.')
                 ->with('orderedItems', $orderedItems);
         } catch (\Exception $e) {
-            // An error occurred, rollback the transaction
-            // DB::rollback();
             // Log the error
             dd($e);
             // Handle the error appropriately (e.g., log the error, display an error message)
@@ -228,35 +242,54 @@ class CartController extends Controller
         }
     }
 
-
-
     public function confirmation($id){
         // Retrieve the order based on the provided ID
         $order = Order::findOrFail($id);
         $items = Items::where('order_id', $id)->get();
         $total = $items->sum('total');
+        // $food = Food::where("id", $order->food_id)->get();
 
-        // You can perform any necessary logic or data retrieval here
-        $food = Food::where("id",$order->food_id)->get();
+        // Retrieve the user's email using the relationship
+        $email = $order->user->email;
         
+        // Prepare the data to be passed to the email view
+        $data = [
+            'order' => $order,
+            'food' => $order->food,
+            'total' => $total,
+            'items' => $items,
+        ];
+
+        // Render the view to HTML
+        $html = view('emails.receipt', $data)->render();
+
+        // Generate PDF from the HTML
+        $pdf = $this->generatePDF($html);
+
+        // Attach the PDF to the email
+        $pdfAttachment = $pdf->output();
+        $attachmentName = 'order_receipt.pdf';
+
+        // Send the email with the PDF attachment
+        Mail::to($email)->send(new ReceiptMail($order, $items, $total, $pdfAttachment, $attachmentName));
 
         // Pass the order data to the view for displaying the confirmation page
-        return view('cart.confirmation', compact('order', 'food','total', 'items'));
+        return view('cart.confirmation', compact('order', 'total', 'items'));
     }
 
-    // public function showOrder($orderId){
-    //     // Retrieve the order
-    //     $order = Order::findOrFail($orderId);
+    private function generatePDF($html)
+    {
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
 
-    //     // Retrieve the ordered food items
-    //     $orderedItems = $order->foods;
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
 
-    //     // Pass the order and ordered items to the view
-    //     return view('cart.confirmation', compact('order', 'orderedItems'));
-    // }
+        // (Optional) Adjust PDF settings here
+        $dompdf->setPaper('A4', 'portrait');
 
+        $dompdf->render();
 
-
-
-
+        return $dompdf;
+    }
 }
