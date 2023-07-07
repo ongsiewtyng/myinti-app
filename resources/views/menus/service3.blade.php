@@ -49,10 +49,13 @@
                                 @php
                                     $timeOptions = $facility->sessions->where('f_id', 6)->pluck('time')->unique();
                                     $currentDateTime = \Carbon\Carbon::now()->setTimezone('Asia/Kuala_Lumpur');
-                                    $startTime = \Carbon\Carbon::createFromFormat('h:i A', explode(' - ', $session->time)[0], 'Asia/Kuala_Lumpur');
-                                    $isSessionAvailable = !$session->booked && $startTime->gt($currentDateTime);
                                 @endphp
                                 @foreach($timeOptions as $time)
+                                    @php
+                                        $session = $facility->sessions->where('f_id', 6)->where('time', $time)->first();
+                                        $startTime = \Carbon\Carbon::createFromFormat('h:i A', explode(' - ', $session->time)[0], 'Asia/Kuala_Lumpur');
+                                        $isSessionAvailable = !$session->booked && $startTime->gt($currentDateTime);
+                                    @endphp
                                     @if($isSessionAvailable)
                                         <option value="{{ $time }}">{{ $time }}</option>
                                     @else

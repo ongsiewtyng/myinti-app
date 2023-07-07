@@ -33,31 +33,55 @@
                     <span class="text">Recent Activity</span>
                 </div>
                 <div class="activity-data">
-                <div class="data names">
-                    <span class="data-title">Name</span>
-                    <?php foreach ($users as $user): ?>
-                        <span class="data-list"><?php echo $user->name; ?></span>
-                    <?php endforeach; ?>
+                    <div class="data names">
+                        <span class="data-title">Name</span>
+                        <?php $perPageOptions = [5, 10, 15, 20]; // Options for number of users per page ?>
+                        <?php $perPage = request()->get('per_page', $perPageOptions[0]); // Get the selected number of users per page from the URL or use the default value ?>
+                        <?php $currentPage = request()->get('page', 1); // Get the current page number from the URL ?>
+                        <?php $startIndex = ($currentPage - 1) * $perPage; // Calculate the starting index of the users for the current page ?>
+                        <?php $recentUsers = $users->sortBy('created_at')->slice($startIndex, $perPage); ?>
+                        <?php foreach ($recentUsers as $user): ?>
+                            <span class="data-list"><?php echo $user->name; ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="data type">
+                        <span class="data-title">Student ID</span>
+                        <?php foreach ($recentUsers as $user): ?>
+                            <span class="data-list" style="text-transform: uppercase;"><?php echo $user->studentid; ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="data email">
+                        <span class="data-title">Email</span>
+                        <?php foreach ($recentUsers as $user): ?>
+                            <span class="data-list"><?php echo $user->email; ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="data joined">
+                        <span class="data-title">Joined</span>
+                        <?php foreach ($recentUsers as $user): ?>
+                            <span class="data-list"><?php echo $user->created_at->format('d M Y'); ?></span>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-                <div class="data type">
-                    <span class="data-title">Student ID</span>
-                    <?php foreach ($users as $user): ?>
-                    <span class="data-list" style="text-transform: uppercase;"><?php echo $user->studentid; ?></span>
-                    <?php endforeach; ?>
+                <div class="user-per-page">
+                    <span class="text">Users per page:</span>
+                    <select name="per_page" onchange="this.options[this.selectedIndex].value && (window.location = '{{ route('dashboard', ['per_page' => '__value__']) }}'.replace('__value__', this.options[this.selectedIndex].value))">
+                        <?php foreach ($perPageOptions as $option): ?>
+                            <option value="<?php echo $option; ?>" <?php echo ($option == $perPage) ? 'selected' : ''; ?>><?php echo $option; ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
-                <div class="data email">
-                    <span class="data-title">Email</span>
-                    <?php foreach ($users as $user): ?>
-                        <span class="data-list"><?php echo $user->email; ?></span>
-                    <?php endforeach; ?>
-                </div>
-                <div class="data joined">
-                    <span class="data-title">Joined</span>
-                    <?php foreach ($users as $user): ?>
-                        <span class="data-list"><?php echo $user->created_at->format('d M Y'); ?></span>
-                    <?php endforeach; ?>
-                </div>
-                </div>
+            </div>
+            <div class="pagination">
+                <?php $totalPages = ceil($users->count() / $perPage); ?>
+                <?php if ($totalPages > 1): ?>
+                    <a href="{{ route('dashboard', ['page' => max($currentPage - 1, 1), 'per_page' => $perPage]) }}" class="arrow prev">
+                        <i class="uil uil-angle-left"></i>
+                    </a>
+                    <a href="{{ route('dashboard', ['page' => min($currentPage + 1, $totalPages), 'per_page' => $perPage]) }}" class="arrow next">
+                        <i class="uil uil-angle-right"></i>
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
         <div class="export-button">
@@ -209,6 +233,31 @@
         background-color: #e2e6ea;
         color: #343a40;
         border-color: #6c757d;
+    }
+
+    .user-per-page {
+        position: absolute;
+        top: 26.1rem;
+        right: 0;
+        margin-right: 15px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        color: #888;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+
+    .pagination .arrow {
+        margin: 0 5px;
+        font-size: 20px;
+        color: #888;
+        text-decoration: none;
     }
 
 </style>

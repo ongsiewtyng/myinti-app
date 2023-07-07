@@ -1,53 +1,68 @@
 @extends('layouts.app')
 
 @section('content')
-<body>
-    <section>
-        <div class="form-box">
-            <div class="form-value">
-                <form method="POST" action="{{ route('register') }}">
-                    @csrf
-                    <h2>Register</h2>
+@if ($errors->has('login') || $errors->has('password') || $errors->has('email'))
+    <div class="alert alert-danger" role="alert">
+        @if ($errors->has('login'))
+            {{ $errors->first('login') }}
+        @endif
+        @if ($errors->has('password'))
+            {{ $errors->first('password') }}
+        @endif
+        @if ($errors->has('email'))
+            @if ($errors->first('email') === 'validation.regex')
+                The email must be in the format "p********@student.newinti.edu.my".
+            @else
+                {{ $errors->first('email') }}
+                The email must be in the format "p********@student.newinti.edu.my".
+            @endif
+        @endif
+    </div>
+@endif
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+<section>
+    <div class="form-box">
+        <div class="form-value">
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
+                <h2>Register</h2>
 
-                    <div class="inputbox">
-                        <ion-icon name="person-outline"></ion-icon>
-                        <input type="text" name="name" value="{{ old('name') }}" required autofocus>
-                        <label for="">Name</label>
-                    </div>
+                <div class="inputbox">
+                    <ion-icon name="person-outline"></ion-icon>
+                    <input type="text" name="name" value="{{ old('name') }}" required autofocus>
+                    <label for="">Name</label>
+                </div>
 
-                    <div class="inputbox">
-                        <ion-icon name="mail-outline"></ion-icon>
-                        <input type="email" name="email" value="{{ old('email') }}" required pattern="^[pP]\d{8}@student\.newinti\.edu\.my$">
-                        <label for="">Student Email</label>
+                <div class="inputbox">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    <input type="email" name="email" value="{{ old('email') }}" required>
+                    <label for="">Student Email</label>
+                </div>
 
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>The email must be in the format "p********@student.newinti.edu.my".</strong>
-                            </span>
-                        @enderror
+                <div class="inputbox">
+                    <ion-icon name="eye-outline" onclick="togglePasswordVisibility()"></ion-icon>
+                    <input type="password" name="password" id="password" required>
+                    <label for="">Password</label>
+                </div>
 
-                    </div>
+                <div class="inputbox">
+                    <ion-icon class="confirm" name="eye-outline" onclick="toggleConfirmPasswordVisibility()" id="password-toggle"></ion-icon>
+                    <input type="password" name="password_confirmation" id="password_confirm" required>
+                    <label for="">Confirm Password</label>
+                </div>
 
-                    <div class="inputbox">
-                        <ion-icon name="eye-outline" onclick="togglePasswordVisibility()"></ion-icon>
-                        <input type="password" name="password" id="password" required>
-                        <label for="">Password</label>
-                    </div>
+                <button type="submit">Register</button>
 
-                    <div class="inputbox">
-                        <ion-icon class="confirm" name="eye-outline" onclick="toggleConfirmPasswordVisibility()" id="password-toggle"></ion-icon>
-                        <input type="password" name="password_confirmation" id="password_confirm" required>
-                        <label for="">Confirm Password</label>
-                    </div>
-
-                    <button type="submit">Register</button>
-
-                    <div class="register">
-                        <p>Already have an account? <a href="{{ route('login') }}">Log in</a></p>
-                    </div>
-                </form>
-            </div>
+                <div class="register">
+                    <p>Already have an account? <a href="{{ route('login') }}">Log in</a></p>
+                </div>
+            </form>
         </div>
+    </div>
 </section>
 
 <script>

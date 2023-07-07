@@ -9,6 +9,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
+use Faker\Factory as Faker;
 
 class UserSeeder extends Seeder
 {
@@ -18,8 +19,30 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $currentDateTime = Carbon::now();
+        $faker = Faker::create();
 
-        $users = [
+        $users = [];
+
+        // Generate 100 users using Faker
+        for ($i = 0; $i < 100; $i++) {
+            $studentId = 'p' . str_pad($faker->unique()->randomNumber(8), 8, '0', STR_PAD_LEFT);
+            $email = $studentId . '@student.newinti.edu.my';
+
+            $createdAt = Carbon::createFromTimestamp($faker->dateTimeBetween('2022-01-01', '2023-12-31')->getTimestamp());
+            $updatedAt = $faker->optional(0.5, $createdAt)->dateTimeBetween($createdAt, '2023-12-31');
+
+            $users[] = [
+                'studentid' => $studentId,
+                'name' => $faker->name,
+                'email' => $email,
+                'password' => Hash::make('123456'),
+                'created_at' => $createdAt,
+                'updated_at' => $updatedAt,
+            ];
+        }
+
+        // Add the predefined users
+        $users = array_merge($users, [
             [
                 'studentid' => 'p21013377',
                 'name' => 'Venus',
@@ -44,7 +67,7 @@ class UserSeeder extends Seeder
                 'created_at' => $currentDateTime,
                 'updated_at' => $currentDateTime,
             ],
-        ];
+        ]);
 
         User::query()->insert($users);
     }
