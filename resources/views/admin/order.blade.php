@@ -11,7 +11,7 @@
           <h3>No orders</h3>
         </div>
       @else
-        @foreach($orders as $order)
+        @if ($order)
           @php
             $orderItems = $items->where('order_id', $order->id);
             $totalAmount = $orderItems->sum('total');
@@ -51,13 +51,21 @@
               </div>
             </div>
           </div>
-        @endforeach
+        @else
+          @foreach($orders as $order)
+            <div class="col-md-6">
+              <div class="order card mb-4">
+                <div class="card-header">
+                  <strong>Order ID: {{ $order->id }}</strong>
+                </div>
+              </div>
+            </div>
+          @endforeach
+        @endif
       @endif
     </div>
   </div>
 </body>
-
-
 
   <script>
     function toggleStatus(event) {

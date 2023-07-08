@@ -1,71 +1,74 @@
 @extends('layouts.admin_home')
 
 @section('content')
-    <div class="search-overlay">
-        <h1>Search Results</h1>
+    <div class="container">
+        <h1 class="mb-4">Search Results</h1>
 
-        <div id="searchResultsContainer" class="overlay-content">
-            @if ($results->isEmpty())
-                <p>No results found.</p>
-            @else
-                <ul>
-                    @foreach ($results as $result)
-                        <li>{{ $result->name }} - {{ $result->email }}</li>
+        <h2>Users</h2>
+        @if ($users->isEmpty())
+            <p>No users found.</p>
+        @else
+            <ul class="list-group mb-4">
+                @foreach ($users as $user)
+                    <li class="list-group-item">
+                        <span style="font-size: 20px;">{{ $user->name }}</span> <br>
+                        <span class="font-weight-bold">{{ strtoupper($user->studentid) }}</span><br>
+                        <span class="text-muted">Email: {{ $user->email }}</span>
+                    </li>
+                @endforeach
+            </ul>
+
+            @if (!$userOrders->isEmpty())
+                <h3>Order History</h3>
+                <ul class="list-group mb-4">
+                    @foreach ($userOrders as $order)
+                        <li class="list-group-item">
+                            <a href="{{ route('order', ['id' => $order->id]) }}" style="text-decoration: none;">
+                                Order ID: {{ $order->id }}
+                            </a>
+                        </li>
+                        <!-- Display other order details -->
                     @endforeach
                 </ul>
             @endif
-        </div>
+
+            @if (!$userApprovals->isEmpty())
+                <h3>Approvals</h3>
+                <ul class="list-group mb-4">
+                    @foreach ($userApprovals as $approval)
+                        <li class="list-group-item">Approval ID: {{ $approval->id }}</li>
+                        <!-- Display other approval details -->
+                    @endforeach
+                </ul>
+            @endif
+
+            @if (!$userMessage->isEmpty())
+                <h3>Messages</h3>
+                <ul class="list-group mb-4">
+                    @foreach ($userMessage as $message)
+                        <li class="list-group-item">Message ID: {{ $message->id }}</li>
+                        <!-- Display other message details -->
+                    @endforeach
+                </ul>
+            @endif
+        @endif
+
+        @if (!$foods->isEmpty())
+            <h2>Foods</h2>
+            <ul class="list-group mb-4">
+                @foreach ($foods as $food)
+                    <li class="list-group-item">{{ $food->name }}</li>
+                @endforeach
+            </ul>
+        @endif
+
+        @if (!$facilities->isEmpty())
+            <h2>Facilities</h2>
+            <ul class="list-group">
+                @foreach ($facilities as $facility)
+                    <li class="list-group-item">{{ $facility->name }}</li>
+                @endforeach
+            </ul>
+        @endif
     </div>
-@endsection
-
-@section('scripts')
-    <script>
-        function search() {
-            // Get the search term from the input field
-            var searchTerm = document.getElementById("searchInput").value;
-
-            // Make an AJAX request to the search route with the search term
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "{{ route('admin.search') }}?term=" + searchTerm, true);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                    // Handle the response and update the search results
-                    var results = JSON.parse(xhr.responseText);
-                    updateSearchResults(results);
-
-                    // Display the search results overlay
-                    var searchResultsContainer = document.getElementById('searchResultsContainer');
-                    searchResultsContainer.classList.add('active');
-                }
-            };
-            xhr.send();
-        }
-
-        function updateSearchResults(results) {
-            // Get the container where the search results will be displayed
-            var searchResultsContainer = document.getElementById("searchResultsContainer");
-            console.log(results);
-
-            // Clear the existing search results
-            searchResultsContainer.innerHTML = "";
-
-            // Display the search results
-            if (results.length > 0) {
-                var ul = document.createElement("ul");
-                results.forEach(function (result) {
-                    var li = document.createElement("li");
-                    li.textContent = result.name;
-                    ul.appendChild(li);
-                });
-                searchResultsContainer.appendChild(ul);
-            } else {
-                var p = document.createElement("p");
-                p.textContent = "No results found.";
-                searchResultsContainer.appendChild(p);
-            }
-        }
-
-        // Attach event listener to the search input
-        document.getElementById("searchInput").addEventListener("keyup", search);
-    </script>
 @endsection

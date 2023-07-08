@@ -65,17 +65,41 @@ class AdminController extends Controller
         return view('admin.admin');
     }
 
-    public function search(Request $request){
-        $searchTerm = $request->input('term');
-    
-        // Perform the search query on relevant tables
-        $results = DB::table('users')
-                    ->where('name', 'like', '%' . $searchTerm . '%')
-                    ->orWhere('email', 'like', '%' . $searchTerm . '%')
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Search users
+        $users = User::where('name', 'LIKE', "%$query%")
+                    ->orWhere('email', 'LIKE', "%$query%")
                     ->get();
-    
-        // Return the search results as JSON
-        return response()->json(['results' => $results]);
+
+        // Search food names
+        $foods = Food::where('name', 'LIKE', "%$query%")
+                    ->get();
+
+        // Search facilities associated with bookings
+        $facilities = Booking::whereHas('facility', function ($queryBuilder) use ($query) {
+            $queryBuilder->where('name', 'LIKE', "%$query%");
+        })
+        ->get();
+
+        // Fetch additional user information if matching user found
+        $userOrders = [];
+        $userApprovals = [];
+        $userMessage =[];
+        if (!$users->isEmpty()) {
+            $userId = $users->first()->id;
+            $name = $users->first()->name;
+            $userOrders = Order::where('user_id', $userId)->get();
+            $userApprovals = Approval::where('user_id', $userId)->get();
+            $userMessage = Message::where('name', $name)->get();
+        }
+
+        // You can add more search queries for different types of data
+
+        //return view
+        return view('admin.search', compact('users', 'foods', 'facilities', 'userOrders', 'userApprovals', 'userMessage'));
     }
     
 
@@ -362,12 +386,18 @@ class AdminController extends Controller
 
     // ORDER HISTORY SECTION
 
-    public function order(){
+    public function order($id = null){
         $orders = Order::all();
         $items = Items::all();
         $food = Food::all();
-        
-        return view('admin.order', compact('orders', 'items', 'food'));
+        $order = null;
+
+        if ($id) {
+            $order = Order::find($id);
+            $items = Items::where('order_id', $id)->get();
+        }
+
+        return view('admin.order', compact('orders', 'order', 'items', 'food'));
     }
 
     public function updateStatus(Request $request){

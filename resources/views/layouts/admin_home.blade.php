@@ -398,10 +398,12 @@
         </header>
         <div class="menu-bar">
             <div class="menu">
-                <li class="search-box">
-                    <i class='bx bx-search icon'></i>
-                    <input type="text" id="searchInput" placeholder="Search...">
-                </li>
+                <form action="{{ route('admin.search') }}" method="GET">
+                    <li class="search-box">
+                        <i class='bx bx-search icon'></i>
+                        <input type="text" name="query" id="searchInput" placeholder="Search...">
+                    </li>
+                </form>
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="{{ route('dashboard') }}">

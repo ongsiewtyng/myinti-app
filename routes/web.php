@@ -28,7 +28,7 @@ Route::post('/reset-password', [App\Http\Controllers\Auth\ResetPasswordControlle
 Route::get('/admin', [App\Http\Controllers\Auth\AdminController::class, 'admin'])->name('admin');
 Route::get('/export', [App\Http\Controllers\ExportController::class, 'exportData'])->name('export.data');
 Route::post('/access', [App\Http\Controllers\Auth\AdminController::class, 'access'])->name('access');
-Route::get('/admin/search', [App\Http\Controllers\Auth\AdminController::class, 'search'])->name('admin.search');
+Route::get('/search', [App\Http\Controllers\Auth\AdminController::class, 'search'])->name('admin.search');
 Route::match(['get', 'post'], '/dashboard', [App\Http\Controllers\Auth\AdminController::class, 'home'])->name('dashboard');
 Route::get('/food', [App\Http\Controllers\Auth\AdminController::class, 'food'])->name('food');
 Route::post('/add-category', [App\Http\Controllers\Auth\AdminController::class, 'addCategory'])->name('add-category');
@@ -50,7 +50,8 @@ Route::delete('facilities/{id}', [App\Http\Controllers\Auth\AdminController::cla
 Route::get('/message', [App\Http\Controllers\Auth\AdminController::class, 'message'])->name('message');
 Route::post('/messages/reply', [App\Http\Controllers\Auth\AdminController::class, 'reply'])->name('messages.reply');
 
-Route::get('/order', [App\Http\Controllers\Auth\AdminController::class, 'order'])->name('order');
+// Route::get('/order', [App\Http\Controllers\Auth\AdminController::class, 'order'])->name('order');
+Route::get('/order/{id?}', [App\Http\Controllers\Auth\AdminController::class, 'order'])->name('order');
 Route::post('/update-status', [App\Http\Controllers\Auth\AdminController::class,'updateStatus'])->name('updateStatus');
 
 
