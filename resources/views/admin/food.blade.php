@@ -8,9 +8,9 @@
             <span class="text">Food Menu</span>
         </div>
         <div class="add-category">
-            <form action="{{ route('add-category') }}" method="POST">
+            <form action="{{ route('add-category') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="text" name="category" placeholder="Enter category name" required>
+                <input type="text" name="cat" placeholder="Enter category name" required>
                 <input type="file" name="pic" placeholder="Choose a picture" required>
                 <button type="submit">Add Category</button>
             </form>
@@ -27,7 +27,7 @@
         </div>
         <!-- Add food form -->
         <div class="add-food-form" style="display: none;">
-            <form action="{{ route('add-food') }}" method="POST">
+            <form action="{{ route('add-food') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="text" name="category" placeholder="Enter category">
                 <input type="text" name="name" placeholder="Enter food name">
@@ -55,21 +55,16 @@
             @foreach ($foodItems as $foodItem)
                 <div class="food-item" data-category="{{ $foodItem->category }}">
                     @php
-                        $categoryMap = [
-                            'Burgers' => 'cafeBurgers',
-                            'Drinks' => 'cafeDrinks',
-                            'Fried Rice' => 'cafeFried',
-                            'menu' => 'cafeMenu',
-                            'Noodles' => 'cafeNoodles',
-                            'Sandwiches' => 'cafeSandwiches',
-                            'Snacks' => 'cafeSnacks',
-                            'Western Food' => 'cafeWestern',
-                            'Wraps' => 'cafeWraps',
-                        ];
-
                         $defaultCategory = 'cafeSandwiches'; // Default directory
-                        $categoryDirectory = $categoryMap[$foodItem->category] ?? $defaultCategory;
+
+                        $category = $foodItem->category;
+                        $categoryDirectory = 'cafe' . str_replace(' ', '', $category);
                         $imagePath = "{$categoryDirectory}/{$foodItem->pic}";
+
+                        $directoryPath = public_path($categoryDirectory);
+                        if (!is_dir($directoryPath)) {
+                            mkdir($directoryPath, 0777, true);
+                        }
                     @endphp
                     <img src="{{ asset($imagePath) }}" alt="{{ $foodItem->name }}">
                     <div class="info">
@@ -110,6 +105,14 @@
     </section>
 </body>
 <script>
+    // Event handler for when the category dropdown value changes
+    $('#categorySelect').on('change', function() {
+    var selectedCategory = $(this).val(); // Get the selected category value
+
+    // Set the value of the category input field in the add-food form
+    $('input[name="category"]').val(selectedCategory);
+    });
+    
     document.addEventListener("DOMContentLoaded", function() {
         const categorySelect = document.getElementById('categorySelect');
 

@@ -71,6 +71,7 @@ Route::get('/service1',[App\Http\Controllers\EventController::class,'service1'])
 Route::post('/submit-proposal', [App\Http\Controllers\EventController::class, 'submitProposal'])->name('submit.proposal');
 
 Route::get('/service2',[App\Http\Controllers\ServicesController::class,'service2'])->name('service2');
+Route::get('/category/{categorySlug}', [App\Http\Controllers\CafeController::class,'category'])->name('cafe.category');
 Route::get('/drinks',[App\Http\Controllers\CafeController::class,'drinks'])->name('drinks');
 Route::get('/burgers',[App\Http\Controllers\CafeController::class,'burgers'])->name('burgers');
 Route::get('/sandwiches',[App\Http\Controllers\CafeController::class,'sandwich'])->name('sandwiches');

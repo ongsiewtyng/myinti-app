@@ -138,42 +138,58 @@ class AdminController extends Controller
     }
 
 
-    public function addCategory(Request $request){
-        $category = new Category();
-        $category->category = $request->input('category');
+        public function addCategory(Request $request){
+            $category = new Category();
+            $category->category = $request->input('cat');
 
-        // Check if an image file was uploaded
-        if ($request->hasFile('catpic')) {
-            $image = $request->file('catpic');
-            $imageName = time().'.'.$image->getClientOriginalExtension();
-            $image->move(public_path('catpics'), $imageName);
-            $category->catpic = $imageName;
+            // Check if an image file was uploaded
+            if ($request->hasFile('pic')) {
+                $image = $request->file('pic');
+                $imageName = $image->getClientOriginalName();
+                $image->move(public_path('cafeMenu'), $imageName);
+                $category->catpic = $imageName;
+            }
+            $category->save();
+
+            return redirect()->back();
         }
 
-        $category->save();
 
-        return redirect()->back();
-    }
-
-
-    public function addFood(Request $request){
-        // Create a new food item instance
-        $foodItem = new Food();
-
-        // Set the values for the food item
-        $foodItem->category = $request->input('category');
-        $foodItem->name = $request->input('name');
-        $foodItem->pic = $request->input('pic');
-        $foodItem->description = $request->input('description');
-        $foodItem->price = $request->input('price');
-        // Set additional properties for other columns in the food table
-
-        // Save the food item to the database
-        $foodItem->save();
-
-        // Redirect back to the food page with a success message
-        return redirect()->route('food')->with('success', 'Food item added successfully');
-    }
+        public function addFood(Request $request)
+        {
+            // Create a new food item instance
+            $foodItem = new Food();
+        
+            // Set the values for the food item
+            $foodItem->category = $request->input('category');
+            $foodItem->name = $request->input('name');
+            $foodItem->description = $request->input('description');
+            $foodItem->price = $request->input('price');
+            // Set additional properties for other columns in the food table
+        
+            // Check if an image file was uploaded
+            if ($request->hasFile('pic')) {
+                $image = $request->file('pic');
+                $category = $request->input('category');
+        
+                // Generate the destination path based on the category value
+                $destinationPath = public_path('cafe' . $category);
+        
+                // Move the uploaded picture file to the destination path
+                $imageName = $image->getClientOriginalName();
+                $image->move($destinationPath, $imageName);
+        
+                // Save the destination path in the pic field of the food item
+                $foodItem->pic =$imageName;
+            }
+        
+            // Save the food item to the database
+            $foodItem->save();
+        
+            // Redirect back to the food page with a success message
+            return redirect()->route('food')->with('success', 'Food item added successfully');
+        }
+        
 
 
     public function updateFood(Request $request, $id){
@@ -197,21 +213,31 @@ class AdminController extends Controller
         if ($request->hasFile('pic')) {
             // Delete the previous picture if it exists
             if ($previousPic) {
-                // Delete the previous picture file from storage
-                Storage::delete('public/' . $previousPic);
+                // Get the previous category value
+                $previousCategoryFolder = 'cafe' . $previousCategory;
+
+                // Construct the previous picture path
+                $previousPicturePath = public_path($previousCategoryFolder . '/' . $previousPic);
+
+                // Delete the previous picture file
+                if (file_exists($previousPicturePath)) {
+                    unlink($previousPicturePath);
+                }
             }
 
-            // Generate a unique filename
-            $filename = $request->file('pic')->getClientOriginalName();
+            // Get the uploaded picture file
+            $image = $request->file('pic');
 
-            // Upload the new picture file to the public folder
-            $picPath = $request->file('pic')->storeAs('public', $filename);
+            // Generate the destination path based on the category value
+            $destinationPath = public_path('cafe' . $foodItem->category);
 
-            // Get the file name only
-            $fileNameOnly = basename($picPath);
-            $foodItem->pic = $fileNameOnly;
+            // Move the uploaded picture file to the destination path
+            $imageName = $image->getClientOriginalName();
+            $image->move($destinationPath, $imageName);
+
+            // Save the destination path in the pic field of the food item
+            $foodItem->pic =$imageName;
         }
-
 
         // Check if any changes were made
         $hasChanges = (

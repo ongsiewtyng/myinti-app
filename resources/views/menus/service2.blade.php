@@ -41,7 +41,7 @@
 	@foreach ($categoryGroups as $categoryGroup)
 		@foreach ($categoryGroup as $category)
 			<article>
-				<a href="{{ url('/' . strtolower($category->category)) }}" style="text-decoration: none; color:#000000">
+				<a href="{{ route('cafe.category', strtolower($category->category)) }}" style="text-decoration: none; color:#000000">
 					<img src="{{ asset('cafeMenu/' . $category->catpic) }}" alt="{{ $category->category }}" class="category-image">
 					<h2>{{ $category->category }}</h2>
 				</a>

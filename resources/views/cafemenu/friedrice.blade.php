@@ -18,7 +18,7 @@
     @if ($food->available)
       <div class="food-item">
           <div class="food-image">
-              <img src="{{ asset('cafeFried/' . $food->pic) }}" style="width: 300px; height: auto; justify-content: center;">
+              <img src="{{ asset('cafeFriedRice/' . $food->pic) }}" style="width: 300px; height: auto; justify-content: center;">
           </div>
 
           <div class="food-details">

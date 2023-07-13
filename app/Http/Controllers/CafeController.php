@@ -18,64 +18,23 @@ class CafeController extends Controller
     {
         $this->middleware('auth');
     }
-    
-    public function drinks(){
-        $category = 'Drinks';
-        $foods = Food::where('category', $category)->get();
 
-        return view('cafemenu.drinks',['foods' => $foods]);
-    }
+    public function category($categorySlug){
+        // Capitalize the first letter of the category slug
+        $categorySlug = ucfirst($categorySlug);
 
-    public function burgers(){
-        $category = 'Burgers';
-        $foods = Food::where('category', $category)->get();
-        
-        return view('cafemenu.burgers',['foods' => $foods]);
+        // Retrieve the category based on the slug
+        $category = Category::where('category', $categorySlug)->first();
 
-    }
+        if (!$category) {
+            abort(404); // or handle the category not found case
+        }
 
-    
-    public function sandwich(){
-        $category = 'Sandwiches';
-        $foods = Food::where('category', $category)->get();
+        // Retrieve the foods belonging to the category
+        $foods = Food::where('category', $category->category)->get();
 
-        return view('cafemenu.sandwiches', ['foods' => $foods]);
-    }
-
-    public function wrap(){
-        $category = 'Wraps';
-        $foods = Food::where('category', $category)->get();
-
-        return view('cafemenu.wraps', ['foods' => $foods]);
-    }
-
-    public function snack(){
-        $category = 'Snacks';
-        $foods = Food::where('category', $category)->get();
-
-        return view('cafemenu.snacks', ['foods' => $foods]);
-    }
-
-    public function western(){
-        $category = 'Western food';
-        $foods = Food::where('category', $category)->get();
-
-        return view('cafemenu.westernfood', ['foods' => $foods]);
-    }
-
-    public function rice(){
-        $category = 'Fried rice';
-        $foods = Food::where('category', $category)->get();
-
-        return view('cafemenu.friedrice', ['foods' => $foods]);
-    }
-
-    public function noodles(){
-        $category = 'Noodles';
-        $foods = Food::where('category', $category)->get();
-
-
-        return view('cafemenu.noodles', ['foods' => $foods]);
+        // Render the category view and pass the category and foods
+        return view('cafemenu.category', compact('category', 'foods'));
     }
 
     public function cart(){
